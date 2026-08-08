@@ -1,14 +1,171 @@
-<!doctype html>
-<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kuğulu Park Rangers | Yönetim</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/admin.css"></head>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>KPR Admin Panel</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+background:#07090b;
+color:white;
+font-family:Arial;
+}
+
+.admin{
+max-width:900px;
+margin:50px auto;
+}
+
+.box{
+background:#12161a;
+padding:25px;
+margin-bottom:20px;
+border:1px solid #242a2f;
+}
+
+h1,h2{
+color:#ff6500;
+}
+
+input,textarea,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#090b0d;
+color:white;
+border:1px solid #333;
+}
+
+button{
+background:#ff6500;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+
 <body>
-<header><a href="index.html">← SİTEYE DÖN</a><strong>KUĞULU PARK RANGERS / YÖNETİM</strong></header>
-<main class="admin-wrap">
-  <div class="admin-head"><span>İÇERİK YÖNETİMİ</span><h1>YÖNETİM PANELİ</h1><p>Değişiklikler bu tarayıcıda kaydedilir. İleride gerçek bir sunucu paneline bağlanmaya hazır yapıdadır.</p></div>
-  <div id="admin-app"></div>
-</main>
-<script src="js/data.js"></script><script src="js/admin.js"></script>
-</body></html>
+
+
+<div class="admin">
+
+
+<h1>KPR Yönetim Paneli</h1>
+
+
+<div class="box">
+
+<h2>Oyuncu Ekle</h2>
+
+<input id="name" placeholder="Oyuncu adı">
+
+<input id="pos" placeholder="Mevki">
+
+<input id="img" placeholder="Fotoğraf yolu">
+
+<button onclick="addPlayer()">
+Oyuncu Kaydet
+</button>
+
+
+</div>
+
+
+
+<div class="box">
+
+<h2>Eklenen Oyuncular</h2>
+
+<div id="players"></div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function addPlayer(){
+
+let player={
+name:document.getElementById("name").value,
+pos:document.getElementById("pos").value,
+img:document.getElementById("img").value
+};
+
+
+let players=
+JSON.parse(localStorage.getItem("players")) || [];
+
+
+players.push(player);
+
+
+localStorage.setItem(
+"players",
+JSON.stringify(players)
+);
+
+
+loadPlayers();
+
+
+}
+
+
+
+function loadPlayers(){
+
+let box=document.getElementById("players");
+
+box.innerHTML="";
+
+
+let players=
+JSON.parse(localStorage.getItem("players")) || [];
+
+
+players.forEach(p=>{
+
+
+box.innerHTML+=`
+
+<div class="box">
+
+<h3>${p.name}</h3>
+
+<p>${p.pos}</p>
+
+<img src="${p.img}" width="150">
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+
+loadPlayers();
+
+
+</script>
+
+
+
+</body>
+</html>

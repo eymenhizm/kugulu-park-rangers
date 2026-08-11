@@ -40,9 +40,9 @@
 <section class="hero">
   <div class="hero-grid wrap">
     <div class="hero-copy">
-      <div class="eyebrow">KUĞULU PARK RANGERS</div>
+      <div class="eyebrow" id="club-hero-name">KUĞULU PARK RANGERS</div>
       <h1>SAHADA<br><em>BİRLİKTE.</em></h1>
-      <p>2020'den bu yana mücadeleyi, takım ruhunu ve gelişimi sahaya taşıyoruz.</p>
+      <p><span id="club-hero-founded">2020</span>'den bu yana mücadeleyi, takım ruhunu ve gelişimi sahaya taşıyoruz.</p>
       <div class="hero-actions">
         <a class="btn orange" href="#takim">TAKIMI KEŞFET</a>
         <a class="btn line" href="#takvim">FİKSTÜR</a>
@@ -50,12 +50,12 @@
     </div>
     <div class="hero-mark">
       <img src="assets/logo/logo.png" alt="">
-      <div class="hero-stamp"><b>2020</b><span>KURULUŞ</span></div>
+      <div class="hero-stamp"><b id="club-stamp-founded">2020</b><span>KURULUŞ</span></div>
     </div>
   </div>
   <div class="hero-bottom">
     <div class="wrap ticker">
-      <span>KUĞULU PARK RANGERS</span><b>2020</b><span>ANKARA</span><b>•</b><span>SEZON 2026 / 27</span>
+      <span id="ticker-name">KUĞULU PARK RANGERS</span><b id="ticker-founded">2020</b><span>ANKARA</span><b>•</b><span>SEZON 2026 / 27</span>
     </div>
   </div>
 </section>
@@ -97,7 +97,7 @@
     </div>
     <div class="league-card">
       <div class="league-badge"><img src="assets/logo/logo.png" alt=""></div>
-      <strong>YAKINDA EKLENECEK</strong>
+      <strong id="league-status">YAKINDA EKLENECEK</strong>
       <span>Golden Lig sıralaması</span>
     </div>
   </div>
@@ -121,8 +121,8 @@
   <div class="wrap contact-grid">
     <div><span class="eyebrow">BİZE ULAŞ</span><h2>İLETİŞİM</h2></div>
     <div class="contact-card">
-      <span>E-POSTA</span><a href="mailto:ergun060691@gmail.com">ergun060691@gmail.com</a>
-      <span>TELEFON</span><a href="tel:05521038970">0552 103 8970</a>
+      <span>E-POSTA</span><a id="contact-email" href="mailto:ergun060691@gmail.com">ergun060691@gmail.com</a>
+      <span>TELEFON</span><a id="contact-phone" href="tel:05521038970">0552 103 8970</a>
     </div>
   </div>
 </section>
@@ -130,21 +130,175 @@
 <section class="sponsor-section">
   <div class="wrap sponsor-in">
     <span class="eyebrow">RESMİ SPONSOR</span>
-    <div class="sponsor-name">PICASSO KURS</div>
+    <div class="sponsor-name" id="sponsor-name">PICASSO KURS</div>
   </div>
 </section>
 </main>
 
 <footer>
   <div class="wrap footer-grid">
-    <div class="footer-brand"><img src="assets/logo/logo.png" alt=""><strong>KUĞULU PARK RANGERS</strong><span>2020'den bu yana.</span></div>
+    <div class="footer-brand"><img src="assets/logo/logo.png" alt=""><strong id="footer-club-name">KUĞULU PARK RANGERS</strong><span id="footer-club-founded">2020'den bu yana.</span></div>
     <div><h4>KULÜP</h4><a href="#takim">Takım</a><a href="#basarilar">Başarılar</a><a href="#lig">Lig</a></div>
     <div><h4>MAÇ</h4><a href="#takvim">Fikstür</a><a href="#haberler">Haberler</a></div>
-    <div><h4>İLETİŞİM</h4><a href="mailto:ergun060691@gmail.com">ergun060691@gmail.com</a><a href="tel:05521038970">0552 103 8970</a></div>
+    <div><h4>İLETİŞİM</h4><a id="footer-email" href="mailto:ergun060691@gmail.com">ergun060691@gmail.com</a><a id="footer-phone" href="tel:05521038970">0552 103 8970</a></div>
   </div>
   <div class="wrap copyright">© 2026 Kuğulu Park Rangers. Tüm hakları saklıdır.</div>
 </footer>
-<script src="js/data.js"></script>
-<script src="js/app.js"></script>
+
+<script>
+"use strict";
+
+const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0enR0aXdhc212eGlicHpzZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzE1NTMsImV4cCI6MjEwMjAwNzU1M30.UfKM4Vxt3SBaGCFtweIsvTSOkzn7tNalMtsSYdchrgk";
+const TABLE_NAME = "site_data";
+
+function escapeHTML(v){
+  return String(v ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  }[c]));
+}
+
+async function fetchSiteData(){
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.1&select=*&_t=${Date.now()}`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Accept": "application/json"
+      }
+    });
+    if(!res.ok) throw new Error("Veri okunamadı");
+    const rows = await res.json();
+    if(Array.isArray(rows) && rows.length > 0 && rows[0].data){
+      renderSite(rows[0].data);
+    }
+  } catch(e) {
+    console.error("Supabase canlı veri yükleme hatası:", e);
+  }
+}
+
+function renderSite(data){
+  // 1. KULÜP BİLGİLERİ & İLETİŞİM
+  if(data.club){
+    const c = data.club;
+    if(c.name){
+      document.querySelectorAll("#club-hero-name, #ticker-name, #footer-club-name").forEach(el => el.textContent = c.name);
+    }
+    if(c.founded){
+      document.querySelectorAll("#club-hero-founded, #club-stamp-founded, #ticker-founded").forEach(el => el.textContent = c.founded);
+      const fEl = document.getElementById("footer-club-founded");
+      if(fEl) fEl.textContent = `${c.founded}'den bu yana.`;
+    }
+    if(c.sponsor){
+      const sEl = document.getElementById("sponsor-name");
+      if(sEl) sEl.textContent = c.sponsor;
+    }
+    if(c.email){
+      document.querySelectorAll("#contact-email, #footer-email").forEach(el => {
+        el.textContent = c.email;
+        el.href = "mailto:" + c.email;
+      });
+    }
+    if(c.phone){
+      document.querySelectorAll("#contact-phone, #footer-phone").forEach(el => {
+        el.textContent = c.phone;
+        el.href = "tel:" + c.phone.replace(/\s+/g, "");
+      });
+    }
+  }
+
+  // 2. HABERLER
+  const newsBox = document.getElementById("news-grid");
+  if(newsBox && Array.isArray(data.news) && data.news.length > 0){
+    newsBox.innerHTML = data.news.map(n => `
+      <article class="news-card">
+        <div class="news-img"><img src="${escapeHTML(n.image || 'assets/logo/logo.png')}" alt="${escapeHTML(n.title)}"></div>
+        <div class="news-body">
+          <div class="news-meta"><span>${escapeHTML(n.tag || 'Kulüp')}</span><time>${escapeHTML(n.date || '')}</time></div>
+          <h3>${escapeHTML(n.title)}</h3>
+          ${n.content ? `<p>${escapeHTML(n.content)}</p>` : ''}
+        </div>
+      </article>
+    `).join("");
+  }
+
+  // 3. FİKSTÜR
+  const fixBox = document.getElementById("fixtures");
+  if(fixBox && Array.isArray(data.fixtures) && data.fixtures.length > 0){
+    fixBox.innerHTML = data.fixtures.map(f => {
+      const home = typeof f === "string" ? f : (f.home || "Kuğulu Park Rangers");
+      const away = typeof f === "string" ? "" : (f.away || "");
+      const date = typeof f === "object" ? (f.date || "") : "";
+      const time = typeof f === "object" ? (f.time || "") : "";
+      return `
+        <div class="fixture-card">
+          <div class="fixture-date"><span>${escapeHTML(date)}</span><b>${escapeHTML(time)}</b></div>
+          <div class="fixture-teams">
+            <span class="team">${escapeHTML(home)}</span>
+            <span class="vs">VS</span>
+            <span class="team">${escapeHTML(away)}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // 4. OYUNCULAR
+  const squadBox = document.getElementById("squads");
+  if(squadBox && Array.isArray(data.players) && data.players.length > 0){
+    const posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
+    let html = "";
+    posOrder.forEach(pos => {
+      const group = data.players.filter(p => p.position === pos);
+      if(group.length > 0){
+        html += `<div class="squad-group"><h3 class="squad-pos-title">${escapeHTML(pos.toUpperCase())}</h3><div class="team-grid">`;
+        html += group.map(p => `
+          <div class="player-card">
+            <div class="player-img"><img src="${escapeHTML(p.image || 'assets/logo/logo.png')}" alt="${escapeHTML(p.name)}"></div>
+            <div class="player-info">
+              <span class="player-num">${escapeHTML(p.number || '')}</span>
+              <strong>${escapeHTML(p.name)}</strong>
+              <small>${escapeHTML(p.position)}</small>
+            </div>
+          </div>
+        `).join("");
+        html += `</div></div>`;
+      }
+    });
+    squadBox.innerHTML = html;
+  }
+
+  // 5. BAŞARILAR
+  const achBox = document.getElementById("achievements");
+  if(achBox && Array.isArray(data.achievements) && data.achievements.length > 0){
+    achBox.innerHTML = data.achievements.map(a => {
+      const title = typeof a === "string" ? a : (a.title || "");
+      return `
+        <div class="achievement-card">
+          <div class="achievement-icon">🏆</div>
+          <h4>${escapeHTML(title)}</h4>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // 6. LİG STATUS
+  if(data.league && data.league.status){
+    const lEl = document.getElementById("league-status");
+    if(lEl) lEl.textContent = data.league.status;
+  }
+}
+
+// Mobil Menü
+const menuToggle = document.querySelector(".menu-toggle");
+const menu = document.querySelector(".menu");
+if(menuToggle && menu){
+  menuToggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+  });
+}
+
+fetchSiteData();
+</script>
 </body>
 </html>

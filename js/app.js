@@ -14,62 +14,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
      HABERLER
-  ========================== */
+  ========================= */
 
   const news = $("#news-grid");
 
   if (news) {
     data.news.forEach((n, i) => {
 
-      const article = document.createElement("article");
+      news.insertAdjacentHTML(
+        "beforeend",
 
-      article.className = `news-card ${i === 0 ? "featured" : ""}`;
+        `<article class="news-card ${i === 0 ? "featured" : ""}" data-news-id="${i}">
+          <div class="news-img">
+            ${n.image ? `<img src="${esc(n.image)}" alt="${esc(n.title)}">` : ""}
+          </div>
 
-      article.innerHTML = `
-        <div class="news-img">
-          ${
-            n.image
-              ? `<img src="${esc(n.image)}" alt="${esc(n.title)}">`
-              : ""
-          }
-        </div>
+          <div class="news-overlay">
+            <span>${esc(n.tag || "HABER")}</span>
+            <h3>${esc(n.title)}</h3>
+            <b>DEVAMI →</b>
+          </div>
+        </article>`
+      );
+    });
 
-        <div class="news-overlay">
-          <span>HABER</span>
+    /* Habere tıklayınca detay sayfasına git */
+    document.querySelectorAll(".news-card").forEach(card => {
 
-          <h3>${esc(n.title)}</h3>
+      card.addEventListener("click", () => {
 
-          <b>DEVAMI →</b>
-        </div>
-      `;
+        const id = card.dataset.newsId;
 
-      /*
-       * HABER KARTI TIKLAMA
-       */
-
-      article.style.cursor = "pointer";
-
-      article.addEventListener("click", () => {
-
-        /*
-         * Şimdilik haberin detay sayfası olmadığı için
-         * haber başlığını gösteriyoruz.
-         */
-
-        alert(
-          `${n.title}\n\nKuğulu Park Rangers`
-        );
+        window.location.href = `haber.html?id=${id}`;
 
       });
 
-      news.appendChild(article);
     });
   }
 
 
   /* =========================
      FİKSTÜR
-  ========================== */
+  ========================= */
 
   const fixtures = $("#fixtures");
 
@@ -80,32 +66,17 @@ document.addEventListener("DOMContentLoaded", () => {
       fixtures.insertAdjacentHTML(
         "beforeend",
 
-        `
-        <article class="fixture">
-
+        `<article class="fixture">
           <span>MAÇ ${i + 1}</span>
 
           <div class="fixture-teams">
-
-            <b>
-              KUĞULU PARK<br>
-              RANGERS
-            </b>
-
+            <b>KUĞULU PARK<br>RANGERS</b>
             <i>VS</i>
-
-            <b>
-              ${esc(f)}
-            </b>
-
+            <b>${esc(f)}</b>
           </div>
 
-          <small>
-            Fikstür bilgisi
-          </small>
-
-        </article>
-        `
+          <small>Fikstür bilgisi</small>
+        </article>`
       );
 
     });
@@ -114,8 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================
-     OYUNCULAR
-  ========================== */
+     TAKIM
+  ========================= */
 
   const squads = $("#squads");
 
@@ -132,64 +103,39 @@ document.addEventListener("DOMContentLoaded", () => {
       squads.insertAdjacentHTML(
         "beforeend",
 
-        `
-        <div class="squad-block">
+        `<div class="squad-block">
 
           <div class="squad-head">
-
-            <h3>
-              ${pos.toUpperCase()}
-            </h3>
-
-            <span>
-              ${list.length} OYUNCU
-            </span>
-
+            <h3>${pos.toUpperCase()}</h3>
+            <span>${list.length} OYUNCU</span>
           </div>
 
           <div class="player-grid">
 
-            ${
-              list.map(p => `
+            ${list.map(p => `
 
-                <article class="player">
+              <article class="player">
 
-                  <div class="player-photo">
+                <div class="player-photo">
+                  ${
+                    p.image
+                      ? `<img src="${esc(p.image)}" alt="${esc(p.name)}">`
+                      : ""
+                  }
+                </div>
 
-                    ${
-                      p.image
-                        ? `
-                          <img
-                            src="${esc(p.image)}"
-                            alt="${esc(p.name)}"
-                          >
-                        `
-                        : ""
-                    }
+                <div class="player-info">
+                  <span>${esc(p.position)}</span>
+                  <h4>${esc(p.name)}</h4>
+                </div>
 
-                  </div>
+              </article>
 
-                  <div class="player-info">
-
-                    <span>
-                      ${esc(p.position)}
-                    </span>
-
-                    <h4>
-                      ${esc(p.name)}
-                    </h4>
-
-                  </div>
-
-                </article>
-
-              `).join("")
-            }
+            `).join("")}
 
           </div>
 
-        </div>
-        `
+        </div>`
       );
 
     });
@@ -199,43 +145,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
      BAŞARILAR
-  ========================== */
+  ========================= */
 
   const achievements = $("#achievements");
 
   if (achievements) {
 
-    achievements.innerHTML =
-      data.achievements
-        .map((a, i) => `
+    achievements.innerHTML = data.achievements
+      .map(
+        (a, i) => `
 
-          <article class="achievement">
+        <article class="achievement">
 
-            <span>
-              ${String(i + 1).padStart(2, "0")}
-            </span>
+          <span>0${i + 1}</span>
 
-            <div>
+          <div>
+            <b>BAŞARI</b>
+            <h3>${esc(a)}</h3>
+          </div>
 
-              <b>BAŞARI</b>
+        </article>
 
-              <h3>
-                ${esc(a)}
-              </h3>
-
-            </div>
-
-          </article>
-
-        `)
-        .join("");
+      `
+      )
+      .join("");
 
   }
 
 
   /* =========================
      MOBİL MENÜ
-  ========================== */
+  ========================= */
 
   $(".menu-toggle")?.addEventListener(
     "click",
@@ -243,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document
         .querySelector(".menu")
-        ?.classList.toggle("open");
+        .classList.toggle("open");
 
     }
   );

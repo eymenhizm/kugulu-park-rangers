@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Yönetim Paneli | Kuğulu Park Rangers</title>
 
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -17,7 +20,10 @@ body{
   font-family:Inter,Arial,sans-serif;
 }
 
-button,input,select,textarea{
+button,
+input,
+select,
+textarea{
   font:inherit;
 }
 
@@ -31,17 +37,25 @@ button{
   align-items:center;
   justify-content:center;
   padding:25px;
+
   background:
-    radial-gradient(circle at 80% 20%,rgba(255,101,0,.14),transparent 35%),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255,101,0,.14),
+      transparent 35%
+    ),
     #07090b;
 }
 
 .login-box{
   width:min(430px,100%);
   padding:42px;
+
   background:#101418;
   border:1px solid #292f34;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.5);
 }
 
 .login-logo{
@@ -87,10 +101,14 @@ button{
 .field select,
 .field textarea{
   width:100%;
+
   background:#090b0d;
   border:1px solid #30363b;
+
   color:#fff;
+
   padding:14px;
+
   outline:none;
   border-radius:0;
 }
@@ -110,20 +128,29 @@ button{
 
 .login-btn{
   width:100%;
+
   border:0;
+
   background:#ff6500;
   color:#090a0b;
+
   padding:16px;
+
   font-weight:900;
   letter-spacing:1px;
+
   margin-top:5px;
 }
 
 .error{
   min-height:20px;
+
   color:#ff6b35;
+
   text-align:center;
+
   font-size:12px;
+
   margin-top:15px;
 }
 
@@ -135,18 +162,26 @@ button{
   position:sticky;
   top:0;
   z-index:100;
+
   background:rgba(7,9,11,.96);
+
   backdrop-filter:blur(15px);
+
   border-bottom:1px solid #252b2f;
 }
 
 .admin-head-inner{
   width:min(1420px,calc(100% - 40px));
+
   min-height:82px;
+
   margin:auto;
+
   display:flex;
+
   align-items:center;
   justify-content:space-between;
+
   gap:20px;
 }
 
@@ -169,9 +204,13 @@ button{
 
 .admin-brand small{
   display:block;
+
   color:#ff6500;
+
   font-size:9px;
+
   letter-spacing:2px;
+
   margin-top:4px;
 }
 
@@ -182,36 +221,54 @@ button{
 
 .admin-grid{
   width:min(1420px,calc(100% - 40px));
+
   margin:30px auto;
+
   display:grid;
+
   grid-template-columns:220px 1fr;
+
   gap:30px;
 }
 
 .admin-side{
   position:sticky;
   top:112px;
+
   align-self:start;
+
   background:#101418;
+
   border:1px solid #252b2f;
+
   padding:20px;
 }
 
 .admin-side .kicker{
   color:#ff6500;
+
   font-size:10px;
+
   font-weight:900;
+
   letter-spacing:3px;
+
   margin-bottom:15px;
 }
 
 .admin-side a{
   display:block;
+
   color:#aaa;
+
   font-size:12px;
+
   font-weight:800;
+
   padding:12px 10px;
+
   border-bottom:1px solid #20252a;
+
   text-decoration:none;
 }
 
@@ -225,27 +282,37 @@ button{
 
 .admin-card{
   background:#101418;
+
   border:1px solid #252b2f;
+
   padding:28px;
+
   margin-bottom:20px;
 }
 
 .admin-card h2{
   font-family:"Barlow Condensed",Arial,sans-serif;
+
   font-size:38px;
+
   margin:8px 0 25px;
 }
 
 .kicker{
   color:#ff6500;
+
   font-size:10px;
+
   font-weight:900;
+
   letter-spacing:3px;
 }
 
 .form-grid{
   display:grid;
+
   grid-template-columns:repeat(2,1fr);
+
   gap:15px;
 }
 
@@ -259,81 +326,117 @@ button{
 
 .edit-item{
   background:#0a0d0f;
+
   border:1px solid #252b2f;
+
   padding:18px;
+
   margin-bottom:12px;
 }
 
 .edit-item-head{
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   gap:15px;
+
   margin-bottom:15px;
 }
 
 .edit-item-head strong{
   color:#ff6500;
+
   font-size:11px;
+
   letter-spacing:2px;
 }
 
 .delete-btn{
   background:transparent;
+
   border:1px solid #49312a;
+
   color:#ff7650;
+
   padding:8px 12px;
+
   font-size:10px;
+
   font-weight:800;
 }
 
 .delete-btn:hover{
   background:#ff6500;
+
   color:#000;
 }
 
 .preview-btn{
   display:inline-block;
+
   background:transparent;
+
   border:1px solid #363d42;
+
   color:#fff;
+
   padding:8px 12px;
+
   font-size:10px;
+
   font-weight:800;
+
   text-decoration:none;
+
   margin-right:auto;
 }
 
 .preview-btn:hover{
   border-color:#ff6500;
+
   color:#ff6500;
 }
 
 .admin-buttons{
   display:flex;
+
   flex-wrap:wrap;
+
   gap:10px;
+
   margin-top:20px;
 }
 
 .btn-admin{
   border:1px solid #363d42;
+
   background:transparent;
+
   color:#fff;
+
   padding:13px 18px;
+
   font-size:10px;
+
   font-weight:900;
+
   letter-spacing:1px;
 }
 
 .btn-admin:hover{
   border-color:#ff6500;
+
   color:#ff6500;
 }
 
 .btn-admin.orange{
   background:#ff6500;
+
   border-color:#ff6500;
+
   color:#090a0b;
 }
 
@@ -343,20 +446,31 @@ button{
 
 .save-message{
   color:#71d99a;
+
   font-size:11px;
+
   font-weight:800;
+
   min-height:16px;
+
   display:flex;
+
   align-items:center;
 }
 
 .notice{
   padding:16px 18px;
+
   border-left:3px solid #ff6500;
+
   background:#11161a;
+
   color:#a8adb1;
+
   font-size:12px;
+
   line-height:1.6;
+
   margin-bottom:20px;
 }
 
@@ -366,15 +480,21 @@ button{
 
 .news-content-help{
   margin-top:8px;
+
   color:#777e84;
+
   font-size:10px;
+
   line-height:1.5;
 }
 
 .empty{
   padding:25px;
+
   text-align:center;
+
   color:#777e84;
+
   border:1px dashed #30363b;
 }
 
@@ -386,8 +506,11 @@ button{
 
   .admin-side{
     position:static;
+
     display:flex;
+
     gap:5px;
+
     overflow:auto;
   }
 
@@ -397,13 +520,13 @@ button{
 
   .admin-side a{
     white-space:nowrap;
+
     border:0;
   }
 
   .form-grid{
     grid-template-columns:1fr;
   }
-
 }
 
 @media(max-width:520px){
@@ -414,6 +537,7 @@ button{
 
   .admin-grid{
     width:calc(100% - 24px);
+
     margin-top:15px;
   }
 
@@ -433,16 +557,15 @@ button{
   .admin-actions-top .btn-admin:first-child{
     display:none;
   }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
+<!-- =====================================================
      GİRİŞ
-========================= -->
+===================================================== -->
 
 <div class="admin-login" id="loginScreen">
 
@@ -461,6 +584,7 @@ button{
 
     </div>
 
+
     <div class="login-field">
 
       <label>KULLANICI ADI</label>
@@ -472,6 +596,7 @@ button{
       >
 
     </div>
+
 
     <div class="login-field">
 
@@ -485,12 +610,14 @@ button{
 
     </div>
 
+
     <button
       class="login-btn"
       id="loginButton"
     >
       GİRİŞ YAP
     </button>
+
 
     <div
       class="error"
@@ -502,9 +629,9 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      PANEL
-========================= -->
+===================================================== -->
 
 <div id="panel">
 
@@ -533,6 +660,7 @@ button{
 
     </div>
 
+
     <div class="admin-actions-top">
 
       <a
@@ -559,9 +687,9 @@ button{
 <div class="admin-grid">
 
 
-<!-- =========================
+<!-- =====================================================
      SOL MENÜ
-========================= -->
+===================================================== -->
 
 <aside class="admin-side">
 
@@ -570,10 +698,15 @@ button{
   </div>
 
   <a href="#club">Kulüp</a>
+
   <a href="#news">Haberler</a>
+
   <a href="#fixtures">Fikstür</a>
+
   <a href="#players">Oyuncular</a>
+
   <a href="#achievements">Başarılar</a>
+
   <a href="#backup">Yedek</a>
 
 </aside>
@@ -586,7 +719,10 @@ button{
 
   <strong>Yönetim paneli aktif.</strong>
 
-  Buradaki değişiklikler bu tarayıcıda kaydedilir.
+  Buradaki değişiklikler bu tarayıcıda
+  kaydedilir ve sitenin kullandığı
+  <strong>KPR veri sistemi</strong> üzerinden
+  saklanır.
 
   Haberlerde başlık, tarih, etiket, görsel ve
   <strong>detay yazısını</strong> değiştirebilirsin.
@@ -594,9 +730,9 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      KULÜP
-========================= -->
+===================================================== -->
 
 <section
   class="admin-card"
@@ -613,6 +749,7 @@ button{
     id="clubEditor"
     class="form-grid"
   ></div>
+
 
   <div class="admin-buttons">
 
@@ -633,9 +770,9 @@ button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      HABERLER
-========================= -->
+===================================================== -->
 
 <section
   class="admin-card"
@@ -649,6 +786,7 @@ button{
   <h2>Haberler</h2>
 
   <div id="newsEditor"></div>
+
 
   <div class="admin-buttons">
 
@@ -676,9 +814,9 @@ button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      FİKSTÜR
-========================= -->
+===================================================== -->
 
 <section
   class="admin-card"
@@ -692,6 +830,7 @@ button{
   <h2>Fikstür</h2>
 
   <div id="fixtureEditor"></div>
+
 
   <div class="admin-buttons">
 
@@ -719,9 +858,9 @@ button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      OYUNCULAR
-========================= -->
+===================================================== -->
 
 <section
   class="admin-card"
@@ -735,6 +874,7 @@ button{
   <h2>Oyuncular</h2>
 
   <div id="playerEditor"></div>
+
 
   <div class="admin-buttons">
 
@@ -762,9 +902,9 @@ button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      BAŞARILAR
-========================= -->
+===================================================== -->
 
 <section
   class="admin-card"
@@ -778,6 +918,7 @@ button{
   <h2>Başarılar</h2>
 
   <div id="achievementEditor"></div>
+
 
   <div class="admin-buttons">
 
@@ -805,9 +946,9 @@ button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      YEDEK
-========================= -->
+===================================================== -->
 
 <section
   class="admin-card"
@@ -822,13 +963,14 @@ button{
 
   <p style="color:#92979d;line-height:1.7">
 
-    Sitedeki yönetim verilerini JSON dosyası olarak
-    bilgisayarına yedekleyebilirsin.
+    Sitedeki yönetim verilerini JSON dosyası
+    olarak bilgisayarına yedekleyebilirsin.
 
     Daha sonra aynı dosyayı tekrar yükleyerek
     geri getirebilirsin.
 
   </p>
+
 
   <div class="admin-buttons">
 
@@ -839,6 +981,7 @@ button{
       JSON DIŞA AKTAR
     </button>
 
+
     <label
       class="btn-admin"
       for="importFile"
@@ -846,12 +989,14 @@ button{
       JSON İÇE AKTAR
     </label>
 
+
     <input
       id="importFile"
       type="file"
       accept=".json"
       hidden
     >
+
 
     <button
       class="btn-admin"
@@ -864,6 +1009,7 @@ button{
 
 </section>
 
+
 </main>
 
 </div>
@@ -871,15 +1017,14 @@ button{
 </div>
 
 
+<!-- =====================================================
+     DATA
+===================================================== -->
+
 <script src="js/data.js"></script>
 
 
 <script>
-
-/* =====================================================
-   KUĞULU PARK RANGERS
-   GELİŞMİŞ ADMIN PANELİ
-===================================================== */
 
 (function(){
 
@@ -898,21 +1043,27 @@ const USERS = {
 
 };
 
+
 const LOGIN_KEY =
   "kpr_admin_login";
 
-const DATA_KEY =
-  "kpr_admin_data";
-
 
 const loginScreen =
-  document.getElementById("loginScreen");
+  document.getElementById(
+    "loginScreen"
+  );
+
 
 const panel =
-  document.getElementById("panel");
+  document.getElementById(
+    "panel"
+  );
+
 
 const loginError =
-  document.getElementById("loginError");
+  document.getElementById(
+    "loginError"
+  );
 
 
 function login(){
@@ -921,12 +1072,15 @@ function login(){
     document
       .getElementById("username")
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
+
 
   const password =
     document
       .getElementById("password")
       .value;
+
 
   if(
     USERS[username] &&
@@ -938,15 +1092,20 @@ function login(){
       username
     );
 
+
     loginScreen.style.display =
       "none";
+
 
     panel.style.display =
       "block";
 
-    renderAll();
 
-  }else{
+    loadAndRender();
+
+  }
+
+  else{
 
     loginError.textContent =
       "Kullanıcı adı veya şifre yanlış.";
@@ -971,7 +1130,9 @@ document
     function(e){
 
       if(e.key === "Enter"){
+
         login();
+
       }
 
     }
@@ -988,8 +1149,10 @@ document
         LOGIN_KEY
       );
 
+
       panel.style.display =
         "none";
+
 
       loginScreen.style.display =
         "flex";
@@ -999,8 +1162,29 @@ document
 
 
 /* =====================================================
-   VERİ
+   VERİ SİSTEMİ
 ===================================================== */
+
+/*
+  ÖNEMLİ:
+
+  Artık ayrı bir "kpr_admin_data"
+  kullanılmıyor.
+
+  Admin paneli doğrudan:
+
+      window.KPR.load()
+
+  ve
+
+      window.KPR.save(data)
+
+  sistemini kullanıyor.
+
+  Böylece index.html ile admin.html
+  aynı veriyi okuyor.
+*/
+
 
 function clone(value){
 
@@ -1011,28 +1195,18 @@ function clone(value){
 }
 
 
-function getBaseData(){
+function getDefaultData(){
 
   if(
-    window.KUGULU_DATA
+    window.DEFAULT_KPR_DATA
   ){
 
     return clone(
-      window.KUGULU_DATA
+      window.DEFAULT_KPR_DATA
     );
 
   }
 
-  if(
-    window.KPR &&
-    typeof window.KPR.load === "function"
-  ){
-
-    return clone(
-      window.KPR.load()
-    );
-
-  }
 
   return {
 
@@ -1044,60 +1218,105 @@ function getBaseData(){
       phone:"0552 103 8970"
     },
 
+    achievements:[],
+
+    players:[],
+
     news:[],
 
     fixtures:[],
 
-    players:[],
-
-    achievements:[]
+    league:{
+      status:"Yakında eklenecek"
+    }
 
   };
 
 }
 
 
-function loadData(){
+function getData(){
 
   try{
 
-    const saved =
-      localStorage.getItem(
-        DATA_KEY
-      );
+    if(
+      window.KPR &&
+      typeof window.KPR.load === "function"
+    ){
 
-    if(saved){
-
-      return JSON.parse(
-        saved
+      return clone(
+        window.KPR.load()
       );
 
     }
 
-  }catch(error){
+  }
+
+  catch(error){
 
     console.error(
-      "Veri okunamadı:",
+      "KPR verisi okunamadı:",
       error
     );
 
   }
 
-  return getBaseData();
+
+  return getDefaultData();
 
 }
 
 
 let data =
-  loadData();
+  getData();
 
 
 function saveData(){
 
-  localStorage.setItem(
-    DATA_KEY,
-    JSON.stringify(data)
-  );
+  try{
+
+    if(
+      window.KPR &&
+      typeof window.KPR.save === "function"
+    ){
+
+      window.KPR.save(
+        data
+      );
+
+      return true;
+
+    }
+
+
+    console.error(
+      "window.KPR.save bulunamadı."
+    );
+
+    return false;
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Veri kaydedilemedi:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+function loadAndRender(){
+
+  data =
+    getData();
+
+  renderAll();
 
 }
 
@@ -1137,17 +1356,27 @@ function esc(value){
 function message(id){
 
   const el =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
 
-  if(!el) return;
+
+  if(!el){
+
+    return;
+
+  }
+
 
   el.textContent =
     "✓ Kaydedildi";
 
+
   setTimeout(
     function(){
 
-      el.textContent = "";
+      el.textContent =
+        "";
 
     },
     2500
@@ -1162,8 +1391,15 @@ function message(id){
 
 function renderClub(){
 
+  if(!data.club){
+
+    data.club = {};
+
+  }
+
+
   const club =
-    data.club || {};
+    data.club;
 
 
   const fields = [
@@ -1186,32 +1422,35 @@ function renderClub(){
     .innerHTML =
 
     fields
-      .map(function(field){
+      .map(
+        function(field){
 
-        const key =
-          field[0];
+          const key =
+            field[0];
 
-        const label =
-          field[1];
+          const label =
+            field[1];
 
-        return `
 
-          <div class="field">
+          return `
 
-            <label>
-              ${label}
-            </label>
+            <div class="field">
 
-            <input
-              data-club="${key}"
-              value="${esc(club[key])}"
-            >
+              <label>
+                ${label}
+              </label>
 
-          </div>
+              <input
+                data-club="${key}"
+                value="${esc(club[key])}"
+              >
 
-        `;
+            </div>
 
-      })
+          `;
+
+        }
+      )
       .join("");
 
 }
@@ -1224,8 +1463,11 @@ document
     function(){
 
       if(!data.club){
+
         data.club = {};
+
       }
+
 
       document
         .querySelectorAll(
@@ -1242,11 +1484,16 @@ document
           }
         );
 
-      saveData();
 
-      message(
-        "clubMessage"
-      );
+      if(
+        saveData()
+      ){
+
+        message(
+          "clubMessage"
+        );
+
+      }
 
     }
   );
@@ -1286,6 +1533,7 @@ function renderNews(){
         <strong>
           + HABER EKLE
         </strong>
+
         butonuna basarak ilk haberi oluştur.
 
       </div>
@@ -1300,154 +1548,153 @@ function renderNews(){
   editor.innerHTML =
 
     data.news
-      .map(function(news,index){
+      .map(
+        function(news,index){
 
-        return `
-
-        <div class="edit-item">
-
-          <div class="edit-item-head">
-
-            <strong>
-              HABER ${index + 1}
-            </strong>
-
-            <a
-              class="preview-btn"
-              href="haber.html?id=${index}"
-              target="_blank"
-            >
-              👁 HABERİ GÖR
-            </a>
-
-            <button
-              class="delete-btn"
-              data-delete-news="${index}"
-            >
-              SİL
-            </button>
-
-          </div>
+          news =
+            news || {};
 
 
-          <div class="form-grid">
+          return `
+
+          <div class="edit-item">
+
+            <div class="edit-item-head">
+
+              <strong>
+                HABER ${index + 1}
+              </strong>
 
 
-            <!-- BAŞLIK -->
-
-            <div class="field full">
-
-              <label>
-                BAŞLIK
-              </label>
-
-              <input
-                data-news-title="${index}"
-                value="${esc(news.title)}"
-                placeholder="Haber başlığı"
+              <a
+                class="preview-btn"
+                href="haber.html?id=${index}"
+                target="_blank"
               >
+                👁 HABERİ GÖR
+              </a>
+
+
+              <button
+                class="delete-btn"
+                data-delete-news="${index}"
+              >
+                SİL
+              </button>
 
             </div>
 
 
-            <!-- TARİH -->
-
-            <div class="field">
-
-              <label>
-                TARİH
-              </label>
-
-              <input
-                data-news-date="${index}"
-                value="${esc(news.date)}"
-                placeholder="10 Ağustos 2026"
-              >
-
-            </div>
+            <div class="form-grid">
 
 
-            <!-- ETİKET -->
+              <div class="field full">
 
-            <div class="field">
+                <label>
+                  BAŞLIK
+                </label>
 
-              <label>
-                ETİKET
-              </label>
-
-              <input
-                data-news-tag="${index}"
-                value="${esc(news.tag)}"
-                placeholder="Kulüp"
-              >
-
-            </div>
-
-
-            <!-- GÖRSEL -->
-
-            <div class="field full">
-
-              <label>
-                GÖRSEL YOLU
-              </label>
-
-              <input
-                data-news-image="${index}"
-                value="${esc(news.image)}"
-                placeholder="assets/news/haber1.jpg"
-              >
-
-              <div class="news-content-help">
-
-                Örnek:
-                assets/news/haber1.jpg
-
-                veya internetteki doğrudan görsel adresi.
+                <input
+                  data-news-title="${index}"
+                  value="${esc(news.title)}"
+                  placeholder="Haber başlığı"
+                >
 
               </div>
 
-            </div>
 
+              <div class="field">
 
-            <!-- DETAY İÇERİĞİ -->
+                <label>
+                  TARİH
+                </label>
 
-            <div class="field full">
-
-              <label>
-                HABER DETAYI
-              </label>
-
-              <textarea
-                data-news-content="${index}"
-                placeholder="Haberin detayını buraya yaz..."
-              >${esc(news.content || "")}</textarea>
-
-              <div class="news-content-help">
-
-                Buraya yazdığın içerik
-                haber.html sayfasında
-                haberin altında gösterilir.
-
-                Paragraflar arasında boş satır
-                bırakırsan ayrı paragraf olarak görünür.
+                <input
+                  data-news-date="${index}"
+                  value="${esc(news.date)}"
+                  placeholder="10 Ağustos 2026"
+                >
 
               </div>
 
-            </div>
 
+              <div class="field">
+
+                <label>
+                  ETİKET
+                </label>
+
+                <input
+                  data-news-tag="${index}"
+                  value="${esc(news.tag)}"
+                  placeholder="Kulüp"
+                >
+
+              </div>
+
+
+              <div class="field full">
+
+                <label>
+                  GÖRSEL YOLU
+                </label>
+
+                <input
+                  data-news-image="${index}"
+                  value="${esc(news.image)}"
+                  placeholder="assets/news/haber-1.jpg"
+                >
+
+                <div class="news-content-help">
+
+                  Örnek:
+                  assets/news/haber-1.jpg
+
+                  veya internetteki doğrudan
+                  görsel adresi.
+
+                </div>
+
+              </div>
+
+
+              <div class="field full">
+
+                <label>
+                  HABER DETAYI
+                </label>
+
+                <textarea
+                  data-news-content="${index}"
+                  placeholder="Haberin detayını buraya yaz..."
+                >${esc(news.content || "")}</textarea>
+
+
+                <div class="news-content-help">
+
+                  Buraya yazdığın içerik
+                  haber.html sayfasında
+                  haberin altında gösterilir.
+
+                  Paragraflar arasında boş satır
+                  bırakırsan ayrı paragraf olarak
+                  görünür.
+
+                </div>
+
+              </div>
+
+
+            </div>
 
           </div>
 
-        </div>
+          `;
 
-        `;
-
-      })
+        }
+      )
       .join("");
 
-
-  /* SİL */
 
   document
     .querySelectorAll(
@@ -1465,6 +1712,7 @@ function renderNews(){
                 button.dataset.deleteNews
               );
 
+
             if(
               !confirm(
                 "Bu haberi silmek istediğine emin misin?"
@@ -1475,10 +1723,12 @@ function renderNews(){
 
             }
 
+
             data.news.splice(
               index,
               1
             );
+
 
             saveData();
 
@@ -1532,6 +1782,7 @@ document
 
       renderNews();
 
+
       document
         .getElementById("news")
         .scrollIntoView({
@@ -1557,8 +1808,6 @@ document
       }
 
 
-      /* BAŞLIK */
-
       document
         .querySelectorAll(
           "[data-news-title]"
@@ -1571,6 +1820,7 @@ document
                 input.dataset.newsTitle
               );
 
+
             if(data.news[index]){
 
               data.news[index].title =
@@ -1581,8 +1831,6 @@ document
           }
         );
 
-
-      /* TARİH */
 
       document
         .querySelectorAll(
@@ -1596,6 +1844,7 @@ document
                 input.dataset.newsDate
               );
 
+
             if(data.news[index]){
 
               data.news[index].date =
@@ -1606,8 +1855,6 @@ document
           }
         );
 
-
-      /* ETİKET */
 
       document
         .querySelectorAll(
@@ -1621,6 +1868,7 @@ document
                 input.dataset.newsTag
               );
 
+
             if(data.news[index]){
 
               data.news[index].tag =
@@ -1631,8 +1879,6 @@ document
           }
         );
 
-
-      /* GÖRSEL */
 
       document
         .querySelectorAll(
@@ -1646,6 +1892,7 @@ document
                 input.dataset.newsImage
               );
 
+
             if(data.news[index]){
 
               data.news[index].image =
@@ -1656,8 +1903,6 @@ document
           }
         );
 
-
-      /* DETAY İÇERİĞİ */
 
       document
         .querySelectorAll(
@@ -1671,6 +1916,7 @@ document
                 input.dataset.newsContent
               );
 
+
             if(data.news[index]){
 
               data.news[index].content =
@@ -1682,11 +1928,15 @@ document
         );
 
 
-      saveData();
+      if(
+        saveData()
+      ){
 
-      message(
-        "newsMessage"
-      );
+        message(
+          "newsMessage"
+        );
+
+      }
 
     }
   );
@@ -1718,7 +1968,9 @@ function renderFixtures(){
     editor.innerHTML = `
 
       <div class="empty">
+
         Henüz fikstür bulunmuyor.
+
       </div>
 
     `;
@@ -1731,94 +1983,105 @@ function renderFixtures(){
   editor.innerHTML =
 
     data.fixtures
-      .map(function(match,index){
+      .map(
+        function(match,index){
 
-        return `
+          match =
+            match || {};
 
-        <div class="edit-item">
 
-          <div class="edit-item-head">
+          return `
 
-            <strong>
-              MAÇ ${index + 1}
-            </strong>
+          <div class="edit-item">
 
-            <button
-              class="delete-btn"
-              data-delete-fixture="${index}"
-            >
-              SİL
-            </button>
+            <div class="edit-item-head">
+
+              <strong>
+                MAÇ ${index + 1}
+              </strong>
+
+
+              <button
+                class="delete-btn"
+                data-delete-fixture="${index}"
+              >
+                SİL
+              </button>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+              <div class="field">
+
+                <label>
+                  TARİH
+                </label>
+
+                <input
+                  data-fixture-date="${index}"
+                  value="${esc(match.date)}"
+                  placeholder="01 Eyl"
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  SAAT
+                </label>
+
+                <input
+                  data-fixture-time="${index}"
+                  value="${esc(match.time)}"
+                  placeholder="19:00"
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  EV SAHİBİ
+                </label>
+
+                <input
+                  data-fixture-home="${index}"
+                  value="${esc(match.home)}"
+                  placeholder="Kuğulu Park Rangers"
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  DEPLASMAN
+                </label>
+
+                <input
+                  data-fixture-away="${index}"
+                  value="${esc(match.away)}"
+                  placeholder="Rakip"
+                >
+
+              </div>
+
+
+            </div>
 
           </div>
 
+          `;
 
-          <div class="form-grid">
-
-
-            <div class="field">
-
-              <label>
-                TARİH
-              </label>
-
-              <input
-                data-fixture-date="${index}"
-                value="${esc(match.date)}"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                SAAT
-              </label>
-
-              <input
-                data-fixture-time="${index}"
-                value="${esc(match.time)}"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                EV SAHİBİ
-              </label>
-
-              <input
-                data-fixture-home="${index}"
-                value="${esc(match.home)}"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                DEPLASMAN
-              </label>
-
-              <input
-                data-fixture-away="${index}"
-                value="${esc(match.away)}"
-              >
-
-            </div>
-
-
-          </div>
-
-        </div>
-
-        `;
-
-      })
+        }
+      )
       .join("");
 
 
@@ -1838,10 +2101,23 @@ function renderFixtures(){
                 button.dataset.deleteFixture
               );
 
+
+            if(
+              !confirm(
+                "Bu maçı silmek istediğine emin misin?"
+              )
+            ){
+
+              return;
+
+            }
+
+
             data.fixtures.splice(
               index,
               1
             );
+
 
             saveData();
 
@@ -1888,6 +2164,8 @@ document
       });
 
 
+      saveData();
+
       renderFixtures();
 
     }
@@ -1907,12 +2185,18 @@ document
         .forEach(
           function(input){
 
-            data.fixtures[
+            const index =
               Number(
                 input.dataset.fixtureDate
-              )
-            ].date =
-              input.value;
+              );
+
+
+            if(data.fixtures[index]){
+
+              data.fixtures[index].date =
+                input.value;
+
+            }
 
           }
         );
@@ -1925,12 +2209,18 @@ document
         .forEach(
           function(input){
 
-            data.fixtures[
+            const index =
               Number(
                 input.dataset.fixtureTime
-              )
-            ].time =
-              input.value;
+              );
+
+
+            if(data.fixtures[index]){
+
+              data.fixtures[index].time =
+                input.value;
+
+            }
 
           }
         );
@@ -1943,12 +2233,18 @@ document
         .forEach(
           function(input){
 
-            data.fixtures[
+            const index =
               Number(
                 input.dataset.fixtureHome
-              )
-            ].home =
-              input.value;
+              );
+
+
+            if(data.fixtures[index]){
+
+              data.fixtures[index].home =
+                input.value;
+
+            }
 
           }
         );
@@ -1961,22 +2257,32 @@ document
         .forEach(
           function(input){
 
-            data.fixtures[
+            const index =
               Number(
                 input.dataset.fixtureAway
-              )
-            ].away =
-              input.value;
+              );
+
+
+            if(data.fixtures[index]){
+
+              data.fixtures[index].away =
+                input.value;
+
+            }
 
           }
         );
 
 
-      saveData();
+      if(
+        saveData()
+      ){
 
-      message(
-        "fixtureMessage"
-      );
+        message(
+          "fixtureMessage"
+        );
+
+      }
 
     }
   );
@@ -2021,7 +2327,9 @@ function renderPlayers(){
     editor.innerHTML = `
 
       <div class="empty">
+
         Henüz oyuncu bulunmuyor.
+
       </div>
 
     `;
@@ -2034,116 +2342,128 @@ function renderPlayers(){
   editor.innerHTML =
 
     data.players
-      .map(function(player,index){
+      .map(
+        function(player,index){
 
-        return `
+          player =
+            player || {};
 
-        <div class="edit-item">
 
-          <div class="edit-item-head">
+          return `
 
-            <strong>
-              OYUNCU ${index + 1}
-            </strong>
+          <div class="edit-item">
 
-            <button
-              class="delete-btn"
-              data-delete-player="${index}"
-            >
-              SİL
-            </button>
+            <div class="edit-item-head">
+
+              <strong>
+                OYUNCU ${index + 1}
+              </strong>
+
+
+              <button
+                class="delete-btn"
+                data-delete-player="${index}"
+              >
+                SİL
+              </button>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+              <div class="field">
+
+                <label>
+                  FORMA NUMARASI
+                </label>
+
+                <input
+                  data-player-number="${index}"
+                  value="${esc(player.number)}"
+                  placeholder="00"
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  OYUNCU ADI
+                </label>
+
+                <input
+                  data-player-name="${index}"
+                  value="${esc(player.name)}"
+                  placeholder="Oyuncu adı"
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  MEVKİ
+                </label>
+
+                <select
+                  data-player-position="${index}"
+                >
+
+                  ${positions
+                    .map(
+                      function(position){
+
+                        return `
+
+                          <option
+                            value="${esc(position)}"
+                            ${
+                              player.position === position
+                              ? "selected"
+                              : ""
+                            }
+                          >
+                            ${esc(position)}
+                          </option>
+
+                        `;
+
+                      }
+                    )
+                    .join("")}
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  GÖRSEL YOLU
+                </label>
+
+                <input
+                  data-player-image="${index}"
+                  value="${esc(player.image)}"
+                  placeholder="assets/players/oyuncu.jpg"
+                >
+
+              </div>
+
+
+            </div>
 
           </div>
 
+          `;
 
-          <div class="form-grid">
-
-
-            <div class="field">
-
-              <label>
-                FORMA NUMARASI
-              </label>
-
-              <input
-                data-player-number="${index}"
-                value="${esc(player.number)}"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                OYUNCU ADI
-              </label>
-
-              <input
-                data-player-name="${index}"
-                value="${esc(player.name)}"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                MEVKİ
-              </label>
-
-              <select
-                data-player-position="${index}"
-              >
-
-                ${positions
-                  .map(function(position){
-
-                    return `
-
-                      <option
-                        value="${esc(position)}"
-                        ${
-                          player.position === position
-                          ? "selected"
-                          : ""
-                        }
-                      >
-                        ${esc(position)}
-                      </option>
-
-                    `;
-
-                  })
-                  .join("")}
-
-              </select>
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                GÖRSEL YOLU
-              </label>
-
-              <input
-                data-player-image="${index}"
-                value="${esc(player.image)}"
-              >
-
-            </div>
-
-
-          </div>
-
-        </div>
-
-        `;
-
-      })
+        }
+      )
       .join("");
 
 
@@ -2163,10 +2483,23 @@ function renderPlayers(){
                 button.dataset.deletePlayer
               );
 
+
+            if(
+              !confirm(
+                "Bu oyuncuyu silmek istediğine emin misin?"
+              )
+            ){
+
+              return;
+
+            }
+
+
             data.players.splice(
               index,
               1
             );
+
 
             saveData();
 
@@ -2198,16 +2531,22 @@ document
 
       data.players.push({
 
-        number:"00",
+        number:
+          "00",
 
-        name:"Yeni Oyuncu",
+        name:
+          "Yeni Oyuncu",
 
-        position:"Forvet",
+        position:
+          "Forvet",
 
-        image:""
+        image:
+          ""
 
       });
 
+
+      saveData();
 
       renderPlayers();
 
@@ -2228,12 +2567,18 @@ document
         .forEach(
           function(input){
 
-            data.players[
+            const index =
               Number(
                 input.dataset.playerNumber
-              )
-            ].number =
-              input.value;
+              );
+
+
+            if(data.players[index]){
+
+              data.players[index].number =
+                input.value;
+
+            }
 
           }
         );
@@ -2246,12 +2591,18 @@ document
         .forEach(
           function(input){
 
-            data.players[
+            const index =
               Number(
                 input.dataset.playerName
-              )
-            ].name =
-              input.value;
+              );
+
+
+            if(data.players[index]){
+
+              data.players[index].name =
+                input.value;
+
+            }
 
           }
         );
@@ -2264,12 +2615,18 @@ document
         .forEach(
           function(input){
 
-            data.players[
+            const index =
               Number(
                 input.dataset.playerPosition
-              )
-            ].position =
-              input.value;
+              );
+
+
+            if(data.players[index]){
+
+              data.players[index].position =
+                input.value;
+
+            }
 
           }
         );
@@ -2282,22 +2639,32 @@ document
         .forEach(
           function(input){
 
-            data.players[
+            const index =
               Number(
                 input.dataset.playerImage
-              )
-            ].image =
-              input.value;
+              );
+
+
+            if(data.players[index]){
+
+              data.players[index].image =
+                input.value;
+
+            }
 
           }
         );
 
 
-      saveData();
+      if(
+        saveData()
+      ){
 
-      message(
-        "playerMessage"
-      );
+        message(
+          "playerMessage"
+        );
+
+      }
 
     }
   );
@@ -2310,7 +2677,9 @@ document
 function renderAchievements(){
 
   if(
-    !Array.isArray(data.achievements)
+    !Array.isArray(
+      data.achievements
+    )
   ){
 
     data.achievements = [];
@@ -2324,12 +2693,16 @@ function renderAchievements(){
     );
 
 
-  if(!data.achievements.length){
+  if(
+    !data.achievements.length
+  ){
 
     editor.innerHTML = `
 
       <div class="empty">
+
         Henüz başarı bulunmuyor.
+
       </div>
 
     `;
@@ -2342,52 +2715,64 @@ function renderAchievements(){
   editor.innerHTML =
 
     data.achievements
-      .map(function(achievement,index){
+      .map(
+        function(achievement,index){
 
-        const value =
-          typeof achievement === "string"
-            ? achievement
-            : achievement.title || "";
+          const value =
+
+            typeof achievement === "string"
+
+              ? achievement
+
+              : (
+                  achievement &&
+                  achievement.title
+                    ? achievement.title
+                    : ""
+                );
 
 
-        return `
+          return `
 
-        <div class="edit-item">
+          <div class="edit-item">
 
-          <div class="edit-item-head">
+            <div class="edit-item-head">
 
-            <strong>
-              BAŞARI ${index + 1}
-            </strong>
+              <strong>
+                BAŞARI ${index + 1}
+              </strong>
 
-            <button
-              class="delete-btn"
-              data-delete-achievement="${index}"
-            >
-              SİL
-            </button>
+
+              <button
+                class="delete-btn"
+                data-delete-achievement="${index}"
+              >
+                SİL
+              </button>
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                BAŞARI
+              </label>
+
+              <input
+                data-achievement="${index}"
+                value="${esc(value)}"
+                placeholder="Yeni başarı"
+              >
+
+            </div>
 
           </div>
 
+          `;
 
-          <div class="field">
-
-            <label>
-              BAŞARI
-            </label>
-
-            <input
-              data-achievement="${index}"
-              value="${esc(value)}"
-            >
-
-          </div>
-
-        </div>
-
-        `;
-
-      })
+        }
+      )
       .join("");
 
 
@@ -2407,10 +2792,23 @@ function renderAchievements(){
                 button.dataset.deleteAchievement
               );
 
+
+            if(
+              !confirm(
+                "Bu başarıyı silmek istediğine emin misin?"
+              )
+            ){
+
+              return;
+
+            }
+
+
             data.achievements.splice(
               index,
               1
             );
+
 
             saveData();
 
@@ -2447,6 +2845,8 @@ document
       );
 
 
+      saveData();
+
       renderAchievements();
 
     }
@@ -2466,22 +2866,34 @@ document
         .forEach(
           function(input){
 
-            data.achievements[
+            const index =
               Number(
                 input.dataset.achievement
-              )
-            ] =
-              input.value;
+              );
+
+
+            if(
+              data.achievements[index] !== undefined
+            ){
+
+              data.achievements[index] =
+                input.value;
+
+            }
 
           }
         );
 
 
-      saveData();
+      if(
+        saveData()
+      ){
 
-      message(
-        "achievementMessage"
-      );
+        message(
+          "achievementMessage"
+        );
+
+      }
 
     }
   );
@@ -2496,6 +2908,15 @@ document
   .addEventListener(
     "click",
     function(){
+
+      /*
+        Dışa aktarırken de KPR sistemindeki
+        güncel veri kullanılıyor.
+      */
+
+      data =
+        getData();
+
 
       const json =
         JSON.stringify(
@@ -2526,7 +2947,9 @@ document
         );
 
 
-      a.href = url;
+      a.href =
+        url;
+
 
       a.download =
         "kugulu-park-rangers-yedek.json";
@@ -2559,7 +2982,12 @@ document
       const file =
         event.target.files[0];
 
-      if(!file) return;
+
+      if(!file){
+
+        return;
+
+      }
 
 
       const reader =
@@ -2577,21 +3005,48 @@ document
               );
 
 
+            if(
+              !imported ||
+              typeof imported !== "object"
+            ){
+
+              throw new Error(
+                "Geçersiz veri"
+              );
+
+            }
+
+
             data =
               imported;
 
 
-            saveData();
+            /*
+              İçe aktarılan veri doğrudan
+              KPR sistemine kaydediliyor.
+            */
 
-            renderAll();
+            if(
+              saveData()
+            ){
+
+              renderAll();
 
 
-            alert(
-              "Yedek başarıyla yüklendi."
+              alert(
+                "Yedek başarıyla yüklendi."
+              );
+
+            }
+
+          }
+
+          catch(error){
+
+            console.error(
+              error
             );
 
-
-          }catch(error){
 
             alert(
               "Bu dosya geçerli bir JSON yedeği değil."
@@ -2605,6 +3060,10 @@ document
       reader.readAsText(
         file
       );
+
+
+      event.target.value =
+        "";
 
     }
   );
@@ -2627,14 +3086,11 @@ document
       }
 
 
-      localStorage.removeItem(
-        DATA_KEY
-      );
-
-
       data =
-        getBaseData();
+        getDefaultData();
 
+
+      saveData();
 
       renderAll();
 
@@ -2662,7 +3118,7 @@ function renderAll(){
 
 
 /* =====================================================
-   OTURUM
+   OTURUM KONTROLÜ
 ===================================================== */
 
 if(
@@ -2674,15 +3130,20 @@ if(
   loginScreen.style.display =
     "none";
 
+
   panel.style.display =
     "block";
 
-  renderAll();
 
-}else{
+  loadAndRender();
+
+}
+
+else{
 
   loginScreen.style.display =
     "flex";
+
 
   panel.style.display =
     "none";

@@ -2,6 +2,7 @@ const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_LVYwwiYI4Dn9pV2fZA7spw_2U84dC59";
 
+
 window.DEFAULT_KPR_DATA = {
   club: {
     name: "Kuğulu Park Rangers",
@@ -116,7 +117,7 @@ window.DEFAULT_KPR_DATA = {
 
 
 /* =====================================================
-   SUPABASE REST API
+   SUPABASE API
 ===================================================== */
 
 async function supabaseRequest(method = "GET", body = null) {
@@ -126,6 +127,7 @@ async function supabaseRequest(method = "GET", body = null) {
 
     headers: {
       "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY,
       "Content-Type": "application/json"
     }
   };
@@ -135,7 +137,7 @@ async function supabaseRequest(method = "GET", body = null) {
   }
 
   const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/site_data?id=eq.1`,
+    SUPABASE_URL + "/rest/v1/site_data?id=eq.1",
     options
   );
 
@@ -144,7 +146,10 @@ async function supabaseRequest(method = "GET", body = null) {
     const errorText = await response.text();
 
     throw new Error(
-      `Supabase ${response.status}: ${errorText}`
+      "Supabase " +
+      response.status +
+      ": " +
+      errorText
     );
   }
 
@@ -153,7 +158,59 @@ async function supabaseRequest(method = "GET", body = null) {
 
 
 /* =====================================================
-   KPR DATA
+   VERİ YAPISI
+===================================================== */
+
+function normalizeKPRData(remoteData) {
+
+  const defaults = JSON.parse(
+    JSON.stringify(window.DEFAULT_KPR_DATA)
+  );
+
+  if (!remoteData || typeof remoteData !== "object") {
+    return defaults;
+  }
+
+  return {
+    ...defaults,
+
+    ...remoteData,
+
+    club: {
+      ...defaults.club,
+      ...(remoteData.club || {})
+    },
+
+    achievements:
+      Array.isArray(remoteData.achievements)
+        ? remoteData.achievements
+        : defaults.achievements,
+
+    players:
+      Array.isArray(remoteData.players)
+        ? remoteData.players
+        : defaults.players,
+
+    news:
+      Array.isArray(remoteData.news)
+        ? remoteData.news
+        : defaults.news,
+
+    fixtures:
+      Array.isArray(remoteData.fixtures)
+        ? remoteData.fixtures
+        : defaults.fixtures,
+
+    league: {
+      ...defaults.league,
+      ...(remoteData.league || {})
+    }
+  };
+}
+
+
+/* =====================================================
+   KPR
 ===================================================== */
 
 window.KPR = {
@@ -162,9 +219,11 @@ window.KPR = {
 
     try {
 
-      const response = await supabaseRequest("GET");
+      const response =
+        await supabaseRequest("GET");
 
-      const rows = await response.json();
+      const rows =
+        await response.json();
 
       if (
         Array.isArray(rows) &&
@@ -172,8 +231,14 @@ window.KPR = {
         rows[0].data
       ) {
 
-        return rows[0].data;
+        return normalizeKPRData(
+          rows[0].data
+        );
       }
+
+      console.warn(
+        "Supabase'te veri bulunamadı. Varsayılan veri kullanılıyor."
+      );
 
     } catch (error) {
 
@@ -181,6 +246,7 @@ window.KPR = {
         "Supabase verisi okunamadı:",
         error
       );
+
     }
 
     return JSON.parse(
@@ -195,15 +261,15 @@ window.KPR = {
 
     try {
 
-      const response = await supabaseRequest(
-        "PATCH",
-        {
-          data: data
-        }
-      );
+      const response =
+        await supabaseRequest(
+          "PATCH",
+          {
+            data: data
+          }
+        );
 
       if (!response.ok) {
-
         throw new Error(
           "Supabase kayıt hatası."
         );

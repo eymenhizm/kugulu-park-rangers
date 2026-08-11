@@ -1,21 +1,8 @@
-/* =====================================================
-   KUĞULU PARK RANGERS
-   SUPABASE DATA SYSTEM
-===================================================== */
+const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
 
-const SUPABASE_URL =
-  "https://htzttiwasmvxibpzsdrw.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_LVYwwiYI4Dn9pV2fZA7spw_2U84dC59";
-
-
-/* =====================================================
-   VARSAYILAN VERİ
-===================================================== */
+const SUPABASE_KEY = "sb_publishable_LVYwwiYI4Dn9pV2fZA7spw_2U84dC59";
 
 window.DEFAULT_KPR_DATA = {
-
   club: {
     name: "Kuğulu Park Rangers",
     founded: "2020",
@@ -125,135 +112,68 @@ window.DEFAULT_KPR_DATA = {
   league: {
     status: "Yakında eklenecek"
   }
-
 };
 
 
 /* =====================================================
-   YARDIMCI
+   SUPABASE REST API
 ===================================================== */
 
-function cloneKPR(value) {
-
-  return JSON.parse(
-    JSON.stringify(value)
-  );
-
-}
-
-
-/* =====================================================
-   SUPABASE İSTEK
-===================================================== */
-
-async function supabaseRequest(
-  method = "GET",
-  body = null
-) {
+async function supabaseRequest(method = "GET", body = null) {
 
   const options = {
-
     method: method,
 
     headers: {
-
       "apikey": SUPABASE_KEY,
-
-      "Authorization":
-        `Bearer ${SUPABASE_KEY}`,
-
-      "Content-Type":
-        "application/json",
-
-      "Accept":
-        "application/json",
-
-      "Prefer":
-        "return=representation"
-
+      "Content-Type": "application/json"
     }
-
   };
 
-
   if (body !== null) {
-
-    options.body =
-      JSON.stringify(body);
-
+    options.body = JSON.stringify(body);
   }
 
-
-  const response =
-    await fetch(
-      `${SUPABASE_URL}/rest/v1/site_data?id=eq.1`,
-      options
-    );
-
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/site_data?id=eq.1`,
+    options
+  );
 
   if (!response.ok) {
 
-    const errorText =
-      await response.text();
+    const errorText = await response.text();
 
     throw new Error(
       `Supabase ${response.status}: ${errorText}`
     );
-
   }
 
-
   return response;
-
 }
 
 
 /* =====================================================
-   KPR DATA API
+   KPR DATA
 ===================================================== */
 
 window.KPR = {
-
-
-  /* ===================================================
-     VERİ OKU
-  =================================================== */
 
   async load() {
 
     try {
 
-      const response =
-        await supabaseRequest("GET");
+      const response = await supabaseRequest("GET");
 
-
-      const rows =
-        await response.json();
-
+      const rows = await response.json();
 
       if (
         Array.isArray(rows) &&
         rows.length > 0 &&
-        rows[0] &&
         rows[0].data
       ) {
 
-        console.log(
-          "✓ KPR verileri Supabase'den yüklendi."
-        );
-
-
-        return cloneKPR(
-          rows[0].data
-        );
-
+        return rows[0].data;
       }
-
-
-      console.warn(
-        "Supabase'de site_data kaydı bulunamadı. Varsayılan veriler kullanılıyor."
-      );
-
 
     } catch (error) {
 
@@ -261,66 +181,39 @@ window.KPR = {
         "Supabase verisi okunamadı:",
         error
       );
-
     }
 
-
-    return cloneKPR(
-      window.DEFAULT_KPR_DATA
+    return JSON.parse(
+      JSON.stringify(
+        window.DEFAULT_KPR_DATA
+      )
     );
-
   },
 
-
-  /* ===================================================
-     VERİ KAYDET
-  =================================================== */
 
   async save(data) {
 
     try {
 
-      if (!data) {
-
-        throw new Error(
-          "Kaydedilecek veri bulunamadı."
-        );
-
-      }
-
-
-      const response =
-        await supabaseRequest(
-          "PATCH",
-          {
-            data: data
-          }
-        );
-
-
-      const rows =
-        await response.json();
-
-
-      if (
-        !Array.isArray(rows) ||
-        rows.length === 0
-      ) {
-
-        throw new Error(
-          "Supabase güncelleme yaptı ancak kayıt döndürmedi."
-        );
-
-      }
-
-
-      console.log(
-        "✓ KPR verileri Supabase'e kaydedildi."
+      const response = await supabaseRequest(
+        "PATCH",
+        {
+          data: data
+        }
       );
 
+      if (!response.ok) {
+
+        throw new Error(
+          "Supabase kayıt hatası."
+        );
+      }
+
+      console.log(
+        "✓ Supabase'e kaydedildi."
+      );
 
       return true;
-
 
     } catch (error) {
 
@@ -329,44 +222,8 @@ window.KPR = {
         error
       );
 
-
       return false;
-
     }
-
   }
 
 };
-
-
-/* =====================================================
-   TEST
-===================================================== */
-
-window.KPR.test =
-  async function() {
-
-    try {
-
-      const data =
-        await window.KPR.load();
-
-      console.log(
-        "✓ Supabase bağlantısı çalışıyor.",
-        data
-      );
-
-      return true;
-
-    } catch (error) {
-
-      console.error(
-        "✕ Supabase bağlantı testi başarısız:",
-        error
-      );
-
-      return false;
-
-    }
-
-  };

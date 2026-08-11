@@ -145,33 +145,17 @@
   <div class="wrap copyright">© 2026 Kuğulu Park Rangers. Tüm hakları saklıdır.</div>
 </footer>
 
+<!-- SİTENİN ORİJİNAL JS DOSYASI (Tüm materyal ve görselleri geri getirir) -->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+<!-- SUPABASE CANLI SENKRONİZASYON SCRIPT'İ -->
 <script>
 "use strict";
 
 const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0enR0aXdhc212eGlicHpzZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzE1NTMsImV4cCI6MjEwMjAwNzU1M30.UfKM4Vxt3SBaGCFtweIsvTSOkzn7tNalMtsSYdchrgk";
 const TABLE_NAME = "site_data";
-
-// Panelden veri henüz girilmediğinde alanların boş görünmemesi için şablon veriler
-const DEFAULT_DATA = {
-  club: { name: "KUĞULU PARK RANGERS", founded: "2020", sponsor: "PICASSO KURS", email: "ergun060691@gmail.com", phone: "0552 103 8970" },
-  news: [
-    { title: "Yeni Sezon Hazırlıkları Başladı", tag: "Duyuru", date: "11 AĞUSTOS 2026", content: "Takımımız Golden Lig yeni sezon hazırlıklarına tüm hızıyla devam ediyor.", image: "assets/logo/logo.png" }
-  ],
-  fixtures: [
-    { home: "Kuğulu Park Rangers", away: "Rakip Takım", date: "BU HAFTA", time: "21:00" }
-  ],
-  players: [
-    { name: "Kadro Hazırlanıyor", position: "Kaleci", number: "1", image: "assets/logo/logo.png" },
-    { name: "Kadro Hazırlanıyor", position: "Defans", number: "4", image: "assets/logo/logo.png" },
-    { name: "Kadro Hazırlanıyor", position: "Orta Saha", number: "10", image: "assets/logo/logo.png" },
-    { name: "Kadro Hazırlanıyor", position: "Forvet", number: "9", image: "assets/logo/logo.png" }
-  ],
-  achievements: [
-    { title: "Golden Lig Mücadelesi" }
-  ],
-  league: { status: "YAKINDA EKLENECEK" }
-};
 
 function escapeHTML(v){
   return String(v ?? "").replace(/[&<>"']/g, c => ({
@@ -192,33 +176,20 @@ async function fetchSiteData(){
     if(!res.ok) throw new Error("Veri okunamadı");
     const rows = await res.json();
     if(Array.isArray(rows) && rows.length > 0 && rows[0].data){
-      renderSite(rows[0].data);
-    } else {
-      renderSite(DEFAULT_DATA);
+      renderSiteData(rows[0].data);
     }
   } catch(e) {
     console.error("Supabase canlı veri yükleme hatası:", e);
-    renderSite(DEFAULT_DATA);
   }
 }
 
-function renderSite(rawDbData){
-  // Veritabanından gelen veri ile varsayılan şablonu birleştir
-  const data = {
-    club: { ...DEFAULT_DATA.club, ...(rawDbData.club || {}) },
-    news: (Array.isArray(rawDbData.news) && rawDbData.news.length > 0) ? rawDbData.news : DEFAULT_DATA.news,
-    fixtures: (Array.isArray(rawDbData.fixtures) && rawDbData.fixtures.length > 0) ? rawDbData.fixtures : DEFAULT_DATA.fixtures,
-    players: (Array.isArray(rawDbData.players) && rawDbData.players.length > 0) ? rawDbData.players : DEFAULT_DATA.players,
-    achievements: (Array.isArray(rawDbData.achievements) && rawDbData.achievements.length > 0) ? rawDbData.achievements : DEFAULT_DATA.achievements,
-    league: rawDbData.league || DEFAULT_DATA.league
-  };
+function renderSiteData(data){
+  if(!data) return;
 
-  // 1. KULÜP BİLGİLERİ & İLETİŞİM
+  // 1. KULÜP VE İLETİŞİM BİLGİLERİ (Panelde değişirse anında günceller)
   if(data.club){
     const c = data.club;
-    if(c.name){
-      document.querySelectorAll("#club-hero-name, #ticker-name, #footer-club-name").forEach(el => el.textContent = c.name);
-    }
+    if(c.name) document.querySelectorAll("#club-hero-name, #ticker-name, #footer-club-name").forEach(el => el.textContent = c.name);
     if(c.founded){
       document.querySelectorAll("#club-hero-founded, #club-stamp-founded, #ticker-founded").forEach(el => el.textContent = c.founded);
       const fEl = document.getElementById("footer-club-founded");
@@ -242,97 +213,76 @@ function renderSite(rawDbData){
     }
   }
 
-  // 2. HABERLER
-  const newsBox = document.getElementById("news-grid");
-  if(newsBox){
-    newsBox.innerHTML = data.news.map(n => `
-      <article class="news-card">
-        <div class="news-img"><img src="${escapeHTML(n.image || 'assets/logo/logo.png')}" alt="${escapeHTML(n.title)}"></div>
-        <div class="news-body">
-          <div class="news-meta"><span>${escapeHTML(n.tag || 'Kulüp')}</span><time>${escapeHTML(n.date || '')}</time></div>
-          <h3>${escapeHTML(n.title)}</h3>
-          ${n.content ? `<p>${escapeHTML(n.content)}</p>` : ''}
-        </div>
-      </article>
-    `).join("");
-  }
-
-  // 3. FİKSTÜR
-  const fixBox = document.getElementById("fixtures");
-  if(fixBox){
-    fixBox.innerHTML = data.fixtures.map(f => {
-      const home = typeof f === "string" ? f : (f.home || "Kuğulu Park Rangers");
-      const away = typeof f === "string" ? "" : (f.away || "");
-      const date = typeof f === "object" ? (f.date || "") : "";
-      const time = typeof f === "object" ? (f.time || "") : "";
-      return `
-        <div class="fixture-card">
-          <div class="fixture-date"><span>${escapeHTML(date)}</span><b>${escapeHTML(time)}</b></div>
-          <div class="fixture-teams">
-            <span class="team">${escapeHTML(home)}</span>
-            <span class="vs">VS</span>
-            <span class="team">${escapeHTML(away)}</span>
+  // 2. HABERLER (Panelde dolu haber varsa günceller)
+  if(Array.isArray(data.news) && data.news.length > 0){
+    const newsBox = document.getElementById("news-grid");
+    if(newsBox){
+      newsBox.innerHTML = data.news.map(n => `
+        <article class="news-card">
+          <div class="news-img"><img src="${escapeHTML(n.image || 'assets/logo/logo.png')}" alt="${escapeHTML(n.title)}"></div>
+          <div class="news-body">
+            <div class="news-meta"><span>${escapeHTML(n.tag || 'Kulüp')}</span><time>${escapeHTML(n.date || '')}</time></div>
+            <h3>${escapeHTML(n.title)}</h3>
+            ${n.content ? `<p>${escapeHTML(n.content)}</p>` : ''}
           </div>
-        </div>
-      `;
-    }).join("");
+        </article>
+      `).join("");
+    }
   }
 
-  // 4. OYUNCULAR
-  const squadBox = document.getElementById("squads");
-  if(squadBox){
-    const posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
-    let html = "";
-    posOrder.forEach(pos => {
-      const group = data.players.filter(p => p.position === pos);
-      if(group.length > 0){
-        html += `<div class="squad-group"><h3 class="squad-pos-title">${escapeHTML(pos.toUpperCase())}</h3><div class="team-grid">`;
-        html += group.map(p => `
-          <div class="player-card">
-            <div class="player-img"><img src="${escapeHTML(p.image || 'assets/logo/logo.png')}" alt="${escapeHTML(p.name)}"></div>
-            <div class="player-info">
-              <span class="player-num">${escapeHTML(p.number || '')}</span>
-              <strong>${escapeHTML(p.name)}</strong>
-              <small>${escapeHTML(p.position)}</small>
+  // 3. FİKSTÜR (Panelde dolu fikstür varsa günceller)
+  if(Array.isArray(data.fixtures) && data.fixtures.length > 0){
+    const fixBox = document.getElementById("fixtures");
+    if(fixBox){
+      fixBox.innerHTML = data.fixtures.map(f => {
+        const home = typeof f === "string" ? f : (f.home || "Kuğulu Park Rangers");
+        const away = typeof f === "string" ? "" : (f.away || "");
+        const date = typeof f === "object" ? (f.date || "") : "";
+        const time = typeof f === "object" ? (f.time || "") : "";
+        return `
+          <div class="fixture-card">
+            <div class="fixture-date"><span>${escapeHTML(date)}</span><b>${escapeHTML(time)}</b></div>
+            <div class="fixture-teams">
+              <span class="team">${escapeHTML(home)}</span>
+              <span class="vs">VS</span>
+              <span class="team">${escapeHTML(away)}</span>
             </div>
           </div>
-        `).join("");
-        html += `</div></div>`;
-      }
-    });
-    squadBox.innerHTML = html;
+        `;
+      }).join("");
+    }
   }
 
-  // 5. BAŞARILAR
-  const achBox = document.getElementById("achievements");
-  if(achBox){
-    achBox.innerHTML = data.achievements.map(a => {
-      const title = typeof a === "string" ? a : (a.title || "");
-      return `
-        <div class="achievement-card">
-          <div class="achievement-icon">🏆</div>
-          <h4>${escapeHTML(title)}</h4>
-        </div>
-      `;
-    }).join("");
-  }
-
-  // 6. LİG STATUS
-  if(data.league && data.league.status){
-    const lEl = document.getElementById("league-status");
-    if(lEl) lEl.textContent = data.league.status;
+  // 4. OYUNCULAR (Panelde oyuncu eklendiyse günceller)
+  if(Array.isArray(data.players) && data.players.length > 0){
+    const squadBox = document.getElementById("squads");
+    if(squadBox){
+      const posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
+      let html = "";
+      posOrder.forEach(pos => {
+        const group = data.players.filter(p => p.position === pos);
+        if(group.length > 0){
+          html += `<div class="squad-group"><h3 class="squad-pos-title">${escapeHTML(pos.toUpperCase())}</h3><div class="team-grid">`;
+          html += group.map(p => `
+            <div class="player-card">
+              <div class="player-img"><img src="${escapeHTML(p.image || 'assets/logo/logo.png')}" alt="${escapeHTML(p.name)}"></div>
+              <div class="player-info">
+                <span class="player-num">${escapeHTML(p.number || '')}</span>
+                <strong>${escapeHTML(p.name)}</strong>
+                <small>${escapeHTML(p.position)}</small>
+              </div>
+            </div>
+          `).join("");
+          html += `</div></div>`;
+        }
+      });
+      squadBox.innerHTML = html;
+    }
   }
 }
 
-const menuToggle = document.querySelector(".menu-toggle");
-const menu = document.querySelector(".menu");
-if(menuToggle && menu){
-  menuToggle.addEventListener("click", () => {
-    menu.classList.toggle("active");
-  });
-}
-
-fetchSiteData();
+// Sayfa yüklendiğinde Supabase'den canlı veriyi çek
+window.addEventListener("DOMContentLoaded", fetchSiteData);
 </script>
 </body>
 </html>

@@ -145,144 +145,98 @@
   <div class="wrap copyright">© 2026 Kuğulu Park Rangers. Tüm hakları saklıdır.</div>
 </footer>
 
-<!-- SİTENİN ORİJİNAL JS DOSYASI (Tüm materyal ve görselleri geri getirir) -->
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 
-<!-- SUPABASE CANLI SENKRONİZASYON SCRIPT'İ -->
 <script>
-"use strict";
+(function() {
+  "use strict";
 
-const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0enR0aXdhc212eGlicHpzZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzE1NTMsImV4cCI6MjEwMjAwNzU1M30.UfKM4Vxt3SBaGCFtweIsvTSOkzn7tNalMtsSYdchrgk";
-const TABLE_NAME = "site_data";
+  var SB_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
+  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0enR0aXdhc212eGlicHpzZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzE1NTMsImV4cCI6MjEwMjAwNzU1M30.UfKM4Vxt3SBaGCFtweIsvTSOkzn7tNalMtsSYdchrgk";
 
-function escapeHTML(v){
-  return String(v ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
-  }[c]));
-}
-
-async function fetchSiteData(){
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.1&select=*`, {
-      cache: "no-store",
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + SUPABASE_KEY,
-        "Accept": "application/json"
-      }
+  function esc(v){
+    return String(v ?? "").replace(/[&<>"']/g, function(c) {
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[c];
     });
-    if(!res.ok) throw new Error("Veri okunamadı");
-    const rows = await res.json();
-    if(Array.isArray(rows) && rows.length > 0 && rows[0].data){
-      renderSiteData(rows[0].data);
-    }
-  } catch(e) {
-    console.error("Supabase canlı veri yükleme hatası:", e);
   }
-}
 
-function renderSiteData(data){
-  if(!data) return;
-
-  // 1. KULÜP VE İLETİŞİM BİLGİLERİ (Panelde değişirse anında günceller)
-  if(data.club){
-    const c = data.club;
-    if(c.name) document.querySelectorAll("#club-hero-name, #ticker-name, #footer-club-name").forEach(el => el.textContent = c.name);
-    if(c.founded){
-      document.querySelectorAll("#club-hero-founded, #club-stamp-founded, #ticker-founded").forEach(el => el.textContent = c.founded);
-      const fEl = document.getElementById("footer-club-founded");
-      if(fEl) fEl.textContent = `${c.founded}'den bu yana.`;
-    }
-    if(c.sponsor){
-      const sEl = document.getElementById("sponsor-name");
-      if(sEl) sEl.textContent = c.sponsor;
-    }
-    if(c.email){
-      document.querySelectorAll("#contact-email, #footer-email").forEach(el => {
-        el.textContent = c.email;
-        el.href = "mailto:" + c.email;
+  async function syncLive() {
+    try {
+      var res = await fetch(SB_URL + "/rest/v1/site_data?id=eq.1&select=*", {
+        cache: "no-store",
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Accept": "application/json" }
       });
-    }
-    if(c.phone){
-      document.querySelectorAll("#contact-phone, #footer-phone").forEach(el => {
-        el.textContent = c.phone;
-        el.href = "tel:" + c.phone.replace(/\s+/g, "");
-      });
-    }
-  }
+      if(!res.ok) return;
+      var rows = await res.json();
+      if(!Array.isArray(rows) || !rows.length || !rows[0].data) return;
+      var data = rows[0].data;
 
-  // 2. HABERLER (Panelde dolu haber varsa günceller)
-  if(Array.isArray(data.news) && data.news.length > 0){
-    const newsBox = document.getElementById("news-grid");
-    if(newsBox){
-      newsBox.innerHTML = data.news.map(n => `
-        <article class="news-card">
-          <div class="news-img"><img src="${escapeHTML(n.image || 'assets/logo/logo.png')}" alt="${escapeHTML(n.title)}"></div>
-          <div class="news-body">
-            <div class="news-meta"><span>${escapeHTML(n.tag || 'Kulüp')}</span><time>${escapeHTML(n.date || '')}</time></div>
-            <h3>${escapeHTML(n.title)}</h3>
-            ${n.content ? `<p>${escapeHTML(n.content)}</p>` : ''}
-          </div>
-        </article>
-      `).join("");
-    }
-  }
-
-  // 3. FİKSTÜR (Panelde dolu fikstür varsa günceller)
-  if(Array.isArray(data.fixtures) && data.fixtures.length > 0){
-    const fixBox = document.getElementById("fixtures");
-    if(fixBox){
-      fixBox.innerHTML = data.fixtures.map(f => {
-        const home = typeof f === "string" ? f : (f.home || "Kuğulu Park Rangers");
-        const away = typeof f === "string" ? "" : (f.away || "");
-        const date = typeof f === "object" ? (f.date || "") : "";
-        const time = typeof f === "object" ? (f.time || "") : "";
-        return `
-          <div class="fixture-card">
-            <div class="fixture-date"><span>${escapeHTML(date)}</span><b>${escapeHTML(time)}</b></div>
-            <div class="fixture-teams">
-              <span class="team">${escapeHTML(home)}</span>
-              <span class="vs">VS</span>
-              <span class="team">${escapeHTML(away)}</span>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-  }
-
-  // 4. OYUNCULAR (Panelde oyuncu eklendiyse günceller)
-  if(Array.isArray(data.players) && data.players.length > 0){
-    const squadBox = document.getElementById("squads");
-    if(squadBox){
-      const posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
-      let html = "";
-      posOrder.forEach(pos => {
-        const group = data.players.filter(p => p.position === pos);
-        if(group.length > 0){
-          html += `<div class="squad-group"><h3 class="squad-pos-title">${escapeHTML(pos.toUpperCase())}</h3><div class="team-grid">`;
-          html += group.map(p => `
-            <div class="player-card">
-              <div class="player-img"><img src="${escapeHTML(p.image || 'assets/logo/logo.png')}" alt="${escapeHTML(p.name)}"></div>
-              <div class="player-info">
-                <span class="player-num">${escapeHTML(p.number || '')}</span>
-                <strong>${escapeHTML(p.name)}</strong>
-                <small>${escapeHTML(p.position)}</small>
-              </div>
-            </div>
-          `).join("");
-          html += `</div></div>`;
+      if(data.club){
+        var c = data.club;
+        if(c.name) document.querySelectorAll("#club-hero-name, #ticker-name, #footer-club-name").forEach(function(el){ el.textContent = c.name; });
+        if(c.founded){
+          document.querySelectorAll("#club-hero-founded, #club-stamp-founded, #ticker-founded").forEach(function(el){ el.textContent = c.founded; });
+          var fEl = document.getElementById("footer-club-founded");
+          if(fEl) fEl.textContent = c.founded + "'den bu yana.";
         }
-      });
-      squadBox.innerHTML = html;
-    }
-  }
-}
+        if(c.sponsor){
+          var sEl = document.getElementById("sponsor-name");
+          if(sEl) sEl.textContent = c.sponsor;
+        }
+        if(c.email){
+          document.querySelectorAll("#contact-email, #footer-email").forEach(function(el){ el.textContent = c.email; el.href = "mailto:" + c.email; });
+        }
+        if(c.phone){
+          document.querySelectorAll("#contact-phone, #footer-phone").forEach(function(el){ el.textContent = c.phone; el.href = "tel:" + c.phone.replace(/\s+/g, ""); });
+        }
+      }
 
-// Sayfa yüklendiğinde Supabase'den canlı veriyi çek
-window.addEventListener("DOMContentLoaded", fetchSiteData);
+      if(Array.isArray(data.news) && data.news.length > 0){
+        var newsBox = document.getElementById("news-grid");
+        if(newsBox){
+          newsBox.innerHTML = data.news.map(function(n){
+            return '<article class="news-card"><div class="news-img"><img src="' + esc(n.image || 'assets/logo/logo.png') + '" alt="' + esc(n.title) + '"></div><div class="news-body"><div class="news-meta"><span>' + esc(n.tag || 'Kulüp') + '</span><time>' + esc(n.date || '') + '</time></div>3<h3>' + esc(n.title) + '</h3>' + (n.content ? '<p>' + esc(n.content) + '</p>' : '') + '</div></article>';
+          }).join("");
+        }
+      }
+
+      if(Array.isArray(data.fixtures) && data.fixtures.length > 0){
+        var fixBox = document.getElementById("fixtures");
+        if(fixBox){
+          fixBox.innerHTML = data.fixtures.map(function(f){
+            var home = typeof f === "string" ? f : (f.home || "Kuğulu Park Rangers");
+            var away = typeof f === "string" ? "" : (f.away || "");
+            var date = typeof f === "object" ? (f.date || "") : "";
+            var time = typeof f === "object" ? (f.time || "") : "";
+            return '<div class="fixture-card"><div class="fixture-date"><span>' + esc(date) + '</span><b>' + esc(time) + '</b></div><div class="fixture-teams"><span class="team">' + esc(home) + '</span><span class="vs">VS</span><span class="team">' + esc(away) + '</span></div></div>';
+          }).join("");
+        }
+      }
+
+      if(Array.isArray(data.players) && data.players.length > 0){
+        var squadBox = document.getElementById("squads");
+        if(squadBox){
+          var posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
+          var html = "";
+          posOrder.forEach(function(pos){
+            var group = data.players.filter(function(p){ return p.position === pos; });
+            if(group.length > 0){
+              html += '<div class="squad-group"><h3 class="squad-pos-title">' + esc(pos.toUpperCase()) + '</h3><div class="team-grid">';
+              html += group.map(function(p){
+                return '<div class="player-card"><div class="player-img"><img src="' + esc(p.image || 'assets/logo/logo.png') + '" alt="' + esc(p.name) + '"></div><div class="player-info"><span class="player-num">' + esc(p.number || '') + '</span><strong>' + esc(p.name) + '</strong><small>' + esc(p.position) + '</small></div></div>';
+              }).join("");
+              html += '</div></div>';
+            }
+          });
+          squadBox.innerHTML = html;
+        }
+      }
+    } catch(e) {}
+  }
+
+  window.addEventListener("DOMContentLoaded", syncLive);
+})();
 </script>
 </body>
 </html>

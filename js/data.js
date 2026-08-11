@@ -1,5 +1,4 @@
 const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_LVYwwiYI4Dn9pV2fZA7spw_2U84dC59";
 
 
@@ -117,10 +116,78 @@ window.DEFAULT_KPR_DATA = {
 
 
 /* =====================================================
-   SUPABASE API
+   VERİYİ BİRLEŞTİR
 ===================================================== */
 
-async function supabaseRequest(method = "GET", body = null) {
+function mergeKPRData(remote) {
+
+  const defaults =
+    JSON.parse(
+      JSON.stringify(
+        window.DEFAULT_KPR_DATA
+      )
+    );
+
+  if (!remote || typeof remote !== "object") {
+    return defaults;
+  }
+
+  const result = {
+    ...defaults,
+    ...remote
+  };
+
+  result.club = {
+    ...defaults.club,
+    ...(remote.club || {})
+  };
+
+  /*
+    Supabase'de yanlışlıkla boş array kaydedildiyse
+    varsayılan içerikleri koru.
+  */
+
+  result.players =
+    Array.isArray(remote.players) &&
+    remote.players.length > 0
+      ? remote.players
+      : defaults.players;
+
+  result.news =
+    Array.isArray(remote.news) &&
+    remote.news.length > 0
+      ? remote.news
+      : defaults.news;
+
+  result.fixtures =
+    Array.isArray(remote.fixtures) &&
+    remote.fixtures.length > 0
+      ? remote.fixtures
+      : defaults.fixtures;
+
+  result.achievements =
+    Array.isArray(remote.achievements) &&
+    remote.achievements.length > 0
+      ? remote.achievements
+      : defaults.achievements;
+
+  result.league = {
+    ...defaults.league,
+    ...(remote.league || {})
+  };
+
+  return result;
+}
+
+
+/* =====================================================
+   SUPABASE REQUEST
+===================================================== */
+
+async function supabaseRequest(
+  method = "GET",
+  body = null
+) {
 
   const options = {
     method: method,
@@ -128,7 +195,8 @@ async function supabaseRequest(method = "GET", body = null) {
     headers: {
       "apikey": SUPABASE_KEY,
       "Authorization": "Bearer " + SUPABASE_KEY,
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Prefer": "return=representation"
     }
   };
 
@@ -137,13 +205,15 @@ async function supabaseRequest(method = "GET", body = null) {
   }
 
   const response = await fetch(
-    SUPABASE_URL + "/rest/v1/site_data?id=eq.1",
+    SUPABASE_URL +
+    "/rest/v1/site_data?id=eq.1",
     options
   );
 
   if (!response.ok) {
 
-    const errorText = await response.text();
+    const errorText =
+      await response.text();
 
     throw new Error(
       "Supabase " +
@@ -158,59 +228,7 @@ async function supabaseRequest(method = "GET", body = null) {
 
 
 /* =====================================================
-   VERİ YAPISI
-===================================================== */
-
-function normalizeKPRData(remoteData) {
-
-  const defaults = JSON.parse(
-    JSON.stringify(window.DEFAULT_KPR_DATA)
-  );
-
-  if (!remoteData || typeof remoteData !== "object") {
-    return defaults;
-  }
-
-  return {
-    ...defaults,
-
-    ...remoteData,
-
-    club: {
-      ...defaults.club,
-      ...(remoteData.club || {})
-    },
-
-    achievements:
-      Array.isArray(remoteData.achievements)
-        ? remoteData.achievements
-        : defaults.achievements,
-
-    players:
-      Array.isArray(remoteData.players)
-        ? remoteData.players
-        : defaults.players,
-
-    news:
-      Array.isArray(remoteData.news)
-        ? remoteData.news
-        : defaults.news,
-
-    fixtures:
-      Array.isArray(remoteData.fixtures)
-        ? remoteData.fixtures
-        : defaults.fixtures,
-
-    league: {
-      ...defaults.league,
-      ...(remoteData.league || {})
-    }
-  };
-}
-
-
-/* =====================================================
-   KPR
+   KPR DATA API
 ===================================================== */
 
 window.KPR = {
@@ -231,13 +249,13 @@ window.KPR = {
         rows[0].data
       ) {
 
-        return normalizeKPRData(
+        return mergeKPRData(
           rows[0].data
         );
       }
 
       console.warn(
-        "Supabase'te veri bulunamadı. Varsayılan veri kullanılıyor."
+        "Supabase kaydı bulunamadı. Varsayılan veri kullanılıyor."
       );
 
     } catch (error) {

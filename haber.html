@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Haber | Kuğulu Park Rangers</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.news-detail-page {
+  min-height: 100vh;
+  background: #08090b;
+  color: #fff;
+}
+
+.news-detail {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 24px 100px;
+}
+
+.news-back {
+  display: inline-block;
+  margin-bottom: 35px;
+  color: #ff7a00;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.news-detail-tag {
+  color: #ff7a00;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+}
+
+.news-detail h1 {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(42px, 7vw, 82px);
+  line-height: .95;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.news-detail-date {
+  color: #999;
+  margin-bottom: 35px;
+}
+
+.news-detail-image {
+  width: 100%;
+  max-height: 620px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 40px;
+}
+
+.news-detail-content {
+  max-width: 850px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #d5d5d5;
+}
+
+.news-detail-content p {
+  margin: 0 0 22px;
+}
+
+.news-error {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.news-error h1 {
+  font-size: 48px;
+}
+
+</style>
+</head>
+
+<body class="news-detail-page">
+
+<header class="site-header">
+
+  <div class="utility">
+    <div class="wrap utility-in">
+      <span>RESMİ KULÜP SİTESİ</span>
+      <span>2026 / 27 SEZONU</span>
+    </div>
+  </div>
+
+  <nav class="nav wrap">
+
+    <a class="brand" href="index.html">
+
+      <img src="assets/logo/logo.png" alt="Kuğulu Park Rangers">
+
+      <span>
+        KUĞULU PARK RANGERS
+        <small>GOLDEN LİG</small>
+      </span>
+
+    </a>
+
+    <div class="menu">
+
+      <a href="index.html#haberler">HABERLER</a>
+      <a href="index.html#takvim">FİKSTÜR</a>
+      <a href="index.html#takim">TAKIM</a>
+      <a href="index.html#basarilar">BAŞARILAR</a>
+      <a href="index.html#lig">LİG</a>
+      <a href="index.html#magaza">MAĞAZA</a>
+      <a href="index.html#iletisim">İLETİŞİM</a>
+
+    </div>
+
+  </nav>
+
+</header>
+
+
+<main>
+
+  <article class="news-detail" id="news-detail">
+
+    <a class="news-back" href="index.html#haberler">
+      ← HABERLERE DÖN
+    </a>
+
+    <div id="news-content">
+      Haber yükleniyor...
+    </div>
+
+  </article>
+
+</main>
+
+
+<footer>
+
+  <div class="wrap copyright">
+    © 2026 Kuğulu Park Rangers. Tüm hakları saklıdır.
+  </div>
+
+</footer>
+
+
+<script src="js/data.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const data = KPR.load();
+
+  const params = new URLSearchParams(window.location.search);
+
+  const id = Number(params.get("id"));
+
+  const container = document.querySelector("#news-content");
+
+  const esc = s =>
+    String(s ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[c]));
+
+
+  /* Haber mevcut mu? */
+
+  if (
+    !Number.isInteger(id) ||
+    !data.news ||
+    !data.news[id]
+  ) {
+
+    container.innerHTML = `
+
+      <div class="news-error">
+
+        <h1>HABER BULUNAMADI</h1>
+
+        <p>
+          Aradığın haber mevcut değil veya kaldırılmış olabilir.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const news = data.news[id];
+
+
+  /* Sayfa başlığı */
+
+  document.title =
+    `${news.title} | Kuğulu Park Rangers`;
+
+
+  /* Haber içeriği */
+
+  const content =
+    news.content ||
+    news.text ||
+    "Bu haber için henüz detaylı içerik eklenmemiş.";
+
+
+  container.innerHTML = `
+
+    <div class="news-detail-tag">
+      ${esc(news.tag || "HABER")}
+    </div>
+
+    <h1>
+      ${esc(news.title)}
+    </h1>
+
+    <div class="news-detail-date">
+      ${esc(news.date || "")}
+    </div>
+
+    ${
+      news.image
+        ? `
+          <img
+            class="news-detail-image"
+            src="${esc(news.image)}"
+            alt="${esc(news.title)}"
+          >
+        `
+        : ""
+    }
+
+    <div class="news-detail-content">
+
+      ${String(content)
+        .split(/\n\s*\n/)
+        .map(p => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`)
+        .join("")
+      }
+
+    </div>
+
+  `;
+
+});
+
+</script>
+
+</body>
+</html>

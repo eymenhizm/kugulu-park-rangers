@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-  const data = KPR.load();
+  const data = await KPR.load();
 
   const $ = selector => document.querySelector(selector);
 

@@ -1,191 +1,322 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   const data = KPR.load();
 
-  const $ = s => document.querySelector(s);
+  const $ = selector => document.querySelector(selector);
 
-  const esc = s =>
-    String(s ?? "").replace(/[&<>"']/g, c => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    }[c]));
+  const esc = value =>
+    String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char]));
 
-  /* =========================
+
+  /* =====================================================
      HABERLER
-  ========================= */
+     ===================================================== */
 
   const news = $("#news-grid");
 
   if (news) {
+
+    news.innerHTML = "";
+
     data.news.forEach((n, i) => {
 
-      news.insertAdjacentHTML(
-        "beforeend",
+      news.insertAdjacentHTML("beforeend", `
 
-        `<article class="news-card ${i === 0 ? "featured" : ""}" data-news-id="${i}">
+        <article
+          class="news-card ${i === 0 ? "featured" : ""}"
+          data-news-id="${i}"
+          role="link"
+          tabindex="0"
+          style="cursor:pointer"
+        >
+
           <div class="news-img">
-            ${n.image ? `<img src="${esc(n.image)}" alt="${esc(n.title)}">` : ""}
+
+            ${
+              n.image
+                ? `
+                  <img
+                    src="${esc(n.image)}"
+                    alt="${esc(n.title)}"
+                    loading="lazy"
+                  >
+                `
+                : ""
+            }
+
           </div>
 
           <div class="news-overlay">
-            <span>${esc(n.tag || "HABER")}</span>
-            <h3>${esc(n.title)}</h3>
-            <b>DEVAMI →</b>
+
+            <span>
+              ${esc(n.tag || "HABER")}
+            </span>
+
+            <h3>
+              ${esc(n.title)}
+            </h3>
+
+            <b>
+              DEVAMI →
+            </b>
+
           </div>
-        </article>`
-      );
+
+        </article>
+
+      `);
+
     });
 
-    /* Habere tıklayınca detay sayfasına git */
-    document.querySelectorAll(".news-card").forEach(card => {
 
-      card.addEventListener("click", () => {
+    /*
+      Haber kartlarına tıklama
+
+      Örnek:
+      İlk haber  → haber.html?id=0
+      İkinci     → haber.html?id=1
+      Üçüncü     → haber.html?id=2
+    */
+
+    document.querySelectorAll("[data-news-id]").forEach(card => {
+
+      const openNews = () => {
 
         const id = card.dataset.newsId;
 
         window.location.href = `haber.html?id=${id}`;
 
+      };
+
+
+      card.addEventListener("click", openNews);
+
+
+      /*
+        Klavyeden Enter ile de açılabilsin
+      */
+
+      card.addEventListener("keydown", event => {
+
+        if (event.key === "Enter" || event.key === " ") {
+
+          event.preventDefault();
+
+          openNews();
+
+        }
+
       });
 
     });
+
   }
 
 
-  /* =========================
+  /* =====================================================
      FİKSTÜR
-  ========================= */
+     ===================================================== */
 
   const fixtures = $("#fixtures");
 
   if (fixtures) {
 
+    fixtures.innerHTML = "";
+
     data.fixtures.forEach((f, i) => {
 
-      fixtures.insertAdjacentHTML(
-        "beforeend",
+      fixtures.insertAdjacentHTML("beforeend", `
 
-        `<article class="fixture">
-          <span>MAÇ ${i + 1}</span>
+        <article class="fixture">
+
+          <span>
+            MAÇ ${i + 1}
+          </span>
 
           <div class="fixture-teams">
-            <b>KUĞULU PARK<br>RANGERS</b>
-            <i>VS</i>
-            <b>${esc(f)}</b>
+
+            <b>
+              KUĞULU PARK<br>
+              RANGERS
+            </b>
+
+            <i>
+              VS
+            </i>
+
+            <b>
+              ${esc(f)}
+            </b>
+
           </div>
 
-          <small>Fikstür bilgisi</small>
-        </article>`
-      );
+          <small>
+            Fikstür bilgisi
+          </small>
+
+        </article>
+
+      `);
 
     });
 
   }
 
 
-  /* =========================
-     TAKIM
-  ========================= */
+  /* =====================================================
+     TAKIM / OYUNCULAR
+     ===================================================== */
 
   const squads = $("#squads");
 
   if (squads) {
 
-    ["Kaleci", "Defans", "Orta Saha", "Forvet"].forEach(pos => {
+    squads.innerHTML = "";
 
-      const list = data.players.filter(
-        p => p.position === pos
-      );
+    const positions = [
+      "Kaleci",
+      "Defans",
+      "Orta Saha",
+      "Forvet"
+    ];
+
+    positions.forEach(pos => {
+
+      const list =
+        data.players.filter(
+          player => player.position === pos
+        );
 
       if (!list.length) return;
 
-      squads.insertAdjacentHTML(
-        "beforeend",
 
-        `<div class="squad-block">
+      squads.insertAdjacentHTML("beforeend", `
+
+        <div class="squad-block">
 
           <div class="squad-head">
-            <h3>${pos.toUpperCase()}</h3>
-            <span>${list.length} OYUNCU</span>
+
+            <h3>
+              ${esc(pos.toUpperCase())}
+            </h3>
+
+            <span>
+              ${list.length} OYUNCU
+            </span>
+
           </div>
+
 
           <div class="player-grid">
 
-            ${list.map(p => `
+            ${
+              list.map(player => `
 
-              <article class="player">
+                <article class="player">
 
-                <div class="player-photo">
-                  ${
-                    p.image
-                      ? `<img src="${esc(p.image)}" alt="${esc(p.name)}">`
-                      : ""
-                  }
-                </div>
+                  <div class="player-photo">
 
-                <div class="player-info">
-                  <span>${esc(p.position)}</span>
-                  <h4>${esc(p.name)}</h4>
-                </div>
+                    ${
+                      player.image
+                        ? `
+                          <img
+                            src="${esc(player.image)}"
+                            alt="${esc(player.name)}"
+                            loading="lazy"
+                          >
+                        `
+                        : ""
+                    }
 
-              </article>
+                  </div>
 
-            `).join("")}
+
+                  <div class="player-info">
+
+                    <span>
+                      ${esc(player.position)}
+                    </span>
+
+                    <h4>
+                      ${esc(player.name)}
+                    </h4>
+
+                  </div>
+
+                </article>
+
+              `).join("")
+            }
 
           </div>
 
-        </div>`
-      );
+        </div>
+
+      `);
 
     });
 
   }
 
 
-  /* =========================
+  /* =====================================================
      BAŞARILAR
-  ========================= */
+     ===================================================== */
 
   const achievements = $("#achievements");
 
   if (achievements) {
 
-    achievements.innerHTML = data.achievements
-      .map(
-        (a, i) => `
+    achievements.innerHTML =
+      data.achievements.map((achievement, i) => `
 
         <article class="achievement">
 
-          <span>0${i + 1}</span>
+          <span>
+            ${String(i + 1).padStart(2, "0")}
+          </span>
 
           <div>
-            <b>BAŞARI</b>
-            <h3>${esc(a)}</h3>
+
+            <b>
+              BAŞARI
+            </b>
+
+            <h3>
+              ${esc(achievement)}
+            </h3>
+
           </div>
 
         </article>
 
-      `
-      )
-      .join("");
+      `).join("");
 
   }
 
 
-  /* =========================
+  /* =====================================================
      MOBİL MENÜ
-  ========================= */
+     ===================================================== */
 
-  $(".menu-toggle")?.addEventListener(
-    "click",
-    () => {
+  const menuButton = $(".menu-toggle");
 
-      document
-        .querySelector(".menu")
-        .classList.toggle("open");
+  const menu = document.querySelector(".menu");
 
-    }
-  );
+  if (menuButton && menu) {
+
+    menuButton.addEventListener("click", () => {
+
+      menu.classList.toggle("open");
+
+    });
+
+  }
 
 });

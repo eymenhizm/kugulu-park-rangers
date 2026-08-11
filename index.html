@@ -160,7 +160,8 @@ function escapeHTML(v){
 
 async function fetchSiteData(){
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.1&select=*&_t=${Date.now()}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.1&select=*`, {
+      cache: "no-store",
       headers: {
         "apikey": SUPABASE_KEY,
         "Authorization": "Bearer " + SUPABASE_KEY,
@@ -178,7 +179,6 @@ async function fetchSiteData(){
 }
 
 function renderSite(data){
-  // 1. KULÜP BİLGİLERİ & İLETİŞİM
   if(data.club){
     const c = data.club;
     if(c.name){
@@ -207,7 +207,6 @@ function renderSite(data){
     }
   }
 
-  // 2. HABERLER
   const newsBox = document.getElementById("news-grid");
   if(newsBox && Array.isArray(data.news) && data.news.length > 0){
     newsBox.innerHTML = data.news.map(n => `
@@ -222,7 +221,6 @@ function renderSite(data){
     `).join("");
   }
 
-  // 3. FİKSTÜR
   const fixBox = document.getElementById("fixtures");
   if(fixBox && Array.isArray(data.fixtures) && data.fixtures.length > 0){
     fixBox.innerHTML = data.fixtures.map(f => {
@@ -243,7 +241,6 @@ function renderSite(data){
     }).join("");
   }
 
-  // 4. OYUNCULAR
   const squadBox = document.getElementById("squads");
   if(squadBox && Array.isArray(data.players) && data.players.length > 0){
     const posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
@@ -268,7 +265,6 @@ function renderSite(data){
     squadBox.innerHTML = html;
   }
 
-  // 5. BAŞARILAR
   const achBox = document.getElementById("achievements");
   if(achBox && Array.isArray(data.achievements) && data.achievements.length > 0){
     achBox.innerHTML = data.achievements.map(a => {
@@ -282,14 +278,12 @@ function renderSite(data){
     }).join("");
   }
 
-  // 6. LİG STATUS
   if(data.league && data.league.status){
     const lEl = document.getElementById("league-status");
     if(lEl) lEl.textContent = data.league.status;
   }
 }
 
-// Mobil Menü
 const menuToggle = document.querySelector(".menu-toggle");
 const menu = document.querySelector(".menu");
 if(menuToggle && menu){

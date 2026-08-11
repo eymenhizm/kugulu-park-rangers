@@ -152,6 +152,27 @@ const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0enR0aXdhc212eGlicHpzZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzE1NTMsImV4cCI6MjEwMjAwNzU1M30.UfKM4Vxt3SBaGCFtweIsvTSOkzn7tNalMtsSYdchrgk";
 const TABLE_NAME = "site_data";
 
+// Panelden veri henüz girilmediğinde alanların boş görünmemesi için şablon veriler
+const DEFAULT_DATA = {
+  club: { name: "KUĞULU PARK RANGERS", founded: "2020", sponsor: "PICASSO KURS", email: "ergun060691@gmail.com", phone: "0552 103 8970" },
+  news: [
+    { title: "Yeni Sezon Hazırlıkları Başladı", tag: "Duyuru", date: "11 AĞUSTOS 2026", content: "Takımımız Golden Lig yeni sezon hazırlıklarına tüm hızıyla devam ediyor.", image: "assets/logo/logo.png" }
+  ],
+  fixtures: [
+    { home: "Kuğulu Park Rangers", away: "Rakip Takım", date: "BU HAFTA", time: "21:00" }
+  ],
+  players: [
+    { name: "Kadro Hazırlanıyor", position: "Kaleci", number: "1", image: "assets/logo/logo.png" },
+    { name: "Kadro Hazırlanıyor", position: "Defans", number: "4", image: "assets/logo/logo.png" },
+    { name: "Kadro Hazırlanıyor", position: "Orta Saha", number: "10", image: "assets/logo/logo.png" },
+    { name: "Kadro Hazırlanıyor", position: "Forvet", number: "9", image: "assets/logo/logo.png" }
+  ],
+  achievements: [
+    { title: "Golden Lig Mücadelesi" }
+  ],
+  league: { status: "YAKINDA EKLENECEK" }
+};
+
 function escapeHTML(v){
   return String(v ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
@@ -172,13 +193,27 @@ async function fetchSiteData(){
     const rows = await res.json();
     if(Array.isArray(rows) && rows.length > 0 && rows[0].data){
       renderSite(rows[0].data);
+    } else {
+      renderSite(DEFAULT_DATA);
     }
   } catch(e) {
     console.error("Supabase canlı veri yükleme hatası:", e);
+    renderSite(DEFAULT_DATA);
   }
 }
 
-function renderSite(data){
+function renderSite(rawDbData){
+  // Veritabanından gelen veri ile varsayılan şablonu birleştir
+  const data = {
+    club: { ...DEFAULT_DATA.club, ...(rawDbData.club || {}) },
+    news: (Array.isArray(rawDbData.news) && rawDbData.news.length > 0) ? rawDbData.news : DEFAULT_DATA.news,
+    fixtures: (Array.isArray(rawDbData.fixtures) && rawDbData.fixtures.length > 0) ? rawDbData.fixtures : DEFAULT_DATA.fixtures,
+    players: (Array.isArray(rawDbData.players) && rawDbData.players.length > 0) ? rawDbData.players : DEFAULT_DATA.players,
+    achievements: (Array.isArray(rawDbData.achievements) && rawDbData.achievements.length > 0) ? rawDbData.achievements : DEFAULT_DATA.achievements,
+    league: rawDbData.league || DEFAULT_DATA.league
+  };
+
+  // 1. KULÜP BİLGİLERİ & İLETİŞİM
   if(data.club){
     const c = data.club;
     if(c.name){
@@ -207,8 +242,9 @@ function renderSite(data){
     }
   }
 
+  // 2. HABERLER
   const newsBox = document.getElementById("news-grid");
-  if(newsBox && Array.isArray(data.news) && data.news.length > 0){
+  if(newsBox){
     newsBox.innerHTML = data.news.map(n => `
       <article class="news-card">
         <div class="news-img"><img src="${escapeHTML(n.image || 'assets/logo/logo.png')}" alt="${escapeHTML(n.title)}"></div>
@@ -221,8 +257,9 @@ function renderSite(data){
     `).join("");
   }
 
+  // 3. FİKSTÜR
   const fixBox = document.getElementById("fixtures");
-  if(fixBox && Array.isArray(data.fixtures) && data.fixtures.length > 0){
+  if(fixBox){
     fixBox.innerHTML = data.fixtures.map(f => {
       const home = typeof f === "string" ? f : (f.home || "Kuğulu Park Rangers");
       const away = typeof f === "string" ? "" : (f.away || "");
@@ -241,8 +278,9 @@ function renderSite(data){
     }).join("");
   }
 
+  // 4. OYUNCULAR
   const squadBox = document.getElementById("squads");
-  if(squadBox && Array.isArray(data.players) && data.players.length > 0){
+  if(squadBox){
     const posOrder = ["Kaleci", "Defans", "Orta Saha", "Forvet"];
     let html = "";
     posOrder.forEach(pos => {
@@ -265,8 +303,9 @@ function renderSite(data){
     squadBox.innerHTML = html;
   }
 
+  // 5. BAŞARILAR
   const achBox = document.getElementById("achievements");
-  if(achBox && Array.isArray(data.achievements) && data.achievements.length > 0){
+  if(achBox){
     achBox.innerHTML = data.achievements.map(a => {
       const title = typeof a === "string" ? a : (a.title || "");
       return `
@@ -278,6 +317,7 @@ function renderSite(data){
     }).join("");
   }
 
+  // 6. LİG STATUS
   if(data.league && data.league.status){
     const lEl = document.getElementById("league-status");
     if(lEl) lEl.textContent = data.league.status;

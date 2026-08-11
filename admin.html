@@ -3,253 +3,932 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Yönetim Paneli | Kuğulu Park Rangers</title>
 
 <link rel="stylesheet" href="css/style.css">
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#07090b;color:#f5f5f2;font-family:Inter,Arial,sans-serif}
+
+body{
+  margin:0;
+  background:#07090b;
+  color:#f5f5f2;
+  font-family:Inter,Arial,sans-serif
+}
+
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 
-.admin-login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:25px;background:radial-gradient(circle at 80% 20%,rgba(255,101,0,.14),transparent 35%),#07090b}
-.login-box{width:min(430px,100%);padding:42px;background:#101418;border:1px solid #292f34;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.admin-login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(255,101,0,.14),transparent 35%),
+    #07090b
+}
+
+.login-box{
+  width:min(430px,100%);
+  padding:42px;
+  background:#101418;
+  border:1px solid #292f34;
+  box-shadow:0 30px 80px rgba(0,0,0,.5)
+}
+
 .login-logo{text-align:center;margin-bottom:30px}
-.login-logo img{width:90px;height:90px;object-fit:contain}
-.login-logo h1{font-family:"Barlow Condensed",Arial,sans-serif;font-size:38px;margin:15px 0 5px}
-.login-logo span{color:#ff6500;font-size:10px;font-weight:800;letter-spacing:3px}
+
+.login-logo img{
+  width:90px;
+  height:90px;
+  object-fit:contain
+}
+
+.login-logo h1{
+  font-family:"Barlow Condensed",Arial,sans-serif;
+  font-size:38px;
+  margin:15px 0 5px
+}
+
+.login-logo span{
+  color:#ff6500;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:3px
+}
+
 .login-field{margin-bottom:18px}
-.login-field label,.field label{display:block;color:#858b90;font-size:10px;font-weight:800;letter-spacing:2px;margin-bottom:8px}
-.login-field input,.field input,.field select,.field textarea{width:100%;background:#090b0d;border:1px solid #30363b;color:#fff;padding:14px;outline:none;border-radius:0}
-.field textarea{min-height:180px;resize:vertical;line-height:1.6}
-.login-field input:focus,.field input:focus,.field select:focus,.field textarea:focus{border-color:#ff6500}
-.login-btn{width:100%;border:0;background:#ff6500;color:#090a0b;padding:16px;font-weight:900;letter-spacing:1px;margin-top:5px}
-.error{min-height:20px;color:#ff6b35;text-align:center;font-size:12px;margin-top:15px}
+
+.login-field label,
+.field label{
+  display:block;
+  color:#858b90;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:8px
+}
+
+.login-field input,
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  background:#090b0d;
+  border:1px solid #30363b;
+  color:#fff;
+  padding:14px;
+  outline:none;
+  border-radius:0
+}
+
+.field textarea{
+  min-height:180px;
+  resize:vertical;
+  line-height:1.6
+}
+
+.login-field input:focus,
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#ff6500
+}
+
+.login-btn{
+  width:100%;
+  border:0;
+  background:#ff6500;
+  color:#090a0b;
+  padding:16px;
+  font-weight:900;
+  letter-spacing:1px;
+  margin-top:5px
+}
+
+.error{
+  min-height:20px;
+  color:#ff6b35;
+  text-align:center;
+  font-size:12px;
+  margin-top:15px
+}
 
 #panel{display:none}
-.admin-head{position:sticky;top:0;z-index:100;background:rgba(7,9,11,.96);backdrop-filter:blur(15px);border-bottom:1px solid #252b2f}
-.admin-head-inner{width:min(1420px,calc(100% - 40px));min-height:82px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.admin-brand{display:flex;align-items:center;gap:12px}
-.admin-brand img{width:52px;height:52px;object-fit:contain}
-.admin-brand strong{display:block;font-size:14px}
-.admin-brand small{display:block;color:#ff6500;font-size:9px;letter-spacing:2px;margin-top:4px}
-.admin-actions-top{display:flex;gap:10px}
 
-.admin-grid{width:min(1420px,calc(100% - 40px));margin:30px auto;display:grid;grid-template-columns:220px 1fr;gap:30px}
-.admin-side{position:sticky;top:112px;align-self:start;background:#101418;border:1px solid #252b2f;padding:20px}
-.admin-side .kicker{color:#ff6500;font-size:10px;font-weight:900;letter-spacing:3px;margin-bottom:15px}
-.admin-side a{display:block;color:#aaa;font-size:12px;font-weight:800;padding:12px 10px;border-bottom:1px solid #20252a;text-decoration:none}
+.admin-head{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(7,9,11,.96);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid #252b2f
+}
+
+.admin-head-inner{
+  width:min(1420px,calc(100% - 40px));
+  min-height:82px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px
+}
+
+.admin-brand{
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+
+.admin-brand img{
+  width:52px;
+  height:52px;
+  object-fit:contain
+}
+
+.admin-brand strong{
+  display:block;
+  font-size:14px
+}
+
+.admin-brand small{
+  display:block;
+  color:#ff6500;
+  font-size:9px;
+  letter-spacing:2px;
+  margin-top:4px
+}
+
+.admin-actions-top{
+  display:flex;
+  gap:10px
+}
+
+.admin-grid{
+  width:min(1420px,calc(100% - 40px));
+  margin:30px auto;
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:30px
+}
+
+.admin-side{
+  position:sticky;
+  top:112px;
+  align-self:start;
+  background:#101418;
+  border:1px solid #252b2f;
+  padding:20px
+}
+
+.admin-side .kicker{
+  color:#ff6500;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:3px;
+  margin-bottom:15px
+}
+
+.admin-side a{
+  display:block;
+  color:#aaa;
+  font-size:12px;
+  font-weight:800;
+  padding:12px 10px;
+  border-bottom:1px solid #20252a;
+  text-decoration:none
+}
+
 .admin-side a:hover{color:#ff6500}
+
 .admin-main{min-width:0}
-.admin-card{background:#101418;border:1px solid #252b2f;padding:28px;margin-bottom:20px}
-.admin-card h2{font-family:"Barlow Condensed",Arial,sans-serif;font-size:38px;margin:8px 0 25px}
-.kicker{color:#ff6500;font-size:10px;font-weight:900;letter-spacing:3px}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+
+.admin-card{
+  background:#101418;
+  border:1px solid #252b2f;
+  padding:28px;
+  margin-bottom:20px
+}
+
+.admin-card h2{
+  font-family:"Barlow Condensed",Arial,sans-serif;
+  font-size:38px;
+  margin:8px 0 25px
+}
+
+.kicker{
+  color:#ff6500;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:3px
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px
+}
+
 .field{min-width:0}
 .field.full{grid-column:1/-1}
-.edit-item{background:#0a0d0f;border:1px solid #252b2f;padding:18px;margin-bottom:12px}
-.edit-item-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}
-.edit-item-head strong{color:#ff6500;font-size:11px;letter-spacing:2px}
-.delete-btn{background:transparent;border:1px solid #49312a;color:#ff7650;padding:8px 12px;font-size:10px;font-weight:800}
-.delete-btn:hover{background:#ff6500;color:#000}
-.preview-btn{display:inline-block;background:transparent;border:1px solid #363d42;color:#fff;padding:8px 12px;font-size:10px;font-weight:800;text-decoration:none;margin-right:auto}
-.preview-btn:hover{border-color:#ff6500;color:#ff6500}
-.admin-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.btn-admin{border:1px solid #363d42;background:transparent;color:#fff;padding:13px 18px;font-size:10px;font-weight:900;letter-spacing:1px}
-.btn-admin:hover{border-color:#ff6500;color:#ff6500}
-.btn-admin.orange{background:#ff6500;border-color:#ff6500;color:#090a0b}
-.btn-admin.orange:hover{background:#ff7a24}
-.save-message{color:#71d99a;font-size:11px;font-weight:800;min-height:16px;display:flex;align-items:center}
-.notice{padding:16px 18px;border-left:3px solid #ff6500;background:#11161a;color:#a8adb1;font-size:12px;line-height:1.6;margin-bottom:20px}
+
+.edit-item{
+  background:#0a0d0f;
+  border:1px solid #252b2f;
+  padding:18px;
+  margin-bottom:12px
+}
+
+.edit-item-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px
+}
+
+.edit-item-head strong{
+  color:#ff6500;
+  font-size:11px;
+  letter-spacing:2px
+}
+
+.delete-btn{
+  background:transparent;
+  border:1px solid #49312a;
+  color:#ff7650;
+  padding:8px 12px;
+  font-size:10px;
+  font-weight:800
+}
+
+.delete-btn:hover{
+  background:#ff6500;
+  color:#000
+}
+
+.preview-btn{
+  display:inline-block;
+  background:transparent;
+  border:1px solid #363d42;
+  color:#fff;
+  padding:8px 12px;
+  font-size:10px;
+  font-weight:800;
+  text-decoration:none;
+  margin-right:auto
+}
+
+.preview-btn:hover{
+  border-color:#ff6500;
+  color:#ff6500
+}
+
+.admin-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px
+}
+
+.btn-admin{
+  border:1px solid #363d42;
+  background:transparent;
+  color:#fff;
+  padding:13px 18px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px
+}
+
+.btn-admin:hover{
+  border-color:#ff6500;
+  color:#ff6500
+}
+
+.btn-admin.orange{
+  background:#ff6500;
+  border-color:#ff6500;
+  color:#090a0b
+}
+
+.btn-admin.orange:hover{
+  background:#ff7a24
+}
+
+.save-message{
+  color:#71d99a;
+  font-size:11px;
+  font-weight:800;
+  min-height:16px;
+  display:flex;
+  align-items:center
+}
+
+.notice{
+  padding:16px 18px;
+  border-left:3px solid #ff6500;
+  background:#11161a;
+  color:#a8adb1;
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:20px
+}
+
 .notice strong{color:#fff}
-.news-content-help{margin-top:8px;color:#777e84;font-size:10px;line-height:1.5}
-.empty{padding:25px;text-align:center;color:#777e84;border:1px dashed #30363b}
+
+.empty{
+  padding:25px;
+  text-align:center;
+  color:#777e84;
+  border:1px dashed #30363b
+}
+
+.status-box{
+  padding:12px 15px;
+  margin-bottom:15px;
+  background:#090d10;
+  border:1px solid #252b2f;
+  font-size:11px
+}
+
+.status-online{color:#71d99a}
+.status-offline{color:#ff7650}
 
 @media(max-width:800px){
-.admin-grid{grid-template-columns:1fr}
-.admin-side{position:static;display:flex;gap:5px;overflow:auto}
-.admin-side .kicker{display:none}
-.admin-side a{white-space:nowrap;border:0}
-.form-grid{grid-template-columns:1fr}
+
+  .admin-grid{
+    grid-template-columns:1fr
+  }
+
+  .admin-side{
+    position:static;
+    display:flex;
+    gap:5px;
+    overflow:auto
+  }
+
+  .admin-side .kicker{display:none}
+
+  .admin-side a{
+    white-space:nowrap;
+    border:0
+  }
+
+  .form-grid{
+    grid-template-columns:1fr
+  }
+
 }
+
 @media(max-width:520px){
-.admin-head-inner{width:calc(100% - 24px)}
-.admin-grid{width:calc(100% - 24px);margin-top:15px}
-.admin-card{padding:20px}
-.admin-brand strong{font-size:11px}
-.admin-brand img{width:42px;height:42px}
-.admin-actions-top .btn-admin:first-child{display:none}
+
+  .admin-head-inner{
+    width:calc(100% - 24px)
+  }
+
+  .admin-grid{
+    width:calc(100% - 24px);
+    margin-top:15px
+  }
+
+  .admin-card{
+    padding:20px
+  }
+
+  .admin-brand strong{
+    font-size:11px
+  }
+
+  .admin-brand img{
+    width:42px;
+    height:42px
+  }
+
+  .admin-actions-top .btn-admin:first-child{
+    display:none
+  }
+
 }
 </style>
 </head>
 
 <body>
 
+<!-- =====================================================
+     GİRİŞ
+===================================================== -->
+
 <div class="admin-login" id="loginScreen">
-<div class="login-box">
-<div class="login-logo">
-<img src="assets/logo/logo.png" alt="Kuğulu Park Rangers">
-<h1>Yönetim Paneli</h1>
-<span>KUĞULU PARK RANGERS</span>
+
+  <div class="login-box">
+
+    <div class="login-logo">
+
+      <img
+        src="assets/logo/logo.png"
+        alt="Kuğulu Park Rangers"
+      >
+
+      <h1>Yönetim Paneli</h1>
+
+      <span>KUĞULU PARK RANGERS</span>
+
+    </div>
+
+    <div class="login-field">
+
+      <label>KULLANICI ADI</label>
+
+      <input
+        id="username"
+        type="text"
+        autocomplete="username"
+      >
+
+    </div>
+
+    <div class="login-field">
+
+      <label>ŞİFRE</label>
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+      >
+
+    </div>
+
+    <button
+      class="login-btn"
+      id="loginButton"
+    >
+      GİRİŞ YAP
+    </button>
+
+    <div
+      class="error"
+      id="loginError"
+    ></div>
+
+  </div>
+
 </div>
 
-<div class="login-field">
-<label>KULLANICI ADI</label>
-<input id="username" type="text" autocomplete="username">
-</div>
 
-<div class="login-field">
-<label>ŞİFRE</label>
-<input id="password" type="password" autocomplete="current-password">
-</div>
-
-<button class="login-btn" id="loginButton">GİRİŞ YAP</button>
-<div class="error" id="loginError"></div>
-</div>
-</div>
+<!-- =====================================================
+     PANEL
+===================================================== -->
 
 <div id="panel">
 
 <header class="admin-head">
-<div class="admin-head-inner">
 
-<div class="admin-brand">
-<img src="assets/logo/logo.png" alt="Kuğulu Park Rangers">
-<div>
-<strong>KUĞULU PARK RANGERS</strong>
-<small>YÖNETİM PANELİ</small>
-</div>
-</div>
+  <div class="admin-head-inner">
 
-<div class="admin-actions-top">
-<a class="btn-admin" href="index.html">SİTEYE DÖN</a>
-<button class="btn-admin" id="logoutButton">ÇIKIŞ</button>
-</div>
+    <div class="admin-brand">
 
-</div>
+      <img
+        src="assets/logo/logo.png"
+        alt="Kuğulu Park Rangers"
+      >
+
+      <div>
+
+        <strong>KUĞULU PARK RANGERS</strong>
+
+        <small>YÖNETİM PANELİ</small>
+
+      </div>
+
+    </div>
+
+    <div class="admin-actions-top">
+
+      <a
+        class="btn-admin"
+        href="index.html"
+      >
+        SİTEYE DÖN
+      </a>
+
+      <button
+        class="btn-admin"
+        id="logoutButton"
+      >
+        ÇIKIŞ
+      </button>
+
+    </div>
+
+  </div>
+
 </header>
+
 
 <div class="admin-grid">
 
+<!-- =====================================================
+     MENÜ
+===================================================== -->
+
 <aside class="admin-side">
-<div class="kicker">YÖNETİM</div>
-<a href="#club">Kulüp</a>
-<a href="#news">Haberler</a>
-<a href="#fixtures">Fikstür</a>
-<a href="#players">Oyuncular</a>
-<a href="#achievements">Başarılar</a>
-<a href="#backup">Yedek</a>
+
+  <div class="kicker">YÖNETİM</div>
+
+  <a href="#club">Kulüp</a>
+  <a href="#news">Haberler</a>
+  <a href="#fixtures">Fikstür</a>
+  <a href="#players">Oyuncular</a>
+  <a href="#achievements">Başarılar</a>
+  <a href="#backup">Yedek</a>
+
 </aside>
+
+
+<!-- =====================================================
+     ANA PANEL
+===================================================== -->
 
 <main class="admin-main">
 
 <div class="notice">
-<strong>Supabase bağlantısı aktif.</strong>
-Buradaki değişiklikler Supabase veritabanına kaydedilir ve sitenin diğer cihazlarından da görülebilir.
+
+  <strong>Supabase bağlantısı aktif.</strong>
+
+  Buradaki değişiklikler Supabase veritabanına kaydedilir.
+  Kaydedilen veriler siteyi açan diğer cihazlarda da kullanılabilir.
+
 </div>
 
-<section class="admin-card" id="club">
-<div class="kicker">KULÜP</div>
-<h2>Kulüp Bilgileri</h2>
-<div id="clubEditor" class="form-grid"></div>
-<div class="admin-buttons">
-<button class="btn-admin orange" id="saveClub">KULÜP BİLGİLERİNİ KAYDET</button>
-<span class="save-message" id="clubMessage"></span>
+<div
+  class="status-box"
+  id="connectionStatus"
+>
+  Supabase bağlantısı kontrol ediliyor...
 </div>
+
+
+<!-- =====================================================
+     KULÜP
+===================================================== -->
+
+<section
+  class="admin-card"
+  id="club"
+>
+
+  <div class="kicker">KULÜP</div>
+
+  <h2>Kulüp Bilgileri</h2>
+
+  <div
+    id="clubEditor"
+    class="form-grid"
+  ></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveClub"
+    >
+      KULÜP BİLGİLERİNİ KAYDET
+    </button>
+
+    <span
+      class="save-message"
+      id="clubMessage"
+    ></span>
+
+  </div>
+
 </section>
 
-<section class="admin-card" id="news">
-<div class="kicker">İÇERİK</div>
-<h2>Haberler</h2>
-<div id="newsEditor"></div>
-<div class="admin-buttons">
-<button class="btn-admin orange" id="saveNews">HABERLERİ KAYDET</button>
-<button class="btn-admin" id="addNews">+ HABER EKLE</button>
-<span class="save-message" id="newsMessage"></span>
-</div>
+
+<!-- =====================================================
+     HABERLER
+===================================================== -->
+
+<section
+  class="admin-card"
+  id="news"
+>
+
+  <div class="kicker">İÇERİK</div>
+
+  <h2>Haberler</h2>
+
+  <div id="newsEditor"></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveNews"
+    >
+      HABERLERİ KAYDET
+    </button>
+
+    <button
+      class="btn-admin"
+      id="addNews"
+    >
+      + HABER EKLE
+    </button>
+
+    <span
+      class="save-message"
+      id="newsMessage"
+    ></span>
+
+  </div>
+
 </section>
 
-<section class="admin-card" id="fixtures">
-<div class="kicker">MAÇLAR</div>
-<h2>Fikstür</h2>
-<div id="fixtureEditor"></div>
-<div class="admin-buttons">
-<button class="btn-admin orange" id="saveFixtures">FİKSTÜRÜ KAYDET</button>
-<button class="btn-admin" id="addFixture">+ MAÇ EKLE</button>
-<span class="save-message" id="fixtureMessage"></span>
-</div>
+
+<!-- =====================================================
+     FİKSTÜR
+===================================================== -->
+
+<section
+  class="admin-card"
+  id="fixtures"
+>
+
+  <div class="kicker">MAÇLAR</div>
+
+  <h2>Fikstür</h2>
+
+  <div id="fixtureEditor"></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveFixtures"
+    >
+      FİKSTÜRÜ KAYDET
+    </button>
+
+    <button
+      class="btn-admin"
+      id="addFixture"
+    >
+      + MAÇ EKLE
+    </button>
+
+    <span
+      class="save-message"
+      id="fixtureMessage"
+    ></span>
+
+  </div>
+
 </section>
 
-<section class="admin-card" id="players">
-<div class="kicker">KADRO</div>
-<h2>Oyuncular</h2>
-<div id="playerEditor"></div>
-<div class="admin-buttons">
-<button class="btn-admin orange" id="savePlayers">KADROYU KAYDET</button>
-<button class="btn-admin" id="addPlayer">+ OYUNCU EKLE</button>
-<span class="save-message" id="playerMessage"></span>
-</div>
+
+<!-- =====================================================
+     OYUNCULAR
+===================================================== -->
+
+<section
+  class="admin-card"
+  id="players"
+>
+
+  <div class="kicker">KADRO</div>
+
+  <h2>Oyuncular</h2>
+
+  <div id="playerEditor"></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="savePlayers"
+    >
+      KADROYU KAYDET
+    </button>
+
+    <button
+      class="btn-admin"
+      id="addPlayer"
+    >
+      + OYUNCU EKLE
+    </button>
+
+    <span
+      class="save-message"
+      id="playerMessage"
+    ></span>
+
+  </div>
+
 </section>
 
-<section class="admin-card" id="achievements">
-<div class="kicker">KULÜP TARİHİ</div>
-<h2>Başarılar</h2>
-<div id="achievementEditor"></div>
-<div class="admin-buttons">
-<button class="btn-admin orange" id="saveAchievements">BAŞARILARI KAYDET</button>
-<button class="btn-admin" id="addAchievement">+ BAŞARI EKLE</button>
-<span class="save-message" id="achievementMessage"></span>
-</div>
+
+<!-- =====================================================
+     BAŞARILAR
+===================================================== -->
+
+<section
+  class="admin-card"
+  id="achievements"
+>
+
+  <div class="kicker">KULÜP TARİHİ</div>
+
+  <h2>Başarılar</h2>
+
+  <div id="achievementEditor"></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveAchievements"
+    >
+      BAŞARILARI KAYDET
+    </button>
+
+    <button
+      class="btn-admin"
+      id="addAchievement"
+    >
+      + BAŞARI EKLE
+    </button>
+
+    <span
+      class="save-message"
+      id="achievementMessage"
+    ></span>
+
+  </div>
+
 </section>
 
-<section class="admin-card" id="backup">
-<div class="kicker">YEDEK / AKTARIM</div>
-<h2>Veri Yönetimi</h2>
-<p style="color:#92979d;line-height:1.7">
-Supabase'deki mevcut verileri JSON olarak yedekleyebilir ve daha sonra geri yükleyebilirsin.
-</p>
 
-<div class="admin-buttons">
-<button class="btn-admin" id="exportButton">JSON DIŞA AKTAR</button>
+<!-- =====================================================
+     YEDEK
+===================================================== -->
 
-<label class="btn-admin" for="importFile">JSON İÇE AKTAR</label>
-<input id="importFile" type="file" accept=".json" hidden>
+<section
+  class="admin-card"
+  id="backup"
+>
 
-<button class="btn-admin" id="resetButton">VARSAYILANLARA DÖN</button>
-</div>
+  <div class="kicker">YEDEK / AKTARIM</div>
+
+  <h2>Veri Yönetimi</h2>
+
+  <p style="color:#92979d;line-height:1.7">
+
+    Supabase'deki mevcut verileri JSON olarak
+    yedekleyebilir ve daha sonra geri yükleyebilirsin.
+
+  </p>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin"
+      id="exportButton"
+    >
+      JSON DIŞA AKTAR
+    </button>
+
+    <label
+      class="btn-admin"
+      for="importFile"
+    >
+      JSON İÇE AKTAR
+    </label>
+
+    <input
+      id="importFile"
+      type="file"
+      accept=".json"
+      hidden
+    >
+
+    <button
+      class="btn-admin"
+      id="resetButton"
+    >
+      VARSAYILANLARA DÖN
+    </button>
+
+  </div>
+
 </section>
 
 </main>
 </div>
 </div>
 
-<script src="js/data.js"></script>
 
 <script>
-(function(){
 
 "use strict";
 
-const USERS={
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+  "https://htzttiwasmvxibpzsdrw.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_LVYwwiY4Dn9pV2fZA7spw_2U84dC59";
+
+const TABLE_NAME = "site_data";
+
+
+/* =====================================================
+   GİRİŞ
+===================================================== */
+
+const USERS = {
   ergun:"ergun12",
   eymen:"eymen12"
 };
 
-const LOGIN_KEY="kpr_admin_login";
+const LOGIN_KEY = "kpr_admin_login";
 
-const loginScreen=document.getElementById("loginScreen");
-const panel=document.getElementById("panel");
-const loginError=document.getElementById("loginError");
 
-let data={};
+/* =====================================================
+   DOM
+===================================================== */
+
+const loginScreen =
+  document.getElementById("loginScreen");
+
+const panel =
+  document.getElementById("panel");
+
+const loginError =
+  document.getElementById("loginError");
+
+const connectionStatus =
+  document.getElementById("connectionStatus");
+
+
+/* =====================================================
+   VERİ
+===================================================== */
+
+let data = {};
+
+let originalData = null;
+
+
+/* =====================================================
+   YARDIMCI
+===================================================== */
 
 function clone(value){
-  return JSON.parse(JSON.stringify(value));
+
+  return JSON.parse(
+    JSON.stringify(value)
+  );
+
 }
 
-function fallbackData(){
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g,function(char){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[char];
+
+    });
+
+}
+
+
+/* =====================================================
+   VARSAYILAN VERİ
+===================================================== */
+
+function defaultData(){
+
   return {
+
     club:{
       name:"Kuğulu Park Rangers",
       founded:"2020",
@@ -257,73 +936,287 @@ function fallbackData(){
       email:"ergun060691@gmail.com",
       phone:"0552 103 8970"
     },
-    achievements:[],
-    players:[],
-    news:[],
-    fixtures:[],
-    league:{status:"Yakında eklenecek"}
-  };
-}
 
-async function loadData(){
+    achievements:[
+      "Rakipbul Ankara Lig Playoff Çeyrek Final",
+      "Rakipbul Ankara Sezonun En Centilmen Takımı"
+    ],
 
-  try{
-
-    if(window.KPR && typeof window.KPR.load==="function"){
-      const result=await window.KPR.load();
-
-      if(result){
-        data=clone(result);
-      }else{
-        data=fallbackData();
+    players:[
+      {
+        name:"Metin Berk Sağlam",
+        position:"Kaleci",
+        image:"assets/players/metin-berk-saglam.jpg"
+      },
+      {
+        name:"Recep Bayındır",
+        position:"Kaleci",
+        image:"assets/players/recep-bayindir.jpg"
+      },
+      {
+        name:"Ergün Çeliksoy",
+        position:"Defans",
+        image:"assets/players/ergun-celiksoy.jpg"
+      },
+      {
+        name:"Suat Var",
+        position:"Defans",
+        image:"assets/players/suat-var.jpg"
+      },
+      {
+        name:"Aykut Acer",
+        position:"Defans",
+        image:"assets/players/aykut-acer.jpg"
+      },
+      {
+        name:"Okan Paçal",
+        position:"Defans",
+        image:"assets/players/okan-pacal.jpg"
+      },
+      {
+        name:"Ferhat Çelik",
+        position:"Orta Saha",
+        image:"assets/players/ferhat-celik.jpg"
+      },
+      {
+        name:"Eymen Taha Gülmez",
+        position:"Orta Saha",
+        image:"assets/players/eymen-taha-gulmez.jpg"
+      },
+      {
+        name:"Ahmed Gas",
+        position:"Orta Saha",
+        image:"assets/players/ahmed-gas.jpg"
+      },
+      {
+        name:"Burak Kılıç",
+        position:"Forvet",
+        image:"assets/players/burak-kilic.jpg"
+      },
+      {
+        name:"Emircan Asma",
+        position:"Forvet",
+        image:"assets/players/emircan-asma.jpg"
+      },
+      {
+        name:"Bulut Çetin",
+        position:"Forvet",
+        image:"assets/players/bulut-cetin.jpg"
+      },
+      {
+        name:"Ahmet Fidan",
+        position:"Forvet",
+        image:"assets/players/ahmet-fidan.jpg"
       }
+    ],
 
-    }else{
-      data=fallbackData();
+    news:[
+      {
+        title:"Takımımız yeni sezon hazırlıklarına başladı",
+        image:"assets/news/haber-1.jpg"
+      },
+      {
+        title:"Yeni sezon formalarımız çok yakında öngösterimde",
+        image:"assets/news/haber-2.jpg"
+      },
+      {
+        title:"Maç sonu basın toplantımız",
+        image:"assets/news/haber-3.jpg"
+      },
+      {
+        title:"Yeni transferlerimiz",
+        image:"assets/news/haber-4.jpg"
+      }
+    ],
+
+    fixtures:[],
+
+    league:{
+      status:"Yakında eklenecek"
     }
 
-  }catch(error){
+  };
 
-    console.error("Supabase veri yükleme hatası:",error);
-    data=fallbackData();
-
-  }
-
-  normalizeData();
-  renderAll();
 }
+
+
+/* =====================================================
+   VERİ NORMALİZASYONU
+===================================================== */
 
 function normalizeData(){
 
-  if(!data.club)data.club={};
-  if(!Array.isArray(data.news))data.news=[];
-  if(!Array.isArray(data.fixtures))data.fixtures=[];
-  if(!Array.isArray(data.players))data.players=[];
-  if(!Array.isArray(data.achievements))data.achievements=[];
+  if(!data || typeof data !== "object"){
+    data = defaultData();
+  }
+
+  if(!data.club){
+    data.club = {};
+  }
+
+  if(!Array.isArray(data.news)){
+    data.news = [];
+  }
+
+  if(!Array.isArray(data.fixtures)){
+    data.fixtures = [];
+  }
+
+  if(!Array.isArray(data.players)){
+    data.players = [];
+  }
+
+  if(!Array.isArray(data.achievements)){
+    data.achievements = [];
+  }
+
+  if(!data.league){
+    data.league = {
+      status:"Yakında eklenecek"
+    };
+  }
 
 }
 
-async function saveData(){
 
-  normalizeData();
+/* =====================================================
+   SUPABASE GET
+===================================================== */
+
+async function supabaseGet(){
+
+  const response = await fetch(
+    SUPABASE_URL +
+    "/rest/v1/" +
+    TABLE_NAME +
+    "?id=eq.1&select=*",
+    {
+      method:"GET",
+
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer " + SUPABASE_KEY,
+        "Accept":"application/json"
+      }
+    }
+  );
+
+  if(!response.ok){
+
+    const text =
+      await response.text();
+
+    throw new Error(
+      "Supabase GET " +
+      response.status +
+      ": " +
+      text
+    );
+
+  }
+
+  return await response.json();
+
+}
+
+
+/* =====================================================
+   SUPABASE PATCH
+===================================================== */
+
+async function supabasePatch(newData){
+
+  const response = await fetch(
+    SUPABASE_URL +
+    "/rest/v1/" +
+    TABLE_NAME +
+    "?id=eq.1",
+    {
+      method:"PATCH",
+
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer " + SUPABASE_KEY,
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Prefer":"return=representation"
+      },
+
+      body:JSON.stringify({
+        data:newData
+      })
+    }
+  );
+
+  if(!response.ok){
+
+    const text =
+      await response.text();
+
+    throw new Error(
+      "Supabase PATCH " +
+      response.status +
+      ": " +
+      text
+    );
+
+  }
+
+  return await response.json();
+
+}
+
+
+/* =====================================================
+   SUPABASE BAĞLANTI TESTİ
+===================================================== */
+
+async function testConnection(){
+
+  connectionStatus.textContent =
+    "Supabase bağlantısı kontrol ediliyor...";
+
+  connectionStatus.className =
+    "status-box";
 
   try{
 
-    if(window.KPR && typeof window.KPR.save==="function"){
+    const rows =
+      await supabaseGet();
 
-      await window.KPR.save(data);
+    if(
+      Array.isArray(rows) &&
+      rows.length > 0
+    ){
+
+      connectionStatus.textContent =
+        "● SUPABASE BAĞLANTISI AKTİF — site_data / id=1";
+
+      connectionStatus.className =
+        "status-box status-online";
 
       return true;
 
     }
 
-    throw new Error("KPR.save bulunamadı.");
+    connectionStatus.textContent =
+      "● SUPABASE BAĞLI — fakat site_data tablosunda id=1 bulunamadı.";
+
+    connectionStatus.className =
+      "status-box status-offline";
+
+    return false;
 
   }catch(error){
 
-    console.error("Supabase kayıt hatası:",error);
+    console.error(error);
 
-    alert("Veri kaydedilemedi. Supabase bağlantısını kontrol et.");
+    connectionStatus.textContent =
+      "● SUPABASE BAĞLANTISI BAŞARISIZ: " +
+      error.message;
+
+    connectionStatus.className =
+      "status-box status-offline";
 
     return false;
 
@@ -331,641 +1224,1437 @@ async function saveData(){
 
 }
 
-function esc(value){
 
-  return String(value??"").replace(
-    /[&<>"']/g,
-    function(c){
-      return {
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[c];
+/* =====================================================
+   VERİYİ SUPABASE'DEN YÜKLE
+===================================================== */
+
+async function loadData(){
+
+  try{
+
+    const rows =
+      await supabaseGet();
+
+    if(
+      Array.isArray(rows) &&
+      rows.length > 0 &&
+      rows[0].data
+    ){
+
+      data = clone(rows[0].data);
+
+      normalizeData();
+
+      originalData = clone(data);
+
+      renderAll();
+
+      connectionStatus.textContent =
+        "● SUPABASE VERİLERİ YÜKLENDİ";
+
+      connectionStatus.className =
+        "status-box status-online";
+
+      return true;
+
     }
-  );
 
-}
+    throw new Error(
+      "site_data tablosunda id=1 bulunamadı."
+    );
 
-function message(id){
+  }catch(error){
 
-  const el=document.getElementById(id);
+    console.error(
+      "Supabase veri yükleme hatası:",
+      error
+    );
 
-  if(!el)return;
+    data = defaultData();
 
-  el.textContent="✓ Supabase'e kaydedildi";
+    normalizeData();
 
-  setTimeout(function(){
-    el.textContent="";
-  },2500);
+    renderAll();
 
-}
+    connectionStatus.textContent =
+      "● VERİTABANI OKUNAMADI — varsayılan veriler gösteriliyor";
 
-async function login(){
+    connectionStatus.className =
+      "status-box status-offline";
 
-  const username=document.getElementById("username").value.trim();
-  const password=document.getElementById("password").value;
-
-  if(USERS[username] && USERS[username]===password){
-
-    localStorage.setItem(LOGIN_KEY,username);
-
-    loginScreen.style.display="none";
-    panel.style.display="block";
-
-    await loadData();
-
-  }else{
-
-    loginError.textContent="Kullanıcı adı veya şifre yanlış.";
+    return false;
 
   }
 
 }
 
-document.getElementById("loginButton").addEventListener("click",login);
 
-document.getElementById("password").addEventListener("keydown",function(e){
-  if(e.key==="Enter")login();
-});
+/* =====================================================
+   VERİYİ SUPABASE'E KAYDET
+===================================================== */
 
-document.getElementById("logoutButton").addEventListener("click",function(){
+async function saveData(){
 
-  localStorage.removeItem(LOGIN_KEY);
+  normalizeData();
 
-  panel.style.display="none";
-  loginScreen.style.display="flex";
+  try{
 
-});
+    const result =
+      await supabasePatch(data);
+
+    if(
+      !Array.isArray(result) ||
+      result.length === 0
+    ){
+
+      throw new Error(
+        "Supabase güncelleme yaptı fakat kayıt döndürmedi."
+      );
+
+    }
+
+    originalData = clone(data);
+
+    connectionStatus.textContent =
+      "● DEĞİŞİKLİKLER SUPABASE'E KAYDEDİLDİ";
+
+    connectionStatus.className =
+      "status-box status-online";
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Supabase kayıt hatası:",
+      error
+    );
+
+    connectionStatus.textContent =
+      "● KAYIT HATASI: " +
+      error.message;
+
+    connectionStatus.className =
+      "status-box status-offline";
+
+    alert(
+      "Supabase'e kaydedilemedi.\n\n" +
+      error.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login(){
+
+  const username =
+    document.getElementById("username")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const password =
+    document.getElementById("password")
+      .value;
+
+  if(
+    USERS[username] &&
+    USERS[username] === password
+  ){
+
+    localStorage.setItem(
+      LOGIN_KEY,
+      username
+    );
+
+    loginError.textContent = "";
+
+    loginScreen.style.display = "none";
+
+    panel.style.display = "block";
+
+    await loadData();
+
+    await testConnection();
+
+  }else{
+
+    loginError.textContent =
+      "Kullanıcı adı veya şifre yanlış.";
+
+  }
+
+}
+
+
+document
+  .getElementById("loginButton")
+  .addEventListener(
+    "click",
+    login
+  );
+
+
+document
+  .getElementById("password")
+  .addEventListener(
+    "keydown",
+    function(event){
+
+      if(event.key === "Enter"){
+        login();
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      localStorage.removeItem(
+        LOGIN_KEY
+      );
+
+      panel.style.display = "none";
+
+      loginScreen.style.display = "flex";
+
+      document.getElementById("password").value = "";
+
+    }
+  );
+
+
+/* =====================================================
+   KULÜP RENDER
+===================================================== */
 
 function renderClub(){
 
-  const club=data.club||{};
+  const club =
+    data.club || {};
 
-  const fields=[
+  const fields = [
+
     ["name","Kulüp Adı"],
     ["founded","Kuruluş"],
     ["sponsor","Sponsor"],
     ["email","E-posta"],
     ["phone","Telefon"]
+
   ];
 
-  document.getElementById("clubEditor").innerHTML=fields.map(function(field){
+  document.getElementById(
+    "clubEditor"
+  ).innerHTML = fields.map(
+    function(field){
 
-    const key=field[0];
-    const label=field[1];
+      const key = field[0];
 
-    return `
-      <div class="field">
-        <label>${label}</label>
-        <input data-club="${key}" value="${esc(club[key])}">
-      </div>
-    `;
+      const label = field[1];
 
-  }).join("");
+      return `
+        <div class="field">
+
+          <label>${label}</label>
+
+          <input
+            data-club="${key}"
+            value="${escapeHTML(club[key])}"
+          >
+
+        </div>
+      `;
+
+    }
+  ).join("");
 
 }
 
-document.getElementById("saveClub").addEventListener("click",async function(){
 
-  if(!data.club)data.club={};
+/* =====================================================
+   KULÜP KAYDET
+===================================================== */
 
-  document.querySelectorAll("[data-club]").forEach(function(input){
-    data.club[input.dataset.club]=input.value;
-  });
+document
+  .getElementById("saveClub")
+  .addEventListener(
+    "click",
+    async function(){
 
-  if(await saveData())message("clubMessage");
+      if(!data.club){
+        data.club = {};
+      }
 
-});
+      document
+        .querySelectorAll("[data-club]")
+        .forEach(
+          function(input){
+
+            data.club[
+              input.dataset.club
+            ] = input.value;
+
+          }
+        );
+
+      if(await saveData()){
+
+        showMessage(
+          "clubMessage"
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   HABERLER RENDER
+===================================================== */
 
 function renderNews(){
 
-  normalizeData();
-
-  const editor=document.getElementById("newsEditor");
-
   if(!data.news.length){
 
-    editor.innerHTML=`
-      <div class="empty">
+    document.getElementById(
+      "newsEditor"
+    ).innerHTML =
+      `<div class="empty">
         Henüz haber yok.
-        <br><br>
-        <strong>+ HABER EKLE</strong>
-      </div>
-    `;
+      </div>`;
 
     return;
 
   }
 
-  editor.innerHTML=data.news.map(function(news,index){
+  document.getElementById(
+    "newsEditor"
+  ).innerHTML = data.news.map(
+    function(news,index){
 
-    return `
-      <div class="edit-item">
+      return `
+        <div class="edit-item">
 
-        <div class="edit-item-head">
+          <div class="edit-item-head">
 
-          <strong>HABER ${index+1}</strong>
+            <strong>
+              HABER ${index + 1}
+            </strong>
 
-          <a class="preview-btn"
-             href="haber.html?id=${index}"
-             target="_blank">
-             👁 HABERİ GÖR
-          </a>
+            <button
+              class="delete-btn"
+              data-delete-news="${index}"
+            >
+              SİL
+            </button>
 
-          <button class="delete-btn"
-                  data-delete-news="${index}">
-                  SİL
-          </button>
+          </div>
+
+          <div class="form-grid">
+
+            <div class="field full">
+
+              <label>BAŞLIK</label>
+
+              <input
+                data-news-title="${index}"
+                value="${escapeHTML(news.title)}"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>TARİH</label>
+
+              <input
+                data-news-date="${index}"
+                value="${escapeHTML(news.date)}"
+                placeholder="10 Ağustos 2026"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>ETİKET</label>
+
+              <input
+                data-news-tag="${index}"
+                value="${escapeHTML(news.tag)}"
+                placeholder="Kulüp"
+              >
+
+            </div>
+
+            <div class="field full">
+
+              <label>GÖRSEL YOLU</label>
+
+              <input
+                data-news-image="${index}"
+                value="${escapeHTML(news.image)}"
+                placeholder="assets/news/haber-1.jpg"
+              >
+
+            </div>
+
+            <div class="field full">
+
+              <label>HABER DETAYI</label>
+
+              <textarea
+                data-news-content="${index}"
+                placeholder="Haber detayını buraya yaz..."
+              >${escapeHTML(news.content || "")}</textarea>
+
+            </div>
+
+          </div>
 
         </div>
+      `;
 
-        <div class="form-grid">
+    }
+  ).join("");
 
-          <div class="field full">
-            <label>BAŞLIK</label>
-            <input data-news-title="${index}"
-                   value="${esc(news.title)}"
-                   placeholder="Haber başlığı">
-          </div>
 
-          <div class="field">
-            <label>TARİH</label>
-            <input data-news-date="${index}"
-                   value="${esc(news.date)}"
-                   placeholder="10 Ağustos 2026">
-          </div>
+  document
+    .querySelectorAll("[data-delete-news]")
+    .forEach(
+      function(button){
 
-          <div class="field">
-            <label>ETİKET</label>
-            <input data-news-tag="${index}"
-                   value="${esc(news.tag)}"
-                   placeholder="Kulüp">
-          </div>
+        button.addEventListener(
+          "click",
+          async function(){
 
-          <div class="field full">
-            <label>GÖRSEL YOLU</label>
-            <input data-news-image="${index}"
-                   value="${esc(news.image)}"
-                   placeholder="assets/news/haber-1.jpg">
-          </div>
+            const index =
+              Number(
+                button.dataset.deleteNews
+              );
 
-          <div class="field full">
-            <label>HABER DETAYI</label>
-            <textarea data-news-content="${index}"
-                      placeholder="Haber detayını buraya yaz...">${esc(news.content||"")}</textarea>
-          </div>
+            if(
+              !confirm(
+                "Bu haberi silmek istediğine emin misin?"
+              )
+            ){
+              return;
+            }
 
-        </div>
-      </div>
-    `;
+            data.news.splice(
+              index,
+              1
+            );
 
-  }).join("");
+            if(await saveData()){
+              renderNews();
+            }
 
-  document.querySelectorAll("[data-delete-news]").forEach(function(button){
+          }
+        );
 
-    button.addEventListener("click",async function(){
-
-      const index=Number(button.dataset.deleteNews);
-
-      if(!confirm("Bu haberi silmek istediğine emin misin?"))return;
-
-      data.news.splice(index,1);
-
-      if(await saveData())renderNews();
-
-    });
-
-  });
+      }
+    );
 
 }
 
-document.getElementById("addNews").addEventListener("click",async function(){
 
-  data.news.unshift({
-    title:"Yeni Haber",
-    date:new Date().toLocaleDateString("tr-TR"),
-    tag:"Kulüp",
-    image:"",
-    content:"Yeni haberinizin detaylarını buraya yazabilirsiniz."
-  });
+/* =====================================================
+   HABER EKLE
+===================================================== */
 
-  if(await saveData()){
+document
+  .getElementById("addNews")
+  .addEventListener(
+    "click",
+    async function(){
 
-    renderNews();
+      data.news.unshift({
 
-    document.getElementById("news").scrollIntoView({
-      behavior:"smooth"
-    });
+        title:"Yeni Haber",
 
-  }
+        date:new Date()
+          .toLocaleDateString("tr-TR"),
 
-});
+        tag:"Kulüp",
 
-document.getElementById("saveNews").addEventListener("click",async function(){
+        image:"",
 
-  document.querySelectorAll("[data-news-title]").forEach(function(input){
-    data.news[Number(input.dataset.newsTitle)].title=input.value;
-  });
+        content:""
 
-  document.querySelectorAll("[data-news-date]").forEach(function(input){
-    data.news[Number(input.dataset.newsDate)].date=input.value;
-  });
+      });
 
-  document.querySelectorAll("[data-news-tag]").forEach(function(input){
-    data.news[Number(input.dataset.newsTag)].tag=input.value;
-  });
+      if(await saveData()){
 
-  document.querySelectorAll("[data-news-image]").forEach(function(input){
-    data.news[Number(input.dataset.newsImage)].image=input.value;
-  });
+        renderNews();
 
-  document.querySelectorAll("[data-news-content]").forEach(function(input){
-    data.news[Number(input.dataset.newsContent)].content=input.value;
-  });
+        document
+          .getElementById("news")
+          .scrollIntoView({
+            behavior:"smooth"
+          });
 
-  if(await saveData())message("newsMessage");
+      }
 
-});
+    }
+  );
+
+
+/* =====================================================
+   HABER KAYDET
+===================================================== */
+
+document
+  .getElementById("saveNews")
+  .addEventListener(
+    "click",
+    async function(){
+
+      document
+        .querySelectorAll("[data-news-title]")
+        .forEach(
+          function(input){
+
+            data.news[
+              Number(input.dataset.newsTitle)
+            ].title = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-news-date]")
+        .forEach(
+          function(input){
+
+            data.news[
+              Number(input.dataset.newsDate)
+            ].date = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-news-tag]")
+        .forEach(
+          function(input){
+
+            data.news[
+              Number(input.dataset.newsTag)
+            ].tag = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-news-image]")
+        .forEach(
+          function(input){
+
+            data.news[
+              Number(input.dataset.newsImage)
+            ].image = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-news-content]")
+        .forEach(
+          function(input){
+
+            data.news[
+              Number(input.dataset.newsContent)
+            ].content = input.value;
+
+          }
+        );
+
+
+      if(await saveData()){
+
+        showMessage(
+          "newsMessage"
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   FİKSTÜR
+===================================================== */
 
 function renderFixtures(){
 
-  normalizeData();
-
-  const editor=document.getElementById("fixtureEditor");
-
   if(!data.fixtures.length){
 
-    editor.innerHTML=`<div class="empty">Henüz fikstür bulunmuyor.</div>`;
+    document.getElementById(
+      "fixtureEditor"
+    ).innerHTML =
+      `<div class="empty">
+        Henüz fikstür bulunmuyor.
+      </div>`;
 
     return;
 
   }
 
-  editor.innerHTML=data.fixtures.map(function(match,index){
+  document.getElementById(
+    "fixtureEditor"
+  ).innerHTML =
+    data.fixtures.map(
+      function(match,index){
 
-    return `
-      <div class="edit-item">
+        if(typeof match === "string"){
 
-        <div class="edit-item-head">
+          match = {
+            date:"",
+            time:"",
+            home:match,
+            away:""
+          };
 
-          <strong>MAÇ ${index+1}</strong>
+          data.fixtures[index] =
+            match;
 
-          <button class="delete-btn"
-                  data-delete-fixture="${index}">
-                  SİL
-          </button>
+        }
 
-        </div>
+        return `
+          <div class="edit-item">
 
-        <div class="form-grid">
+            <div class="edit-item-head">
 
-          <div class="field">
-            <label>TARİH</label>
-            <input data-fixture-date="${index}"
-                   value="${esc(match.date)}">
+              <strong>
+                MAÇ ${index + 1}
+              </strong>
+
+              <button
+                class="delete-btn"
+                data-delete-fixture="${index}"
+              >
+                SİL
+              </button>
+
+            </div>
+
+            <div class="form-grid">
+
+              <div class="field">
+
+                <label>TARİH</label>
+
+                <input
+                  data-fixture-date="${index}"
+                  value="${escapeHTML(match.date)}"
+                >
+
+              </div>
+
+              <div class="field">
+
+                <label>SAAT</label>
+
+                <input
+                  data-fixture-time="${index}"
+                  value="${escapeHTML(match.time)}"
+                >
+
+              </div>
+
+              <div class="field">
+
+                <label>EV SAHİBİ</label>
+
+                <input
+                  data-fixture-home="${index}"
+                  value="${escapeHTML(match.home)}"
+                >
+
+              </div>
+
+              <div class="field">
+
+                <label>DEPLASMAN</label>
+
+                <input
+                  data-fixture-away="${index}"
+                  value="${escapeHTML(match.away)}"
+                >
+
+              </div>
+
+            </div>
+
           </div>
+        `;
 
-          <div class="field">
-            <label>SAAT</label>
-            <input data-fixture-time="${index}"
-                   value="${esc(match.time)}">
-          </div>
+      }
+    ).join("");
 
-          <div class="field">
-            <label>EV SAHİBİ</label>
-            <input data-fixture-home="${index}"
-                   value="${esc(match.home)}">
-          </div>
 
-          <div class="field">
-            <label>DEPLASMAN</label>
-            <input data-fixture-away="${index}"
-                   value="${esc(match.away)}">
-          </div>
+  document
+    .querySelectorAll("[data-delete-fixture]")
+    .forEach(
+      function(button){
 
-        </div>
+        button.addEventListener(
+          "click",
+          async function(){
 
-      </div>
-    `;
+            data.fixtures.splice(
+              Number(
+                button.dataset.deleteFixture
+              ),
+              1
+            );
 
-  }).join("");
+            if(await saveData()){
+              renderFixtures();
+            }
 
-  document.querySelectorAll("[data-delete-fixture]").forEach(function(button){
+          }
+        );
 
-    button.addEventListener("click",async function(){
-
-      data.fixtures.splice(
-        Number(button.dataset.deleteFixture),
-        1
-      );
-
-      if(await saveData())renderFixtures();
-
-    });
-
-  });
+      }
+    );
 
 }
 
-document.getElementById("addFixture").addEventListener("click",async function(){
 
-  data.fixtures.push({
-    date:"01 Eyl",
-    time:"19:00",
-    home:"Kuğulu Park Rangers",
-    away:"Rakip"
-  });
+/* =====================================================
+   FİKSTÜR EKLE
+===================================================== */
 
-  if(await saveData())renderFixtures();
+document
+  .getElementById("addFixture")
+  .addEventListener(
+    "click",
+    async function(){
 
-});
+      data.fixtures.push({
 
-document.getElementById("saveFixtures").addEventListener("click",async function(){
+        date:"",
 
-  document.querySelectorAll("[data-fixture-date]").forEach(function(input){
-    data.fixtures[Number(input.dataset.fixtureDate)].date=input.value;
-  });
+        time:"19:00",
 
-  document.querySelectorAll("[data-fixture-time]").forEach(function(input){
-    data.fixtures[Number(input.dataset.fixtureTime)].time=input.value;
-  });
+        home:"Kuğulu Park Rangers",
 
-  document.querySelectorAll("[data-fixture-home]").forEach(function(input){
-    data.fixtures[Number(input.dataset.fixtureHome)].home=input.value;
-  });
+        away:"Rakip"
 
-  document.querySelectorAll("[data-fixture-away]").forEach(function(input){
-    data.fixtures[Number(input.dataset.fixtureAway)].away=input.value;
-  });
+      });
 
-  if(await saveData())message("fixtureMessage");
+      if(await saveData()){
+        renderFixtures();
+      }
 
-});
+    }
+  );
+
+
+/* =====================================================
+   FİKSTÜR KAYDET
+===================================================== */
+
+document
+  .getElementById("saveFixtures")
+  .addEventListener(
+    "click",
+    async function(){
+
+      document
+        .querySelectorAll("[data-fixture-date]")
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureDate
+              )
+            ].date = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-fixture-time]")
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureTime
+              )
+            ].time = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-fixture-home]")
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureHome
+              )
+            ].home = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-fixture-away]")
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureAway
+              )
+            ].away = input.value;
+
+          }
+        );
+
+
+      if(await saveData()){
+
+        showMessage(
+          "fixtureMessage"
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   OYUNCULAR
+===================================================== */
 
 function renderPlayers(){
 
-  normalizeData();
+  const positions = [
 
-  const positions=[
     "Kaleci",
     "Defans",
     "Orta Saha",
     "Forvet"
-  ];
 
-  const editor=document.getElementById("playerEditor");
+  ];
 
   if(!data.players.length){
 
-    editor.innerHTML=`<div class="empty">Henüz oyuncu bulunmuyor.</div>`;
+    document.getElementById(
+      "playerEditor"
+    ).innerHTML =
+      `<div class="empty">
+        Henüz oyuncu bulunmuyor.
+      </div>`;
 
     return;
 
   }
 
-  editor.innerHTML=data.players.map(function(player,index){
+  document.getElementById(
+    "playerEditor"
+  ).innerHTML =
+    data.players.map(
+      function(player,index){
 
-    return `
-      <div class="edit-item">
+        return `
+          <div class="edit-item">
 
-        <div class="edit-item-head">
+            <div class="edit-item-head">
 
-          <strong>OYUNCU ${index+1}</strong>
+              <strong>
+                OYUNCU ${index + 1}
+              </strong>
 
-          <button class="delete-btn"
-                  data-delete-player="${index}">
-                  SİL
-          </button>
+              <button
+                class="delete-btn"
+                data-delete-player="${index}"
+              >
+                SİL
+              </button>
 
-        </div>
+            </div>
 
-        <div class="form-grid">
+            <div class="form-grid">
 
-          <div class="field">
-            <label>FORMA NUMARASI</label>
-            <input data-player-number="${index}"
-                   value="${esc(player.number)}">
+              <div class="field">
+
+                <label>FORMA NUMARASI</label>
+
+                <input
+                  data-player-number="${index}"
+                  value="${escapeHTML(player.number)}"
+                  placeholder="10"
+                >
+
+              </div>
+
+              <div class="field">
+
+                <label>OYUNCU ADI</label>
+
+                <input
+                  data-player-name="${index}"
+                  value="${escapeHTML(player.name)}"
+                >
+
+              </div>
+
+              <div class="field">
+
+                <label>MEVKİ</label>
+
+                <select
+                  data-player-position="${index}"
+                >
+
+                  ${positions.map(
+                    function(position){
+
+                      return `
+                        <option
+                          value="${escapeHTML(position)}"
+                          ${
+                            player.position === position
+                            ? "selected"
+                            : ""
+                          }
+                        >
+                          ${escapeHTML(position)}
+                        </option>
+                      `;
+
+                    }
+                  ).join("")}
+
+                </select>
+
+              </div>
+
+              <div class="field">
+
+                <label>GÖRSEL YOLU</label>
+
+                <input
+                  data-player-image="${index}"
+                  value="${escapeHTML(player.image)}"
+                  placeholder="assets/players/oyuncu.jpg"
+                >
+
+              </div>
+
+            </div>
+
           </div>
+        `;
 
-          <div class="field">
-            <label>OYUNCU ADI</label>
-            <input data-player-name="${index}"
-                   value="${esc(player.name)}">
-          </div>
+      }
+    ).join("");
 
-          <div class="field">
-            <label>MEVKİ</label>
 
-            <select data-player-position="${index}">
-              ${positions.map(function(position){
+  document
+    .querySelectorAll("[data-delete-player]")
+    .forEach(
+      function(button){
 
-                return `
-                  <option value="${esc(position)}"
-                    ${player.position===position?"selected":""}>
-                    ${esc(position)}
-                  </option>
-                `;
+        button.addEventListener(
+          "click",
+          async function(){
 
-              }).join("")}
-            </select>
+            data.players.splice(
+              Number(
+                button.dataset.deletePlayer
+              ),
+              1
+            );
 
-          </div>
+            if(await saveData()){
+              renderPlayers();
+            }
 
-          <div class="field">
-            <label>GÖRSEL YOLU</label>
-            <input data-player-image="${index}"
-                   value="${esc(player.image)}">
-          </div>
+          }
+        );
 
-        </div>
-      </div>
-    `;
-
-  }).join("");
-
-  document.querySelectorAll("[data-delete-player]").forEach(function(button){
-
-    button.addEventListener("click",async function(){
-
-      data.players.splice(
-        Number(button.dataset.deletePlayer),
-        1
-      );
-
-      if(await saveData())renderPlayers();
-
-    });
-
-  });
+      }
+    );
 
 }
 
-document.getElementById("addPlayer").addEventListener("click",async function(){
 
-  data.players.push({
-    number:"00",
-    name:"Yeni Oyuncu",
-    position:"Forvet",
-    image:""
-  });
+/* =====================================================
+   OYUNCU EKLE
+===================================================== */
 
-  if(await saveData())renderPlayers();
+document
+  .getElementById("addPlayer")
+  .addEventListener(
+    "click",
+    async function(){
 
-});
+      data.players.push({
 
-document.getElementById("savePlayers").addEventListener("click",async function(){
+        number:"00",
 
-  document.querySelectorAll("[data-player-number]").forEach(function(input){
-    data.players[Number(input.dataset.playerNumber)].number=input.value;
-  });
+        name:"Yeni Oyuncu",
 
-  document.querySelectorAll("[data-player-name]").forEach(function(input){
-    data.players[Number(input.dataset.playerName)].name=input.value;
-  });
+        position:"Forvet",
 
-  document.querySelectorAll("[data-player-position]").forEach(function(input){
-    data.players[Number(input.dataset.playerPosition)].position=input.value;
-  });
+        image:""
 
-  document.querySelectorAll("[data-player-image]").forEach(function(input){
-    data.players[Number(input.dataset.playerImage)].image=input.value;
-  });
+      });
 
-  if(await saveData())message("playerMessage");
+      if(await saveData()){
+        renderPlayers();
+      }
 
-});
+    }
+  );
+
+
+/* =====================================================
+   OYUNCU KAYDET
+===================================================== */
+
+document
+  .getElementById("savePlayers")
+  .addEventListener(
+    "click",
+    async function(){
+
+      document
+        .querySelectorAll("[data-player-number]")
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerNumber
+              )
+            ].number = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-player-name]")
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerName
+              )
+            ].name = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-player-position]")
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerPosition
+              )
+            ].position = input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll("[data-player-image]")
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerImage
+              )
+            ].image = input.value;
+
+          }
+        );
+
+
+      if(await saveData()){
+
+        showMessage(
+          "playerMessage"
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   BAŞARILAR
+===================================================== */
 
 function renderAchievements(){
 
-  normalizeData();
-
-  const editor=document.getElementById("achievementEditor");
-
   if(!data.achievements.length){
 
-    editor.innerHTML=`<div class="empty">Henüz başarı bulunmuyor.</div>`;
+    document.getElementById(
+      "achievementEditor"
+    ).innerHTML =
+      `<div class="empty">
+        Henüz başarı bulunmuyor.
+      </div>`;
 
     return;
 
   }
 
-  editor.innerHTML=data.achievements.map(function(achievement,index){
+  document.getElementById(
+    "achievementEditor"
+  ).innerHTML =
+    data.achievements.map(
+      function(achievement,index){
 
-    const value=
-      typeof achievement==="string"
-      ?achievement
-      :(achievement.title||"");
+        const value =
+          typeof achievement === "string"
+          ? achievement
+          : achievement.title || "";
 
-    return `
-      <div class="edit-item">
+        return `
+          <div class="edit-item">
 
-        <div class="edit-item-head">
+            <div class="edit-item-head">
 
-          <strong>BAŞARI ${index+1}</strong>
+              <strong>
+                BAŞARI ${index + 1}
+              </strong>
 
-          <button class="delete-btn"
-                  data-delete-achievement="${index}">
-                  SİL
-          </button>
+              <button
+                class="delete-btn"
+                data-delete-achievement="${index}"
+              >
+                SİL
+              </button>
 
-        </div>
+            </div>
 
-        <div class="field">
+            <div class="field">
 
-          <label>BAŞARI</label>
+              <label>BAŞARI</label>
 
-          <input data-achievement="${index}"
-                 value="${esc(value)}">
+              <input
+                data-achievement="${index}"
+                value="${escapeHTML(value)}"
+              >
 
-        </div>
+            </div>
 
-      </div>
-    `;
+          </div>
+        `;
 
-  }).join("");
+      }
+    ).join("");
 
-  document.querySelectorAll("[data-delete-achievement]").forEach(function(button){
 
-    button.addEventListener("click",async function(){
+  document
+    .querySelectorAll("[data-delete-achievement]")
+    .forEach(
+      function(button){
 
-      data.achievements.splice(
-        Number(button.dataset.deleteAchievement),
-        1
-      );
+        button.addEventListener(
+          "click",
+          async function(){
 
-      if(await saveData())renderAchievements();
+            data.achievements.splice(
+              Number(
+                button.dataset.deleteAchievement
+              ),
+              1
+            );
 
-    });
+            if(await saveData()){
+              renderAchievements();
+            }
 
-  });
+          }
+        );
+
+      }
+    );
 
 }
 
-document.getElementById("addAchievement").addEventListener("click",async function(){
 
-  data.achievements.push("Yeni Başarı");
+/* =====================================================
+   BAŞARI EKLE
+===================================================== */
 
-  if(await saveData())renderAchievements();
+document
+  .getElementById("addAchievement")
+  .addEventListener(
+    "click",
+    async function(){
 
-});
+      data.achievements.push(
+        "Yeni Başarı"
+      );
 
-document.getElementById("saveAchievements").addEventListener("click",async function(){
+      if(await saveData()){
+        renderAchievements();
+      }
 
-  document.querySelectorAll("[data-achievement]").forEach(function(input){
-
-    data.achievements[
-      Number(input.dataset.achievement)
-    ]=input.value;
-
-  });
-
-  if(await saveData())message("achievementMessage");
-
-});
-
-document.getElementById("exportButton").addEventListener("click",async function(){
-
-  await loadData();
-
-  const json=JSON.stringify(data,null,2);
-
-  const blob=new Blob(
-    [json],
-    {type:"application/json"}
+    }
   );
 
-  const url=URL.createObjectURL(blob);
 
-  const a=document.createElement("a");
+/* =====================================================
+   BAŞARI KAYDET
+===================================================== */
 
-  a.href=url;
-  a.download="kugulu-park-rangers-yedek.json";
+document
+  .getElementById("saveAchievements")
+  .addEventListener(
+    "click",
+    async function(){
 
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+      document
+        .querySelectorAll("[data-achievement]")
+        .forEach(
+          function(input){
 
-  URL.revokeObjectURL(url);
+            data.achievements[
+              Number(
+                input.dataset.achievement
+              )
+            ] = input.value;
 
-});
+          }
+        );
 
-document.getElementById("importFile").addEventListener("change",function(event){
 
-  const file=event.target.files[0];
+      if(await saveData()){
 
-  if(!file)return;
+        showMessage(
+          "achievementMessage"
+        );
 
-  const reader=new FileReader();
+      }
 
-  reader.onload=async function(){
+    }
+  );
 
-    try{
 
-      const imported=JSON.parse(reader.result);
+/* =====================================================
+   MESAJ
+===================================================== */
 
-      data=imported;
+function showMessage(id){
+
+  const element =
+    document.getElementById(id);
+
+  if(!element)return;
+
+  element.textContent =
+    "✓ Supabase'e kaydedildi";
+
+  setTimeout(
+    function(){
+
+      element.textContent = "";
+
+    },
+    2500
+  );
+
+}
+
+
+/* =====================================================
+   DIŞA AKTAR
+===================================================== */
+
+document
+  .getElementById("exportButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      const json =
+        JSON.stringify(
+          data,
+          null,
+          2
+        );
+
+      const blob =
+        new Blob(
+          [json],
+          {
+            type:"application/json"
+          }
+        );
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const a =
+        document.createElement("a");
+
+      a.href = url;
+
+      a.download =
+        "kugulu-park-rangers-yedek.json";
+
+      document.body.appendChild(a);
+
+      a.click();
+
+      a.remove();
+
+      URL.revokeObjectURL(url);
+
+    }
+  );
+
+
+/* =====================================================
+   İÇE AKTAR
+===================================================== */
+
+document
+  .getElementById("importFile")
+  .addEventListener(
+    "change",
+    function(event){
+
+      const file =
+        event.target.files[0];
+
+      if(!file)return;
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        async function(){
+
+          try{
+
+            const imported =
+              JSON.parse(
+                reader.result
+              );
+
+            if(
+              !imported ||
+              typeof imported !== "object"
+            ){
+
+              throw new Error(
+                "Geçersiz JSON"
+              );
+
+            }
+
+            data = imported;
+
+            normalizeData();
+
+            if(await saveData()){
+
+              renderAll();
+
+              alert(
+                "Yedek başarıyla Supabase'e yüklendi."
+              );
+
+            }
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Bu dosya geçerli bir JSON yedeği değil."
+            );
+
+          }
+
+          event.target.value = "";
+
+        };
+
+      reader.readAsText(file);
+
+    }
+  );
+
+
+/* =====================================================
+   SIFIRLA
+===================================================== */
+
+document
+  .getElementById("resetButton")
+  .addEventListener(
+    "click",
+    async function(){
+
+      if(
+        !confirm(
+          "DİKKAT!\n\n" +
+          "Supabase'deki mevcut site verileri " +
+          "varsayılan verilerle değiştirilecek.\n\n" +
+          "Devam etmek istiyor musun?"
+        )
+      ){
+
+        return;
+
+      }
+
+      data =
+        defaultData();
 
       normalizeData();
 
@@ -973,67 +2662,74 @@ document.getElementById("importFile").addEventListener("change",function(event){
 
         renderAll();
 
-        alert("Yedek başarıyla Supabase'e yüklendi.");
+        alert(
+          "Varsayılan veriler Supabase'e kaydedildi."
+        );
 
       }
 
-    }catch(error){
-
-      console.error(error);
-
-      alert("Bu dosya geçerli bir JSON yedeği değil.");
-
     }
+  );
 
-  };
 
-  reader.readAsText(file);
-
-});
-
-document.getElementById("resetButton").addEventListener("click",async function(){
-
-  if(!confirm(
-    "Varsayılan veriler Supabase'e kaydedilsin mi?"
-  ))return;
-
-  data=fallbackData();
-
-  if(await saveData()){
-
-    renderAll();
-
-    alert("Varsayılan veriler Supabase'e kaydedildi.");
-
-  }
-
-});
+/* =====================================================
+   TÜMÜNÜ RENDER
+===================================================== */
 
 function renderAll(){
 
+  normalizeData();
+
   renderClub();
+
   renderNews();
+
   renderFixtures();
+
   renderPlayers();
+
   renderAchievements();
 
 }
 
-if(localStorage.getItem(LOGIN_KEY)){
 
-  loginScreen.style.display="none";
-  panel.style.display="block";
+/* =====================================================
+   BAŞLAT
+===================================================== */
 
-  loadData();
+async function start(){
 
-}else{
+  const loggedIn =
+    localStorage.getItem(
+      LOGIN_KEY
+    );
 
-  loginScreen.style.display="flex";
-  panel.style.display="none";
+  if(loggedIn){
+
+    loginScreen.style.display =
+      "none";
+
+    panel.style.display =
+      "block";
+
+    await loadData();
+
+    await testConnection();
+
+  }else{
+
+    loginScreen.style.display =
+      "flex";
+
+    panel.style.display =
+      "none";
+
+  }
 
 }
 
-})();
+start();
+
 </script>
 
 </body>

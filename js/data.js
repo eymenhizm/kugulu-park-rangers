@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://htzttiwasmvxibpzsdrw.supabase.co";
-const SUPABASE_KEY = "sb_publishable_LVYwwiYI4Dn9pV2fZA7spw_2U84dC59";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0enR0aXdhc212eGlicHpzZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzE1NTMsImV4cCI6MjEwMjAwNzU1M30.UfKM4Vxt3SBaGCFtweIsvTSOkzn7tNalMtsSYdchrgk";
 
 window.DEFAULT_KPR_DATA = {
   club: {

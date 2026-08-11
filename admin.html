@@ -17,7 +17,7 @@ body{
   font-family:Inter,Arial,sans-serif;
 }
 
-button,input,select{
+button,input,select,textarea{
   font:inherit;
 }
 
@@ -93,6 +93,12 @@ button{
   padding:14px;
   outline:none;
   border-radius:0;
+}
+
+.field textarea{
+  min-height:180px;
+  resize:vertical;
+  line-height:1.6;
 }
 
 .login-field input:focus,
@@ -206,6 +212,7 @@ button{
   font-weight:800;
   padding:12px 10px;
   border-bottom:1px solid #20252a;
+  text-decoration:none;
 }
 
 .admin-side a:hover{
@@ -250,11 +257,6 @@ button{
   grid-column:1/-1;
 }
 
-.field textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
 .edit-item{
   background:#0a0d0f;
   border:1px solid #252b2f;
@@ -288,6 +290,23 @@ button{
 .delete-btn:hover{
   background:#ff6500;
   color:#000;
+}
+
+.preview-btn{
+  display:inline-block;
+  background:transparent;
+  border:1px solid #363d42;
+  color:#fff;
+  padding:8px 12px;
+  font-size:10px;
+  font-weight:800;
+  text-decoration:none;
+  margin-right:auto;
+}
+
+.preview-btn:hover{
+  border-color:#ff6500;
+  color:#ff6500;
 }
 
 .admin-buttons{
@@ -345,7 +364,22 @@ button{
   color:#fff;
 }
 
+.news-content-help{
+  margin-top:8px;
+  color:#777e84;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.empty{
+  padding:25px;
+  text-align:center;
+  color:#777e84;
+  border:1px dashed #30363b;
+}
+
 @media(max-width:800px){
+
   .admin-grid{
     grid-template-columns:1fr;
   }
@@ -369,9 +403,11 @@ button{
   .form-grid{
     grid-template-columns:1fr;
   }
+
 }
 
 @media(max-width:520px){
+
   .admin-head-inner{
     width:calc(100% - 24px);
   }
@@ -397,72 +433,141 @@ button{
   .admin-actions-top .btn-admin:first-child{
     display:none;
   }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- GİRİŞ -->
+<!-- =========================
+     GİRİŞ
+========================= -->
+
 <div class="admin-login" id="loginScreen">
 
   <div class="login-box">
 
     <div class="login-logo">
-      <img src="assets/logo/logo.png" alt="Kuğulu Park Rangers">
+
+      <img
+        src="assets/logo/logo.png"
+        alt="Kuğulu Park Rangers"
+      >
+
       <h1>Yönetim Paneli</h1>
+
       <span>KUĞULU PARK RANGERS</span>
+
     </div>
 
     <div class="login-field">
+
       <label>KULLANICI ADI</label>
-      <input id="username" type="text" autocomplete="username">
+
+      <input
+        id="username"
+        type="text"
+        autocomplete="username"
+      >
+
     </div>
 
     <div class="login-field">
+
       <label>ŞİFRE</label>
-      <input id="password" type="password" autocomplete="current-password">
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+      >
+
     </div>
 
-    <button class="login-btn" id="loginButton">
+    <button
+      class="login-btn"
+      id="loginButton"
+    >
       GİRİŞ YAP
     </button>
 
-    <div class="error" id="loginError"></div>
+    <div
+      class="error"
+      id="loginError"
+    ></div>
 
   </div>
 
 </div>
 
 
-<!-- PANEL -->
+<!-- =========================
+     PANEL
+========================= -->
+
 <div id="panel">
 
 <header class="admin-head">
+
   <div class="admin-head-inner">
 
     <div class="admin-brand">
-      <img src="assets/logo/logo.png" alt="Kuğulu Park Rangers">
+
+      <img
+        src="assets/logo/logo.png"
+        alt="Kuğulu Park Rangers"
+      >
+
       <div>
-        <strong>KUĞULU PARK RANGERS</strong>
-        <small>YÖNETİM PANELİ</small>
+
+        <strong>
+          KUĞULU PARK RANGERS
+        </strong>
+
+        <small>
+          YÖNETİM PANELİ
+        </small>
+
       </div>
+
     </div>
 
     <div class="admin-actions-top">
-      <a class="btn-admin" href="index.html">SİTEYE DÖN</a>
-      <button class="btn-admin" id="logoutButton">ÇIKIŞ</button>
+
+      <a
+        class="btn-admin"
+        href="index.html"
+      >
+        SİTEYE DÖN
+      </a>
+
+      <button
+        class="btn-admin"
+        id="logoutButton"
+      >
+        ÇIKIŞ
+      </button>
+
     </div>
 
   </div>
+
 </header>
 
 
 <div class="admin-grid">
 
+
+<!-- =========================
+     SOL MENÜ
+========================= -->
+
 <aside class="admin-side">
 
-  <div class="kicker">YÖNETİM</div>
+  <div class="kicker">
+    YÖNETİM
+  </div>
 
   <a href="#club">Kulüp</a>
   <a href="#news">Haberler</a>
@@ -476,146 +581,304 @@ button{
 
 <main class="admin-main">
 
+
 <div class="notice">
+
   <strong>Yönetim paneli aktif.</strong>
+
   Buradaki değişiklikler bu tarayıcıda kaydedilir.
-  Düzenleme yaptıktan sonra ilgili bölümün <strong>KAYDET</strong> butonuna bas.
+
+  Haberlerde başlık, tarih, etiket, görsel ve
+  <strong>detay yazısını</strong> değiştirebilirsin.
+
 </div>
 
 
-<!-- KULÜP -->
+<!-- =========================
+     KULÜP
+========================= -->
 
-<section class="admin-card" id="club">
+<section
+  class="admin-card"
+  id="club"
+>
 
-<div class="kicker">KULÜP</div>
-<h2>Kulüp Bilgileri</h2>
+  <div class="kicker">
+    KULÜP
+  </div>
 
-<div id="clubEditor" class="form-grid"></div>
+  <h2>Kulüp Bilgileri</h2>
 
-<div class="admin-buttons">
-  <button class="btn-admin orange" id="saveClub">KULÜP BİLGİLERİNİ KAYDET</button>
-  <span class="save-message" id="clubMessage"></span>
-</div>
+  <div
+    id="clubEditor"
+    class="form-grid"
+  ></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveClub"
+    >
+      KULÜP BİLGİLERİNİ KAYDET
+    </button>
+
+    <span
+      class="save-message"
+      id="clubMessage"
+    ></span>
+
+  </div>
 
 </section>
 
 
-<!-- HABERLER -->
+<!-- =========================
+     HABERLER
+========================= -->
 
-<section class="admin-card" id="news">
+<section
+  class="admin-card"
+  id="news"
+>
 
-<div class="kicker">İÇERİK</div>
-<h2>Haberler</h2>
+  <div class="kicker">
+    İÇERİK
+  </div>
 
-<div id="newsEditor"></div>
+  <h2>Haberler</h2>
 
-<div class="admin-buttons">
-  <button class="btn-admin orange" id="saveNews">HABERLERİ KAYDET</button>
-  <button class="btn-admin" id="addNews">+ HABER EKLE</button>
-  <span class="save-message" id="newsMessage"></span>
-</div>
+  <div id="newsEditor"></div>
 
-</section>
+  <div class="admin-buttons">
 
+    <button
+      class="btn-admin orange"
+      id="saveNews"
+    >
+      HABERLERİ KAYDET
+    </button>
 
-<!-- FİKSTÜR -->
+    <button
+      class="btn-admin"
+      id="addNews"
+    >
+      + HABER EKLE
+    </button>
 
-<section class="admin-card" id="fixtures">
+    <span
+      class="save-message"
+      id="newsMessage"
+    ></span>
 
-<div class="kicker">MAÇLAR</div>
-<h2>Fikstür</h2>
-
-<div id="fixtureEditor"></div>
-
-<div class="admin-buttons">
-  <button class="btn-admin orange" id="saveFixtures">FİKSTÜRÜ KAYDET</button>
-  <button class="btn-admin" id="addFixture">+ MAÇ EKLE</button>
-  <span class="save-message" id="fixtureMessage"></span>
-</div>
-
-</section>
-
-
-<!-- OYUNCULAR -->
-
-<section class="admin-card" id="players">
-
-<div class="kicker">KADRO</div>
-<h2>Oyuncular</h2>
-
-<div id="playerEditor"></div>
-
-<div class="admin-buttons">
-  <button class="btn-admin orange" id="savePlayers">KADROYU KAYDET</button>
-  <button class="btn-admin" id="addPlayer">+ OYUNCU EKLE</button>
-  <span class="save-message" id="playerMessage"></span>
-</div>
+  </div>
 
 </section>
 
 
-<!-- BAŞARILAR -->
+<!-- =========================
+     FİKSTÜR
+========================= -->
 
-<section class="admin-card" id="achievements">
+<section
+  class="admin-card"
+  id="fixtures"
+>
 
-<div class="kicker">KULÜP TARİHİ</div>
-<h2>Başarılar</h2>
+  <div class="kicker">
+    MAÇLAR
+  </div>
 
-<div id="achievementEditor"></div>
+  <h2>Fikstür</h2>
 
-<div class="admin-buttons">
-  <button class="btn-admin orange" id="saveAchievements">BAŞARILARI KAYDET</button>
-  <button class="btn-admin" id="addAchievement">+ BAŞARI EKLE</button>
-  <span class="save-message" id="achievementMessage"></span>
-</div>
+  <div id="fixtureEditor"></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveFixtures"
+    >
+      FİKSTÜRÜ KAYDET
+    </button>
+
+    <button
+      class="btn-admin"
+      id="addFixture"
+    >
+      + MAÇ EKLE
+    </button>
+
+    <span
+      class="save-message"
+      id="fixtureMessage"
+    ></span>
+
+  </div>
 
 </section>
 
 
-<!-- YEDEK -->
+<!-- =========================
+     OYUNCULAR
+========================= -->
 
-<section class="admin-card" id="backup">
+<section
+  class="admin-card"
+  id="players"
+>
 
-<div class="kicker">YEDEK / AKTARIM</div>
-<h2>Veri Yönetimi</h2>
+  <div class="kicker">
+    KADRO
+  </div>
 
-<p style="color:#92979d;line-height:1.7">
-  Sitedeki yönetim verilerini JSON dosyası olarak bilgisayarına yedekleyebilirsin.
-  Daha sonra aynı dosyayı tekrar yükleyerek geri getirebilirsin.
-</p>
+  <h2>Oyuncular</h2>
 
-<div class="admin-buttons">
+  <div id="playerEditor"></div>
 
-<button class="btn-admin" id="exportButton">
-  JSON DIŞA AKTAR
-</button>
+  <div class="admin-buttons">
 
-<label class="btn-admin" for="importFile">
-  JSON İÇE AKTAR
-</label>
+    <button
+      class="btn-admin orange"
+      id="savePlayers"
+    >
+      KADROYU KAYDET
+    </button>
 
-<input id="importFile" type="file" accept=".json" hidden>
+    <button
+      class="btn-admin"
+      id="addPlayer"
+    >
+      + OYUNCU EKLE
+    </button>
 
-<button class="btn-admin" id="resetButton">
-  VARSAYILANLARA DÖN
-</button>
+    <span
+      class="save-message"
+      id="playerMessage"
+    ></span>
 
-</div>
+  </div>
+
+</section>
+
+
+<!-- =========================
+     BAŞARILAR
+========================= -->
+
+<section
+  class="admin-card"
+  id="achievements"
+>
+
+  <div class="kicker">
+    KULÜP TARİHİ
+  </div>
+
+  <h2>Başarılar</h2>
+
+  <div id="achievementEditor"></div>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin orange"
+      id="saveAchievements"
+    >
+      BAŞARILARI KAYDET
+    </button>
+
+    <button
+      class="btn-admin"
+      id="addAchievement"
+    >
+      + BAŞARI EKLE
+    </button>
+
+    <span
+      class="save-message"
+      id="achievementMessage"
+    ></span>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     YEDEK
+========================= -->
+
+<section
+  class="admin-card"
+  id="backup"
+>
+
+  <div class="kicker">
+    YEDEK / AKTARIM
+  </div>
+
+  <h2>Veri Yönetimi</h2>
+
+  <p style="color:#92979d;line-height:1.7">
+
+    Sitedeki yönetim verilerini JSON dosyası olarak
+    bilgisayarına yedekleyebilirsin.
+
+    Daha sonra aynı dosyayı tekrar yükleyerek
+    geri getirebilirsin.
+
+  </p>
+
+  <div class="admin-buttons">
+
+    <button
+      class="btn-admin"
+      id="exportButton"
+    >
+      JSON DIŞA AKTAR
+    </button>
+
+    <label
+      class="btn-admin"
+      for="importFile"
+    >
+      JSON İÇE AKTAR
+    </label>
+
+    <input
+      id="importFile"
+      type="file"
+      accept=".json"
+      hidden
+    >
+
+    <button
+      class="btn-admin"
+      id="resetButton"
+    >
+      VARSAYILANLARA DÖN
+    </button>
+
+  </div>
 
 </section>
 
 </main>
+
 </div>
+
 </div>
 
 
 <script src="js/data.js"></script>
 
+
 <script>
 
 /* =====================================================
    KUĞULU PARK RANGERS
-   ADMIN PANEL
+   GELİŞMİŞ ADMIN PANELİ
 ===================================================== */
 
 (function(){
@@ -623,38 +886,63 @@ button{
 "use strict";
 
 
-/* -----------------------------
+/* =====================================================
    GİRİŞ
------------------------------ */
+===================================================== */
 
 const USERS = {
+
   ergun: "ergun12",
+
   eymen: "eymen12"
+
 };
 
-const LOGIN_KEY = "kpr_admin_login";
-const DATA_KEY = "kpr_admin_data";
+const LOGIN_KEY =
+  "kpr_admin_login";
+
+const DATA_KEY =
+  "kpr_admin_data";
 
 
-const loginScreen = document.getElementById("loginScreen");
-const panel = document.getElementById("panel");
-const loginError = document.getElementById("loginError");
+const loginScreen =
+  document.getElementById("loginScreen");
+
+const panel =
+  document.getElementById("panel");
+
+const loginError =
+  document.getElementById("loginError");
 
 
 function login(){
 
   const username =
-    document.getElementById("username").value.trim();
+    document
+      .getElementById("username")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("password").value;
+    document
+      .getElementById("password")
+      .value;
 
-  if(USERS[username] && USERS[username] === password){
+  if(
+    USERS[username] &&
+    USERS[username] === password
+  ){
 
-    localStorage.setItem(LOGIN_KEY, username);
+    localStorage.setItem(
+      LOGIN_KEY,
+      username
+    );
 
-    loginScreen.style.display = "none";
-    panel.style.display = "block";
+    loginScreen.style.display =
+      "none";
+
+    panel.style.display =
+      "block";
 
     renderAll();
 
@@ -668,49 +956,86 @@ function login(){
 }
 
 
-document.getElementById("loginButton")
-  .addEventListener("click", login);
+document
+  .getElementById("loginButton")
+  .addEventListener(
+    "click",
+    login
+  );
 
 
-document.getElementById("password")
-  .addEventListener("keydown", function(e){
+document
+  .getElementById("password")
+  .addEventListener(
+    "keydown",
+    function(e){
 
-    if(e.key === "Enter"){
-      login();
+      if(e.key === "Enter"){
+        login();
+      }
+
     }
-
-});
-
-
-document.getElementById("logoutButton")
-  .addEventListener("click", function(){
-
-    localStorage.removeItem(LOGIN_KEY);
-
-    panel.style.display = "none";
-    loginScreen.style.display = "flex";
-
-});
+  );
 
 
-/* -----------------------------
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      localStorage.removeItem(
+        LOGIN_KEY
+      );
+
+      panel.style.display =
+        "none";
+
+      loginScreen.style.display =
+        "flex";
+
+    }
+  );
+
+
+/* =====================================================
    VERİ
------------------------------ */
+===================================================== */
 
 function clone(value){
 
-  return JSON.parse(JSON.stringify(value));
+  return JSON.parse(
+    JSON.stringify(value)
+  );
 
 }
 
 
 function getBaseData(){
 
-  if(window.KUGULU_DATA){
-    return clone(window.KUGULU_DATA);
+  if(
+    window.KUGULU_DATA
+  ){
+
+    return clone(
+      window.KUGULU_DATA
+    );
+
+  }
+
+  if(
+    window.KPR &&
+    typeof window.KPR.load === "function"
+  ){
+
+    return clone(
+      window.KPR.load()
+    );
+
   }
 
   return {
+
     club:{
       name:"Kuğulu Park Rangers",
       founded:"2020",
@@ -726,6 +1051,7 @@ function getBaseData(){
     players:[],
 
     achievements:[]
+
   };
 
 }
@@ -736,15 +1062,24 @@ function loadData(){
   try{
 
     const saved =
-      localStorage.getItem(DATA_KEY);
+      localStorage.getItem(
+        DATA_KEY
+      );
 
     if(saved){
-      return JSON.parse(saved);
+
+      return JSON.parse(
+        saved
+      );
+
     }
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Veri okunamadı:",
+      error
+    );
 
   }
 
@@ -753,7 +1088,8 @@ function loadData(){
 }
 
 
-let data = loadData();
+let data =
+  loadData();
 
 
 function saveData(){
@@ -766,840 +1102,1593 @@ function saveData(){
 }
 
 
-/* -----------------------------
+/* =====================================================
    YARDIMCI
------------------------------ */
+===================================================== */
 
 function esc(value){
 
-  return String(value ?? "")
-    .replace(/[&<>"']/g,function(c){
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    function(c){
 
       return {
+
         "&":"&amp;",
+
         "<":"&lt;",
+
         ">":"&gt;",
+
         '"':"&quot;",
+
         "'":"&#039;"
+
       }[c];
 
-    });
+    }
+  );
 
 }
 
 
 function message(id){
 
-  const el = document.getElementById(id);
+  const el =
+    document.getElementById(id);
 
-  el.textContent = "✓ Kaydedildi";
+  if(!el) return;
 
-  setTimeout(function(){
-    el.textContent = "";
-  },2500);
+  el.textContent =
+    "✓ Kaydedildi";
+
+  setTimeout(
+    function(){
+
+      el.textContent = "";
+
+    },
+    2500
+  );
 
 }
 
 
-/* -----------------------------
+/* =====================================================
    KULÜP
------------------------------ */
+===================================================== */
 
 function renderClub(){
 
   const club =
     data.club || {};
 
+
   const fields = [
+
     ["name","Kulüp Adı"],
+
     ["founded","Kuruluş"],
+
     ["sponsor","Sponsor"],
+
     ["email","E-posta"],
+
     ["phone","Telefon"]
+
   ];
 
-  document.getElementById("clubEditor").innerHTML =
-    fields.map(function(field){
 
-      const key = field[0];
-      const label = field[1];
+  document
+    .getElementById("clubEditor")
+    .innerHTML =
 
-      return `
-        <div class="field">
-          <label>${label}</label>
-          <input
-            data-club="${key}"
-            value="${esc(club[key])}">
-        </div>
-      `;
+    fields
+      .map(function(field){
 
-    }).join("");
+        const key =
+          field[0];
+
+        const label =
+          field[1];
+
+        return `
+
+          <div class="field">
+
+            <label>
+              ${label}
+            </label>
+
+            <input
+              data-club="${key}"
+              value="${esc(club[key])}"
+            >
+
+          </div>
+
+        `;
+
+      })
+      .join("");
 
 }
 
 
-document.getElementById("saveClub")
-  .addEventListener("click",function(){
+document
+  .getElementById("saveClub")
+  .addEventListener(
+    "click",
+    function(){
 
-    document
-      .querySelectorAll("[data-club]")
-      .forEach(function(input){
+      if(!data.club){
+        data.club = {};
+      }
 
-        data.club[input.dataset.club] =
-          input.value;
+      document
+        .querySelectorAll(
+          "[data-club]"
+        )
+        .forEach(
+          function(input){
 
-      });
+            data.club[
+              input.dataset.club
+            ] =
+              input.value;
 
-    saveData();
+          }
+        );
 
-    message("clubMessage");
+      saveData();
 
-});
+      message(
+        "clubMessage"
+      );
+
+    }
+  );
 
 
-/* -----------------------------
+/* =====================================================
    HABERLER
------------------------------ */
+===================================================== */
 
 function renderNews(){
 
-  if(!Array.isArray(data.news)){
+  if(
+    !Array.isArray(data.news)
+  ){
+
     data.news = [];
+
   }
 
-  document.getElementById("newsEditor").innerHTML =
 
-    data.news.map(function(news,index){
+  const editor =
+    document.getElementById(
+      "newsEditor"
+    );
 
-      return `
-      <div class="edit-item">
 
-        <div class="edit-item-head">
-          <strong>HABER ${index + 1}</strong>
+  if(!data.news.length){
 
-          <button
-            class="delete-btn"
-            data-delete-news="${index}">
-            SİL
-          </button>
-        </div>
+    editor.innerHTML = `
 
-        <div class="form-grid">
+      <div class="empty">
 
-          <div class="field">
-            <label>BAŞLIK</label>
-            <input
-              data-news-title="${index}"
-              value="${esc(news.title)}">
-          </div>
+        Henüz haber yok.
 
-          <div class="field">
-            <label>TARİH</label>
-            <input
-              data-news-date="${index}"
-              value="${esc(news.date)}">
-          </div>
+        <br><br>
 
-          <div class="field">
-            <label>ETİKET</label>
-            <input
-              data-news-tag="${index}"
-              value="${esc(news.tag)}">
-          </div>
-
-          <div class="field">
-            <label>GÖRSEL YOLU</label>
-            <input
-              data-news-image="${index}"
-              value="${esc(news.image)}">
-          </div>
-
-        </div>
+        <strong>
+          + HABER EKLE
+        </strong>
+        butonuna basarak ilk haberi oluştur.
 
       </div>
-      `;
 
-    }).join("");
+    `;
 
+    return;
+
+  }
+
+
+  editor.innerHTML =
+
+    data.news
+      .map(function(news,index){
+
+        return `
+
+        <div class="edit-item">
+
+          <div class="edit-item-head">
+
+            <strong>
+              HABER ${index + 1}
+            </strong>
+
+            <a
+              class="preview-btn"
+              href="haber.html?id=${index}"
+              target="_blank"
+            >
+              👁 HABERİ GÖR
+            </a>
+
+            <button
+              class="delete-btn"
+              data-delete-news="${index}"
+            >
+              SİL
+            </button>
+
+          </div>
+
+
+          <div class="form-grid">
+
+
+            <!-- BAŞLIK -->
+
+            <div class="field full">
+
+              <label>
+                BAŞLIK
+              </label>
+
+              <input
+                data-news-title="${index}"
+                value="${esc(news.title)}"
+                placeholder="Haber başlığı"
+              >
+
+            </div>
+
+
+            <!-- TARİH -->
+
+            <div class="field">
+
+              <label>
+                TARİH
+              </label>
+
+              <input
+                data-news-date="${index}"
+                value="${esc(news.date)}"
+                placeholder="10 Ağustos 2026"
+              >
+
+            </div>
+
+
+            <!-- ETİKET -->
+
+            <div class="field">
+
+              <label>
+                ETİKET
+              </label>
+
+              <input
+                data-news-tag="${index}"
+                value="${esc(news.tag)}"
+                placeholder="Kulüp"
+              >
+
+            </div>
+
+
+            <!-- GÖRSEL -->
+
+            <div class="field full">
+
+              <label>
+                GÖRSEL YOLU
+              </label>
+
+              <input
+                data-news-image="${index}"
+                value="${esc(news.image)}"
+                placeholder="assets/news/haber1.jpg"
+              >
+
+              <div class="news-content-help">
+
+                Örnek:
+                assets/news/haber1.jpg
+
+                veya internetteki doğrudan görsel adresi.
+
+              </div>
+
+            </div>
+
+
+            <!-- DETAY İÇERİĞİ -->
+
+            <div class="field full">
+
+              <label>
+                HABER DETAYI
+              </label>
+
+              <textarea
+                data-news-content="${index}"
+                placeholder="Haberin detayını buraya yaz..."
+              >${esc(news.content || "")}</textarea>
+
+              <div class="news-content-help">
+
+                Buraya yazdığın içerik
+                haber.html sayfasında
+                haberin altında gösterilir.
+
+                Paragraflar arasında boş satır
+                bırakırsan ayrı paragraf olarak görünür.
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  /* SİL */
 
   document
-    .querySelectorAll("[data-delete-news]")
-    .forEach(function(button){
+    .querySelectorAll(
+      "[data-delete-news]"
+    )
+    .forEach(
+      function(button){
 
-      button.addEventListener("click",function(){
+        button.addEventListener(
+          "click",
+          function(){
 
-        const index =
-          Number(button.dataset.deleteNews);
+            const index =
+              Number(
+                button.dataset.deleteNews
+              );
 
-        data.news.splice(index,1);
+            if(
+              !confirm(
+                "Bu haberi silmek istediğine emin misin?"
+              )
+            ){
 
-        saveData();
-        renderNews();
+              return;
 
-      });
+            }
 
-    });
+            data.news.splice(
+              index,
+              1
+            );
+
+            saveData();
+
+            renderNews();
+
+          }
+        );
+
+      }
+    );
 
 }
 
 
-document.getElementById("addNews")
-  .addEventListener("click",function(){
-
-    if(!Array.isArray(data.news)){
-      data.news=[];
-    }
-
-    data.news.unshift({
-
-      title:"Yeni Haber",
-      date:"10 Ağustos 2026",
-      tag:"Kulüp",
-      image:""
-
-    });
-
-    renderNews();
-
-});
-
-
-document.getElementById("saveNews")
-  .addEventListener("click",function(){
-
-    document
-      .querySelectorAll("[data-news-title]")
-      .forEach(function(input){
-
-        data.news[
-          Number(input.dataset.newsTitle)
-        ].title = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-news-date]")
-      .forEach(function(input){
-
-        data.news[
-          Number(input.dataset.newsDate)
-        ].date = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-news-tag]")
-      .forEach(function(input){
-
-        data.news[
-          Number(input.dataset.newsTag)
-        ].tag = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-news-image]")
-      .forEach(function(input){
-
-        data.news[
-          Number(input.dataset.newsImage)
-        ].image = input.value;
-
-      });
-
-
-    saveData();
-
-    message("newsMessage");
-
-});
-
-
-/* -----------------------------
-   FİKSTÜR
------------------------------ */
-
-function renderFixtures(){
-
-  if(!Array.isArray(data.fixtures)){
-    data.fixtures=[];
-  }
-
-  document.getElementById("fixtureEditor").innerHTML =
-
-    data.fixtures.map(function(match,index){
-
-      return `
-      <div class="edit-item">
-
-        <div class="edit-item-head">
-
-          <strong>MAÇ ${index + 1}</strong>
-
-          <button
-            class="delete-btn"
-            data-delete-fixture="${index}">
-            SİL
-          </button>
-
-        </div>
-
-        <div class="form-grid">
-
-          <div class="field">
-            <label>TARİH</label>
-            <input
-              data-fixture-date="${index}"
-              value="${esc(match.date)}">
-          </div>
-
-          <div class="field">
-            <label>SAAT</label>
-            <input
-              data-fixture-time="${index}"
-              value="${esc(match.time)}">
-          </div>
-
-          <div class="field">
-            <label>EV SAHİBİ</label>
-            <input
-              data-fixture-home="${index}"
-              value="${esc(match.home)}">
-          </div>
-
-          <div class="field">
-            <label>DEPLASMAN</label>
-            <input
-              data-fixture-away="${index}"
-              value="${esc(match.away)}">
-          </div>
-
-        </div>
-
-      </div>
-      `;
-
-    }).join("");
-
-
-  document
-    .querySelectorAll("[data-delete-fixture]")
-    .forEach(function(button){
-
-      button.addEventListener("click",function(){
-
-        const index =
-          Number(button.dataset.deleteFixture);
-
-        data.fixtures.splice(index,1);
-
-        saveData();
-        renderFixtures();
-
-      });
-
-    });
-
-}
-
-
-document.getElementById("addFixture")
-  .addEventListener("click",function(){
-
-    if(!Array.isArray(data.fixtures)){
-      data.fixtures=[];
-    }
-
-    data.fixtures.push({
-
-      date:"01 Eyl",
-      time:"19:00",
-      home:"Kuğulu Park Rangers",
-      away:"Rakip"
-
-    });
-
-    renderFixtures();
-
-});
-
-
-document.getElementById("saveFixtures")
-  .addEventListener("click",function(){
-
-    document
-      .querySelectorAll("[data-fixture-date]")
-      .forEach(function(input){
-
-        data.fixtures[
-          Number(input.dataset.fixtureDate)
-        ].date = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-fixture-time]")
-      .forEach(function(input){
-
-        data.fixtures[
-          Number(input.dataset.fixtureTime)
-        ].time = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-fixture-home]")
-      .forEach(function(input){
-
-        data.fixtures[
-          Number(input.dataset.fixtureHome)
-        ].home = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-fixture-away]")
-      .forEach(function(input){
-
-        data.fixtures[
-          Number(input.dataset.fixtureAway)
-        ].away = input.value;
-
-      });
-
-
-    saveData();
-
-    message("fixtureMessage");
-
-});
-
-
-/* -----------------------------
-   OYUNCULAR
------------------------------ */
-
-function renderPlayers(){
-
-  if(!Array.isArray(data.players)){
-    data.players=[];
-  }
-
-  const positions = [
-    "Kaleci",
-    "Defans",
-    "Orta Saha",
-    "Forvet"
-  ];
-
-
-  document.getElementById("playerEditor").innerHTML =
-
-    data.players.map(function(player,index){
-
-      return `
-      <div class="edit-item">
-
-        <div class="edit-item-head">
-
-          <strong>OYUNCU ${index + 1}</strong>
-
-          <button
-            class="delete-btn"
-            data-delete-player="${index}">
-            SİL
-          </button>
-
-        </div>
-
-        <div class="form-grid">
-
-          <div class="field">
-            <label>FORMA NUMARASI</label>
-            <input
-              data-player-number="${index}"
-              value="${esc(player.number)}">
-          </div>
-
-          <div class="field">
-            <label>OYUNCU ADI</label>
-            <input
-              data-player-name="${index}"
-              value="${esc(player.name)}">
-          </div>
-
-          <div class="field">
-            <label>MEVKİ</label>
-
-            <select data-player-position="${index}">
-
-              ${positions.map(function(position){
-
-                return `
-                <option
-                  value="${esc(position)}"
-                  ${player.position === position ? "selected" : ""}>
-                  ${esc(position)}
-                </option>
-                `;
-
-              }).join("")}
-
-            </select>
-
-          </div>
-
-          <div class="field">
-            <label>GÖRSEL YOLU</label>
-            <input
-              data-player-image="${index}"
-              value="${esc(player.image)}">
-          </div>
-
-        </div>
-
-      </div>
-      `;
-
-    }).join("");
-
-
-  document
-    .querySelectorAll("[data-delete-player]")
-    .forEach(function(button){
-
-      button.addEventListener("click",function(){
-
-        const index =
-          Number(button.dataset.deletePlayer);
-
-        data.players.splice(index,1);
-
-        saveData();
-        renderPlayers();
-
-      });
-
-    });
-
-}
-
-
-document.getElementById("addPlayer")
-  .addEventListener("click",function(){
-
-    if(!Array.isArray(data.players)){
-      data.players=[];
-    }
-
-    data.players.push({
-
-      number:"00",
-      name:"Yeni Oyuncu",
-      position:"Forvet",
-      image:"assets/players/yeni-oyuncu.jpg"
-
-    });
-
-    renderPlayers();
-
-});
-
-
-document.getElementById("savePlayers")
-  .addEventListener("click",function(){
-
-    document
-      .querySelectorAll("[data-player-number]")
-      .forEach(function(input){
-
-        data.players[
-          Number(input.dataset.playerNumber)
-        ].number = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-player-name]")
-      .forEach(function(input){
-
-        data.players[
-          Number(input.dataset.playerName)
-        ].name = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-player-position]")
-      .forEach(function(input){
-
-        data.players[
-          Number(input.dataset.playerPosition)
-        ].position = input.value;
-
-      });
-
-
-    document
-      .querySelectorAll("[data-player-image]")
-      .forEach(function(input){
-
-        data.players[
-          Number(input.dataset.playerImage)
-        ].image = input.value;
-
-      });
-
-
-    saveData();
-
-    message("playerMessage");
-
-});
-
-
-/* -----------------------------
-   BAŞARILAR
------------------------------ */
-
-function renderAchievements(){
-
-  if(!Array.isArray(data.achievements)){
-    data.achievements=[];
-  }
-
-
-  document.getElementById("achievementEditor").innerHTML =
-
-    data.achievements.map(function(achievement,index){
-
-      const value =
-        typeof achievement === "string"
-          ? achievement
-          : achievement.title || "";
-
-      return `
-      <div class="edit-item">
-
-        <div class="edit-item-head">
-
-          <strong>BAŞARI ${index + 1}</strong>
-
-          <button
-            class="delete-btn"
-            data-delete-achievement="${index}">
-            SİL
-          </button>
-
-        </div>
-
-        <div class="field">
-
-          <label>BAŞARI</label>
-
-          <input
-            data-achievement="${index}"
-            value="${esc(value)}">
-
-        </div>
-
-      </div>
-      `;
-
-    }).join("");
-
-
-  document
-    .querySelectorAll("[data-delete-achievement]")
-    .forEach(function(button){
-
-      button.addEventListener("click",function(){
-
-        const index =
-          Number(button.dataset.deleteAchievement);
-
-        data.achievements.splice(index,1);
-
-        saveData();
-        renderAchievements();
-
-      });
-
-    });
-
-}
-
-
-document.getElementById("addAchievement")
-  .addEventListener("click",function(){
-
-    if(!Array.isArray(data.achievements)){
-      data.achievements=[];
-    }
-
-    data.achievements.push("Yeni Başarı");
-
-    renderAchievements();
-
-});
-
-
-document.getElementById("saveAchievements")
-  .addEventListener("click",function(){
-
-    document
-      .querySelectorAll("[data-achievement]")
-      .forEach(function(input){
-
-        data.achievements[
-          Number(input.dataset.achievement)
-        ] = input.value;
-
-      });
-
-
-    saveData();
-
-    message("achievementMessage");
-
-});
-
-
-/* -----------------------------
-   YEDEK
------------------------------ */
-
-document.getElementById("exportButton")
-  .addEventListener("click",function(){
-
-    const json =
-      JSON.stringify(data,null,2);
-
-    const blob =
-      new Blob([json],{
-        type:"application/json"
-      });
-
-    const url =
-      URL.createObjectURL(blob);
-
-    const a =
-      document.createElement("a");
-
-    a.href=url;
-
-    a.download =
-      "kugulu-park-rangers-yedek.json";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(url);
-
-});
-
-
-document.getElementById("importFile")
-  .addEventListener("change",function(event){
-
-    const file =
-      event.target.files[0];
-
-    if(!file) return;
-
-    const reader =
-      new FileReader();
-
-    reader.onload=function(){
-
-      try{
-
-        const imported =
-          JSON.parse(reader.result);
-
-        data = imported;
-
-        saveData();
-
-        renderAll();
-
-        alert("Yedek başarıyla yüklendi.");
-
-      }catch(error){
-
-        alert("Bu dosya geçerli bir JSON yedeği değil.");
+document
+  .getElementById("addNews")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !Array.isArray(data.news)
+      ){
+
+        data.news = [];
 
       }
 
-    };
 
-    reader.readAsText(file);
+      data.news.unshift({
 
-});
+        title:
+          "Yeni Haber",
+
+        date:
+          "10 Ağustos 2026",
+
+        tag:
+          "Kulüp",
+
+        image:
+          "",
+
+        content:
+          "Yeni haberinizin detaylarını buraya yazabilirsiniz."
+
+      });
 
 
-document.getElementById("resetButton")
-  .addEventListener("click",function(){
+      saveData();
 
-    if(!confirm(
-      "Yerel yönetim verilerinin tamamı varsayılana döndürülsün mü?"
-    )){
-      return;
+      renderNews();
+
+      document
+        .getElementById("news")
+        .scrollIntoView({
+          behavior:"smooth"
+        });
+
     }
-
-    localStorage.removeItem(DATA_KEY);
-
-    data =
-      getBaseData();
-
-    renderAll();
-
-});
+  );
 
 
-/* -----------------------------
+document
+  .getElementById("saveNews")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !Array.isArray(data.news)
+      ){
+
+        data.news = [];
+
+      }
+
+
+      /* BAŞLIK */
+
+      document
+        .querySelectorAll(
+          "[data-news-title]"
+        )
+        .forEach(
+          function(input){
+
+            const index =
+              Number(
+                input.dataset.newsTitle
+              );
+
+            if(data.news[index]){
+
+              data.news[index].title =
+                input.value;
+
+            }
+
+          }
+        );
+
+
+      /* TARİH */
+
+      document
+        .querySelectorAll(
+          "[data-news-date]"
+        )
+        .forEach(
+          function(input){
+
+            const index =
+              Number(
+                input.dataset.newsDate
+              );
+
+            if(data.news[index]){
+
+              data.news[index].date =
+                input.value;
+
+            }
+
+          }
+        );
+
+
+      /* ETİKET */
+
+      document
+        .querySelectorAll(
+          "[data-news-tag]"
+        )
+        .forEach(
+          function(input){
+
+            const index =
+              Number(
+                input.dataset.newsTag
+              );
+
+            if(data.news[index]){
+
+              data.news[index].tag =
+                input.value;
+
+            }
+
+          }
+        );
+
+
+      /* GÖRSEL */
+
+      document
+        .querySelectorAll(
+          "[data-news-image]"
+        )
+        .forEach(
+          function(input){
+
+            const index =
+              Number(
+                input.dataset.newsImage
+              );
+
+            if(data.news[index]){
+
+              data.news[index].image =
+                input.value;
+
+            }
+
+          }
+        );
+
+
+      /* DETAY İÇERİĞİ */
+
+      document
+        .querySelectorAll(
+          "[data-news-content]"
+        )
+        .forEach(
+          function(input){
+
+            const index =
+              Number(
+                input.dataset.newsContent
+              );
+
+            if(data.news[index]){
+
+              data.news[index].content =
+                input.value;
+
+            }
+
+          }
+        );
+
+
+      saveData();
+
+      message(
+        "newsMessage"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   FİKSTÜR
+===================================================== */
+
+function renderFixtures(){
+
+  if(
+    !Array.isArray(data.fixtures)
+  ){
+
+    data.fixtures = [];
+
+  }
+
+
+  const editor =
+    document.getElementById(
+      "fixtureEditor"
+    );
+
+
+  if(!data.fixtures.length){
+
+    editor.innerHTML = `
+
+      <div class="empty">
+        Henüz fikstür bulunmuyor.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  editor.innerHTML =
+
+    data.fixtures
+      .map(function(match,index){
+
+        return `
+
+        <div class="edit-item">
+
+          <div class="edit-item-head">
+
+            <strong>
+              MAÇ ${index + 1}
+            </strong>
+
+            <button
+              class="delete-btn"
+              data-delete-fixture="${index}"
+            >
+              SİL
+            </button>
+
+          </div>
+
+
+          <div class="form-grid">
+
+
+            <div class="field">
+
+              <label>
+                TARİH
+              </label>
+
+              <input
+                data-fixture-date="${index}"
+                value="${esc(match.date)}"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                SAAT
+              </label>
+
+              <input
+                data-fixture-time="${index}"
+                value="${esc(match.time)}"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                EV SAHİBİ
+              </label>
+
+              <input
+                data-fixture-home="${index}"
+                value="${esc(match.home)}"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                DEPLASMAN
+              </label>
+
+              <input
+                data-fixture-away="${index}"
+                value="${esc(match.away)}"
+              >
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  document
+    .querySelectorAll(
+      "[data-delete-fixture]"
+    )
+    .forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            const index =
+              Number(
+                button.dataset.deleteFixture
+              );
+
+            data.fixtures.splice(
+              index,
+              1
+            );
+
+            saveData();
+
+            renderFixtures();
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+document
+  .getElementById("addFixture")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !Array.isArray(data.fixtures)
+      ){
+
+        data.fixtures = [];
+
+      }
+
+
+      data.fixtures.push({
+
+        date:
+          "01 Eyl",
+
+        time:
+          "19:00",
+
+        home:
+          "Kuğulu Park Rangers",
+
+        away:
+          "Rakip"
+
+      });
+
+
+      renderFixtures();
+
+    }
+  );
+
+
+document
+  .getElementById("saveFixtures")
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .querySelectorAll(
+          "[data-fixture-date]"
+        )
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureDate
+              )
+            ].date =
+              input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          "[data-fixture-time]"
+        )
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureTime
+              )
+            ].time =
+              input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          "[data-fixture-home]"
+        )
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureHome
+              )
+            ].home =
+              input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          "[data-fixture-away]"
+        )
+        .forEach(
+          function(input){
+
+            data.fixtures[
+              Number(
+                input.dataset.fixtureAway
+              )
+            ].away =
+              input.value;
+
+          }
+        );
+
+
+      saveData();
+
+      message(
+        "fixtureMessage"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   OYUNCULAR
+===================================================== */
+
+function renderPlayers(){
+
+  if(
+    !Array.isArray(data.players)
+  ){
+
+    data.players = [];
+
+  }
+
+
+  const positions = [
+
+    "Kaleci",
+
+    "Defans",
+
+    "Orta Saha",
+
+    "Forvet"
+
+  ];
+
+
+  const editor =
+    document.getElementById(
+      "playerEditor"
+    );
+
+
+  if(!data.players.length){
+
+    editor.innerHTML = `
+
+      <div class="empty">
+        Henüz oyuncu bulunmuyor.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  editor.innerHTML =
+
+    data.players
+      .map(function(player,index){
+
+        return `
+
+        <div class="edit-item">
+
+          <div class="edit-item-head">
+
+            <strong>
+              OYUNCU ${index + 1}
+            </strong>
+
+            <button
+              class="delete-btn"
+              data-delete-player="${index}"
+            >
+              SİL
+            </button>
+
+          </div>
+
+
+          <div class="form-grid">
+
+
+            <div class="field">
+
+              <label>
+                FORMA NUMARASI
+              </label>
+
+              <input
+                data-player-number="${index}"
+                value="${esc(player.number)}"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                OYUNCU ADI
+              </label>
+
+              <input
+                data-player-name="${index}"
+                value="${esc(player.name)}"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                MEVKİ
+              </label>
+
+              <select
+                data-player-position="${index}"
+              >
+
+                ${positions
+                  .map(function(position){
+
+                    return `
+
+                      <option
+                        value="${esc(position)}"
+                        ${
+                          player.position === position
+                          ? "selected"
+                          : ""
+                        }
+                      >
+                        ${esc(position)}
+                      </option>
+
+                    `;
+
+                  })
+                  .join("")}
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                GÖRSEL YOLU
+              </label>
+
+              <input
+                data-player-image="${index}"
+                value="${esc(player.image)}"
+              >
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  document
+    .querySelectorAll(
+      "[data-delete-player]"
+    )
+    .forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            const index =
+              Number(
+                button.dataset.deletePlayer
+              );
+
+            data.players.splice(
+              index,
+              1
+            );
+
+            saveData();
+
+            renderPlayers();
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+document
+  .getElementById("addPlayer")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !Array.isArray(data.players)
+      ){
+
+        data.players = [];
+
+      }
+
+
+      data.players.push({
+
+        number:"00",
+
+        name:"Yeni Oyuncu",
+
+        position:"Forvet",
+
+        image:""
+
+      });
+
+
+      renderPlayers();
+
+    }
+  );
+
+
+document
+  .getElementById("savePlayers")
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .querySelectorAll(
+          "[data-player-number]"
+        )
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerNumber
+              )
+            ].number =
+              input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          "[data-player-name]"
+        )
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerName
+              )
+            ].name =
+              input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          "[data-player-position]"
+        )
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerPosition
+              )
+            ].position =
+              input.value;
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          "[data-player-image]"
+        )
+        .forEach(
+          function(input){
+
+            data.players[
+              Number(
+                input.dataset.playerImage
+              )
+            ].image =
+              input.value;
+
+          }
+        );
+
+
+      saveData();
+
+      message(
+        "playerMessage"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   BAŞARILAR
+===================================================== */
+
+function renderAchievements(){
+
+  if(
+    !Array.isArray(data.achievements)
+  ){
+
+    data.achievements = [];
+
+  }
+
+
+  const editor =
+    document.getElementById(
+      "achievementEditor"
+    );
+
+
+  if(!data.achievements.length){
+
+    editor.innerHTML = `
+
+      <div class="empty">
+        Henüz başarı bulunmuyor.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  editor.innerHTML =
+
+    data.achievements
+      .map(function(achievement,index){
+
+        const value =
+          typeof achievement === "string"
+            ? achievement
+            : achievement.title || "";
+
+
+        return `
+
+        <div class="edit-item">
+
+          <div class="edit-item-head">
+
+            <strong>
+              BAŞARI ${index + 1}
+            </strong>
+
+            <button
+              class="delete-btn"
+              data-delete-achievement="${index}"
+            >
+              SİL
+            </button>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              BAŞARI
+            </label>
+
+            <input
+              data-achievement="${index}"
+              value="${esc(value)}"
+            >
+
+          </div>
+
+        </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  document
+    .querySelectorAll(
+      "[data-delete-achievement]"
+    )
+    .forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            const index =
+              Number(
+                button.dataset.deleteAchievement
+              );
+
+            data.achievements.splice(
+              index,
+              1
+            );
+
+            saveData();
+
+            renderAchievements();
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+document
+  .getElementById("addAchievement")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !Array.isArray(
+          data.achievements
+        )
+      ){
+
+        data.achievements = [];
+
+      }
+
+
+      data.achievements.push(
+        "Yeni Başarı"
+      );
+
+
+      renderAchievements();
+
+    }
+  );
+
+
+document
+  .getElementById("saveAchievements")
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .querySelectorAll(
+          "[data-achievement]"
+        )
+        .forEach(
+          function(input){
+
+            data.achievements[
+              Number(
+                input.dataset.achievement
+              )
+            ] =
+              input.value;
+
+          }
+        );
+
+
+      saveData();
+
+      message(
+        "achievementMessage"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   YEDEK
+===================================================== */
+
+document
+  .getElementById("exportButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      const json =
+        JSON.stringify(
+          data,
+          null,
+          2
+        );
+
+
+      const blob =
+        new Blob(
+          [json],
+          {
+            type:"application/json"
+          }
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const a =
+        document.createElement(
+          "a"
+        );
+
+
+      a.href = url;
+
+      a.download =
+        "kugulu-park-rangers-yedek.json";
+
+
+      document
+        .body
+        .appendChild(a);
+
+
+      a.click();
+
+      a.remove();
+
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("importFile")
+  .addEventListener(
+    "change",
+    function(event){
+
+      const file =
+        event.target.files[0];
+
+      if(!file) return;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(){
+
+          try{
+
+            const imported =
+              JSON.parse(
+                reader.result
+              );
+
+
+            data =
+              imported;
+
+
+            saveData();
+
+            renderAll();
+
+
+            alert(
+              "Yedek başarıyla yüklendi."
+            );
+
+
+          }catch(error){
+
+            alert(
+              "Bu dosya geçerli bir JSON yedeği değil."
+            );
+
+          }
+
+        };
+
+
+      reader.readAsText(
+        file
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("resetButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !confirm(
+          "Yerel yönetim verilerinin tamamı varsayılana döndürülsün mü?"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      localStorage.removeItem(
+        DATA_KEY
+      );
+
+
+      data =
+        getBaseData();
+
+
+      renderAll();
+
+    }
+  );
+
+
+/* =====================================================
    RENDER
------------------------------ */
+===================================================== */
 
 function renderAll(){
 
   renderClub();
+
   renderNews();
+
   renderFixtures();
+
   renderPlayers();
+
   renderAchievements();
 
 }
 
 
-/* -----------------------------
-   OTURUMU KONTROL ET
------------------------------ */
+/* =====================================================
+   OTURUM
+===================================================== */
 
-if(localStorage.getItem(LOGIN_KEY)){
+if(
+  localStorage.getItem(
+    LOGIN_KEY
+  )
+){
 
-  loginScreen.style.display="none";
-  panel.style.display="block";
+  loginScreen.style.display =
+    "none";
+
+  panel.style.display =
+    "block";
 
   renderAll();
 
 }else{
 
-  loginScreen.style.display="flex";
-  panel.style.display="none";
+  loginScreen.style.display =
+    "flex";
+
+  panel.style.display =
+    "none";
 
 }
+
 
 })();
 
